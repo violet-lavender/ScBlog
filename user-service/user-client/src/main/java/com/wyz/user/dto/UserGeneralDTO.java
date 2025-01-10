@@ -8,54 +8,54 @@ import lombok.Data;
 @Data
 public class UserGeneralDTO {
 
-	/**
-	 * id
-	 */
-	Integer id;
+    /**
+     * id
+     */
+    Integer id;
 
-	/**
-	 * 用户id
-	 */
-	Integer userId;
+    /**
+     * 用户id
+     */
+    Integer userId;
 
-	/**
-	 * 累计点赞数
-	 */
-	Integer likeNum;
+    /**
+     * 累计点赞数
+     */
+    Integer likeNum;
 
-	/**
-	 * 粉丝数
-	 */
-	Integer fansNum;
+    /**
+     * 粉丝数
+     */
+    Integer fansNum;
 
-	/**
-	 * 评论数
-	 */
-	Integer commentNum;
+    /**
+     * 评论数
+     */
+    Integer commentNum;
 
-	/**
-	 * 收藏数
-	 */
-	Integer collectNum;
+    /**
+     * 收藏数
+     */
+    Integer collectNum;
 
-	/**
-	 * 访问数
-	 */
-	Integer viewNum;
+    /**
+     * 访问数
+     */
+    Integer viewNum;
 
-	/**
-	 * 博客数
-	 */
-	Integer blogNum;
+    /**
+     * 博客数
+     */
+    Integer blogNum;
 
-	/**
-	 * 作者周排行
-	 */
-	Double weekRank;
+    /**
+     * 作者周排行
+     */
+    Double weekRank;
 
-	/**
-	 * 作者总排行
-	 */
-	Double totalRank;
+    /**
+     * 作者总排行
+     */
+    Double totalRank;
 
 }
