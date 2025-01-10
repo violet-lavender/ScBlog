@@ -3,13 +3,13 @@ package com.wyz.user.pojo;
 import cn.sticki.common.result.ListVO;
 
 /**
- * @author 阿杆
+ * 粉丝视图列表对象
  */
 public class FansViewListVO extends ListVO<FansView> {
 
-	@Override
-	public String toString() {
-		return super.toString();
-	}
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
 }

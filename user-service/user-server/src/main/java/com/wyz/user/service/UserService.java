@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author 阿杆
+ * 用户服务接口
  */
 public interface UserService extends IService<UserView> {
 
 	/**
-	 * 获取用户信息
+	 * 根据id获取用户信息
 	 *
 	 * @param id 用户id
 	 * @return 用户信息
@@ -24,7 +24,7 @@ public interface UserService extends IService<UserView> {
 	User getById(Integer id);
 
 	/**
-	 * 获取用户信息
+	 * 根据用户名获取用户信息
 	 *
 	 * @param username 用户名
 	 * @return 用户信息

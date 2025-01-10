@@ -3,14 +3,14 @@ package com.wyz.user.pojo;
 import cn.sticki.common.result.ListVO;
 
 /**
- * @author 阿杆
+ * 关注视图列表
  */
 
 public class FollowViewListVO extends ListVO<FollowView> {
 
-	@Override
-	public String toString() {
-		return super.toString();
-	}
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
 }

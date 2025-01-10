@@ -6,65 +6,65 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 /**
- * @author 阿杆
+ * 用户基本信息
  */
 @Data
 public class UserBasic {
 
-	/**
-	 * 用户名
-	 */
-	@TableId
-	String username;
+    /**
+     * 用户名
+     */
+    @TableId
+    String username;
 
-	/**
-	 * 真实姓名
-	 */
-	String realname;
+    /**
+     * 真实姓名
+     */
+    String realname;
 
-	/**
-	 * 生日时间戳
-	 */
-	Timestamp birthday;
+    /**
+     * 生日时间戳
+     */
+    Timestamp birthday;
 
-	/**
-	 * 个人简介
-	 */
-	String intro;
+    /**
+     * 个人简介
+     */
+    String intro;
 
-	/**
-	 * 性别
-	 */
-	String gender;
+    /**
+     * 性别
+     */
+    String gender;
 
-	/**
-	 * 城市id
-	 */
-	Integer cityId;
+    /**
+     * 城市id
+     */
+    Integer cityId;
 
-	/**
-	 * 省份id
-	 */
-	Integer provinceId;
+    /**
+     * 省份id
+     */
+    Integer provinceId;
 
-	/**
-	 * 信息修改时间
-	 */
-	Timestamp modifiedTime;
+    /**
+     * 信息修改时间
+     */
+    Timestamp modifiedTime;
 
-	/**
-	 * 昵称修改时间
-	 */
-	Timestamp nameModifyTime;
+    /**
+     * 昵称修改时间
+     */
+    Timestamp nameModifyTime;
 
-	/**
-	 * 开始工作的时间
-	 */
-	Timestamp startWorkTime;
+    /**
+     * 开始工作的时间
+     */
+    Timestamp startWorkTime;
 
-	/**
-	 * 是否已经删除，0未删除，1已删除
-	 */
-	Integer deleted;
+    /**
+     * 是否已经删除，0未删除，1已删除
+     */
+    Integer deleted;
 
 }

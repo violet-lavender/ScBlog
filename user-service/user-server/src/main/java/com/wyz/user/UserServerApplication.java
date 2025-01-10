@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * @author 阿杆
+ * 用户服务启动类
  */
 @SuppressWarnings("AlibabaCommentsMustBeJavadocFormat")
 @SpringBootApplication
@@ -25,8 +25,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDefaultResponseAdvice // 注入默认包装器
 public class UserServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(UserServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(UserServerApplication.class, args);
+    }
 
 }

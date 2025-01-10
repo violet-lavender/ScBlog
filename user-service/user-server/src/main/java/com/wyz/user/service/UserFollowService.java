@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
- * @author 阿杆
+ * 用户关注服务接口
  */
 public interface UserFollowService extends IService<UserFollow> {
 

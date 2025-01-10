@@ -6,14 +6,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @author 阿杆
+ * Security配置类
  */
 @Configuration
 public class SecurityConfig {
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

@@ -4,16 +4,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author 阿杆
+ * TODO: 该类作用
  */
 @Configuration
 @ConfigurationProperties("user")
 public class UserConfig {
 
-	public static String DefaultAvatar;
+    public static String DefaultAvatar;
 
-	public void setDefaultAvatar(String defaultAvatar) {
-		DefaultAvatar = defaultAvatar;
-	}
+    public void setDefaultAvatar(String defaultAvatar) {
+        DefaultAvatar = defaultAvatar;
+    }
 
 }

@@ -6,7 +6,7 @@ import com.wyz.user.pojo.UserSafety;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * @author 阿杆
+ * 用户注册服务接口
  */
 public interface RegisterService extends IService<UserSafety> {
 

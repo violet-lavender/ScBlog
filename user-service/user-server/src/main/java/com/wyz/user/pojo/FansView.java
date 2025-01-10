@@ -5,64 +5,64 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 /**
- * @author 阿杆
+ * 粉丝视图对象
  */
 @Data
 public class FansView {
 
-	/**
-	 * id
-	 */
-	Integer id;
+    /**
+     * id
+     */
+    Integer id;
 
-	/**
-	 * 用户id
-	 */
-	Integer userId;
+    /**
+     * 用户id
+     */
+    Integer userId;
 
-	/**
-	 * 粉丝id
-	 */
-	Integer fansId;
+    /**
+     * 粉丝id
+     */
+    Integer fansId;
 
-	/**
-	 * 备注
-	 */
-	String note;
+    /**
+     * 备注
+     */
+    String note;
 
-	/**
-	 * 状态码
-	 */
-	Integer status;
+    /**
+     * 状态码
+     */
+    Integer status;
 
-	/**
-	 * 创建时间
-	 */
-	Timestamp createTime;
+    /**
+     * 创建时间
+     */
+    Timestamp createTime;
 
-	/**
-	 * 粉丝用户名
-	 */
-	String username;
+    /**
+     * 粉丝用户名
+     */
+    String username;
 
-	/**
-	 * 粉丝昵称
-	 */
-	String nickname;
+    /**
+     * 粉丝昵称
+     */
+    String nickname;
 
-	/**
-	 * 粉丝院校代码
-	 */
-	Integer schoolCode;
+    /**
+     * 粉丝院校代码
+     */
+    Integer schoolCode;
 
-	/**
-	 * 粉丝头像链接
-	 */
-	String avatarUrl;
+    /**
+     * 粉丝头像链接
+     */
+    String avatarUrl;
 
-	/**
-	 * 粉丝注册时间
-	 */
-	Timestamp registerTime;
+    /**
+     * 粉丝注册时间
+     */
+    Timestamp registerTime;
 
 }

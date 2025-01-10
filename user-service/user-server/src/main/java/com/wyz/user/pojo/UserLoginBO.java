@@ -4,15 +4,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @author 阿杆
+ * 用户登录业务对象
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class UserLoginBO extends User {
 
-	/**
-	 * 院校名称
-	 */
-	String schoolName;
+    /**
+     * 院校名称
+     */
+    String schoolName;
 
 }

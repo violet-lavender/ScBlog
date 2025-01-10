@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 登录相关接口
- *
- * @author 阿杆
  */
 @Slf4j
 @RestController
@@ -26,31 +24,32 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class LoginController {
 
-	@Resource
-	private LoginService loginService;
+    @Resource
+    private LoginService loginService;
 
-	@Resource
-	private HttpServletResponse response;
+    @Resource
+    private HttpServletResponse response;
 
-	/**
-	 * 用户登录
-	 *
-	 * @param username 账号
-	 * @param password 密码
-	 */
-	@PostMapping("/login")
-	public UserLoginBO loginHandle(@NotNull String username, @NotNull String password) {
-		UserLoginBO user = loginService.login(username, password);
-		if (user == null) {
-			throw new BusinessException("用户名或密码错误");
-		}
-		response.setHeader(JwtConfig.headerName, JwtUtils.createToken("id", user.getId()));
-		response.setHeader("Access-Control-Expose-Headers", JwtConfig.headerName);
-		// 院校代码放到cookie去
-		Cookie cookie = new Cookie("schoolCode", user.getSchoolCode().toString());
-		cookie.setMaxAge(3600 * 7);
-		response.addCookie(cookie);
-		return user;
-	}
+    /**
+     * 用户登录
+     *
+     * @param username 账号
+     * @param password 密码
+     */
+    @PostMapping("/login")
+    public UserLoginBO loginHandle(@NotNull String username, @NotNull String password) {
+        UserLoginBO user = loginService.login(username, password);
+        if (user == null) {
+            throw new BusinessException("用户名或密码错误");
+        }
+        response.setHeader(JwtConfig.headerName, JwtUtils.createToken("id", user.getId()));
+        // TODO: 具体信息
+        response.setHeader("Access-Control-Expose-Headers", JwtConfig.headerName);
+        // 院校代码放到cookie去
+        Cookie cookie = new Cookie("schoolCode", user.getSchoolCode().toString());
+        cookie.setMaxAge(3600 * 7);
+        response.addCookie(cookie);
+        return user;
+    }
 
 }

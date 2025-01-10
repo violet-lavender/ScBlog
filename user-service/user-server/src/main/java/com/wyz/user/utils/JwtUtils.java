@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Date;
 
 /**
- * @author 阿杆
+ * JWT工具类
  */
 @Slf4j
 public class JwtUtils {

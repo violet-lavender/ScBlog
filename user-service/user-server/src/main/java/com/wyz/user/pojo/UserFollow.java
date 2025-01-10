@@ -5,44 +5,44 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 /**
- * @author 阿杆
+ * 用户关注信息
  */
 @Data
 public class UserFollow {
 
-	/**
-	 * id
-	 */
-	Integer id;
+    /**
+     * id
+     */
+    Integer id;
 
-	/**
-	 * 粉丝id
-	 */
-	Integer fansId;
+    /**
+     * 粉丝id
+     */
+    Integer fansId;
 
-	/**
-	 * 关注者id
-	 */
-	Integer followId;
+    /**
+     * 关注者id
+     */
+    Integer followId;
 
-	/**
-	 * 备注
-	 */
-	String note;
+    /**
+     * 备注
+     */
+    String note;
 
-	/**
-	 * 状态码 0->未关注;1->已关注
-	 */
-	Integer status;
+    /**
+     * 状态码 0->未关注;1->已关注
+     */
+    Integer status;
 
-	/**
-	 * 创建时间
-	 */
-	Timestamp createTime;
+    /**
+     * 创建时间
+     */
+    Timestamp createTime;
 
-	/**
-	 * 是否已经删除，0未删除，1已删除
-	 */
-	Integer deleted;
+    /**
+     * 是否已经删除，0未删除，1已删除
+     */
+    Integer deleted;
 
 }
