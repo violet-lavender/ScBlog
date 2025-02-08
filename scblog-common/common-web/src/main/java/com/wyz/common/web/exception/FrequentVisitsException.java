@@ -1,11 +1,9 @@
 package com.wyz.common.web.exception;
 
-import cn.sticki.common.exception.BusinessException;
+import com.wyz.common.exception.BusinessException;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/10/14 22:19
+ * 访问频繁异常
  */
 public class FrequentVisitsException extends BusinessException {
 
