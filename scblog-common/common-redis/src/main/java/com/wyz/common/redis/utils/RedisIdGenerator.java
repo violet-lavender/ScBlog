@@ -8,9 +8,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/6/20 20:29
+ * Redis ID 生成器
  */
 @Component
 public class RedisIdGenerator {

@@ -1,7 +1,7 @@
 package com.wyz.common.redis.utils;
 
 /**
- * @author 阿杆
+ * Redis相关常量类
  */
 public class RedisConstants {
 

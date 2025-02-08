@@ -17,12 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
- * Redis缓存工具类，可以解决缓存穿透和缓存击穿问题<br>
- * 学习自黑马程序员虎老师: <a href="https://www.bilibili.com/video/BV1cr4y1671t?p=46">视频链接</a>
- *
- * @author 阿杆
- * @version 1.0
- * @date 2022/6/19 20:39
+ * Redis缓存工具类，可以解决缓存穿透和缓存击穿问题
  */
 @Slf4j
 @Component
