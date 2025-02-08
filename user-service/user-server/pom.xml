@@ -12,29 +12,29 @@
 	<artifactId>user-server</artifactId>
 
 	<dependencies>
-		<dependency>
-			<groupId>cn.sticki</groupId>
+<!--		<dependency>
+			<groupId>com.wyz</groupId>
 			<artifactId>resource-client</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
-			<groupId>cn.sticki</groupId>
+			<groupId>com.wyz</groupId>
 			<artifactId>resource-sdk</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
-			<groupId>cn.sticki</groupId>
+			<groupId>com.wyz</groupId>
 			<artifactId>blog-client</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
-			<groupId>cn.sticki</groupId>
+			<groupId>com.wyz</groupId>
 			<artifactId>comment-sdk</artifactId>
 			<version>1.0.0</version>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>com.wyz</groupId>

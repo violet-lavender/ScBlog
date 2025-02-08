@@ -12,14 +12,14 @@
 	<artifactId>common-web</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>cn.sticki</groupId>
+			<groupId>com.wyz</groupId>
 			<artifactId>common-core</artifactId>
 			<version>1.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>cn.sticki</groupId>
+			<groupId>com.wyz</groupId>
 			<artifactId>common-redis</artifactId>
 			<version>1.0.0</version>
 			<optional>true</optional>
@@ -55,7 +55,7 @@
 
 		<dependency>
 			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-http</artifactId>
+			<artifactId>hutool-all</artifactId>
 			<optional>true</optional>
 		</dependency>
 
