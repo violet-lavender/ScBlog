@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.UUID;
 
 /**
- * @author 阿杆
+ * 随机数工具类
  */
 public class RandomUtils {
 
