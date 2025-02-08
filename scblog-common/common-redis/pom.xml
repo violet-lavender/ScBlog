@@ -13,7 +13,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>cn.sticki</groupId>
+			<groupId>com.wyz</groupId>
 			<artifactId>common-core</artifactId>
 			<version>1.0.0</version>
 		</dependency>
@@ -30,13 +30,9 @@
 
 		<dependency>
 			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-core</artifactId>
+			<artifactId>hutool-all</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-json</artifactId>
-		</dependency>
 	</dependencies>
 
 </project>
