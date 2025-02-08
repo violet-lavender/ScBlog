@@ -6,9 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/6/25 18:01
+ * AMQP消息转换器, 消息的序列化和反序列化
  */
 @Configuration
 public class AmqpMessageConverterConfig {

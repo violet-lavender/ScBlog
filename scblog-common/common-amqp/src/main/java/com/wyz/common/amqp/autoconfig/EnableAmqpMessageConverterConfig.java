@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/6/25 18:17
+ * 启用 AMQP 消息转换器配置的注解
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
