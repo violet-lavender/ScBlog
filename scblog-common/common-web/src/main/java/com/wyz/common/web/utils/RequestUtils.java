@@ -1,6 +1,6 @@
 package com.wyz.common.web.utils;
 
-import cn.sticki.common.exception.SystemException;
+import com.wyz.common.exception.SystemException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -10,7 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.Objects;
 
 /**
- * @author 阿杆
+ * 获取请求相关信息的工具类
  */
 @SuppressWarnings("AlibabaUndefineMagicConstant")
 public class RequestUtils {
