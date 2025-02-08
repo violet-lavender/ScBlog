@@ -1,8 +1,8 @@
 package com.wyz.common.web.advice;
 
-import cn.sticki.common.result.RestResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wyz.common.result.RestResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
- * 默认的响应包装处理器
- *
- * @author 阿杆
- * @version 1.0
- * @date 2022/9/24 11:21
+ * 默认的响应包装处理器，拦截所有 Controller 返回的响应体 并进行 统一处理
+ * <p>
+ * 包装非 RestResult 类型的返回值，确保所有 API 响应都符合 RestResult 结构
+ * 特殊处理 String 类型返回值，避免 Spring 的 StringHttpMessageConverter 造成的问题
  */
 @Slf4j
 @RestControllerAdvice

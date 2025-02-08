@@ -1,9 +1,9 @@
 package com.wyz.common.web.advice;
 
-import cn.sticki.common.exception.BusinessException;
-import cn.sticki.common.exception.MapperException;
-import cn.sticki.common.exception.SystemException;
-import cn.sticki.common.result.RestResult;
+import com.wyz.common.exception.BusinessException;
+import com.wyz.common.exception.MapperException;
+import com.wyz.common.exception.SystemException;
+import com.wyz.common.result.RestResult;
 import jakarta.servlet.ServletException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +23,9 @@ import java.net.ConnectException;
 import java.util.List;
 
 /**
- * 默认的SpringMVC的异常处理器
- *
- * @author 阿杆
+ * 默认 SpringMVC 异常处理器
+ * <p>
+ * &#064;ControllerAdvice 和 @RestControllerAdvice 用于全局异常处理、数据绑定、模型属性处理，以及对 Controller 的返回值进行增强
  */
 @Slf4j
 @RestControllerAdvice
