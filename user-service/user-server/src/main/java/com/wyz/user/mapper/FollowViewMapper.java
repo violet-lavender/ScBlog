@@ -1,14 +1,14 @@
 package com.wyz.user.mapper;
 
-import com.wyz.user.pojo.FollowView;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wyz.user.pojo.FollowView;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 /**
- * @author 阿杆
+ * 关注视图 Mapper 接口
  */
 @Mapper
 public interface FollowViewMapper extends BaseMapper<FollowView> {

@@ -1,12 +1,12 @@
 package com.wyz.user.mapper;
 
-import com.wyz.user.pojo.UserGeneral;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wyz.user.pojo.UserGeneral;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * @author durance
+ * 用户统计信息 Mapper 接口
  */
 @Mapper
 public interface UserGeneralMapper extends BaseMapper<UserGeneral> {

@@ -1,7 +1,7 @@
 package com.wyz.user.mapper;
 
-import com.wyz.user.pojo.UserSafety;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wyz.user.pojo.UserSafety;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Update;
 import java.io.Serializable;
 
 /**
- * @author 阿杆
+ * 用户安全 Mapper 接口
  */
 @Mapper
 public interface UserSafetyMapper extends BaseMapper<UserSafety> {

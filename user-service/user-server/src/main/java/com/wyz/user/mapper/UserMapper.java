@@ -1,13 +1,13 @@
 package com.wyz.user.mapper;
 
-import com.wyz.user.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wyz.user.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.io.Serializable;
 
 /**
- * @author 阿杆
+ * 用户 Mapper 接口
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
