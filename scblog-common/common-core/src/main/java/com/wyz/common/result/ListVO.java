@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author 阿杆
+ * 分页List对象
  */
 @SuppressWarnings({"AlibabaPojoNoDefaultValue", "AlibabaPojoMustUsePrimitiveField"})
 @Data

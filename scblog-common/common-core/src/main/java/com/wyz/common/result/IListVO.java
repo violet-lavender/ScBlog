@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author 阿杆
+ * 分页数据封装接口
  */
-@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
+@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")  // 抑制编译器/代码检查工具警告的注解
 public interface IListVO<T> extends Serializable {
 
 	/**

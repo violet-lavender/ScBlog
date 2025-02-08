@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author 阿杆
+ * Result封装类
  */
 @Data
 @AllArgsConstructor
