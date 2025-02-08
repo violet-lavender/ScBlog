@@ -1,9 +1,7 @@
 package com.wyz.common.redis.utils;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/6/21 21:58
+ * 锁接口
  */
 public interface ILock {
 

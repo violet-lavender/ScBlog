@@ -8,9 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/6/21 21:57
+ * Redis分布式锁实现
  */
 public class RedisSimpleLock implements ILock {
 
