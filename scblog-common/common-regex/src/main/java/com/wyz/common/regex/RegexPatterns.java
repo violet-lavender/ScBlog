@@ -1,9 +1,7 @@
 package com.wyz.common.regex;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/6/16 11:00
+ * 正则表达式
  */
 public class RegexPatterns {
 
