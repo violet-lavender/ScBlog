@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 /**
- * @author 阿杆
+ * Web 应用程序的 API 响应处理, 将 Java 对象转换为 JSON 格式的响应
  */
 public class ResponseUtils {
 
