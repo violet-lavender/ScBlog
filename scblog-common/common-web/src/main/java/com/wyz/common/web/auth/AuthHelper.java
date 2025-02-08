@@ -10,10 +10,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * 获取用户登录的账号信息
  * <p>
  * 该类与网关服务耦合，所获取的用户信息是由 gateway-service 解析而来的
- *
- * @author 阿杆
- * @version 1.0
- * @date 2022/11/30 11:53
  */
 public class AuthHelper {
 
