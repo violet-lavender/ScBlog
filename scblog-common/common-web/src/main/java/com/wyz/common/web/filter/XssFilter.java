@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Date 2022/10/26
- *
- * @author likangli
- * description xss攻击过滤器
+ * xss攻击过滤器
  */
 
 public class XssFilter implements Filter {

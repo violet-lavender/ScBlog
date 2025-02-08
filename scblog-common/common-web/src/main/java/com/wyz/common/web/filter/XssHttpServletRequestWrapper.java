@@ -5,10 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 
 /**
- * Date 2022/10/26
- *
- * @author likangli
- * description 处理xss的request包装类
+ * 处理xss的request包装类
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
