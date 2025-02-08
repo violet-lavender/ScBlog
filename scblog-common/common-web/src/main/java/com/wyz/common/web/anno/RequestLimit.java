@@ -7,10 +7,6 @@ import java.lang.annotation.*;
 
 /**
  * Request 请求限制拦截
- *
- * @author 阿杆
- * @version 1.0
- * @date 2022/7/31 20:19
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

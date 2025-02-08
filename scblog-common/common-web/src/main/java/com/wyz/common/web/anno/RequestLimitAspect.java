@@ -18,9 +18,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/7/31 20:24
+ * 限制请求次数的切面
  */
 @Aspect
 @Component
@@ -37,7 +35,7 @@ public class RequestLimitAspect {
 	/**
 	 * 拦截有 {@link RequestLimit}注解的方法
 	 */
-	@Around("@annotation(cn.sticki.common.web.anno.RequestLimit)")
+	@Around("@annotation(com.wyz.common.web.anno.RequestLimit)")
 	public Object before(ProceedingJoinPoint pjp) throws Throwable {
 		MethodSignature signature = (MethodSignature) pjp.getSignature();
 		// 1. 获取被拦截的方法和方法名
