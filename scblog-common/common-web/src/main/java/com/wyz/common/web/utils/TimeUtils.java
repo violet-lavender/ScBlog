@@ -10,12 +10,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
- * @Author if
- * @Description: 时间日期工具类并通过ThreadLocal解决DateFormat的线程安全问题
+ * 时间日期工具类并通过ThreadLocal解决DateFormat的线程安全问题
  * ThreadLocal通过保存各个线程的SimpleDateFormat类对象的副本
- * 使每个线程在运行时，各自使用自身绑定的SimpleDateFormat对象
- * 互不干扰，执行性能比较高，推荐在高并发的生产环境使用。
- * @Date 2022-01-08 下午 03:20
+ * 使每个线程在运行时, 各自使用自身绑定的SimpleDateFormat对象
+ * 互不干扰，执行性能比较高, 在高并发的生产环境使用
  */
 public class TimeUtils {
 
