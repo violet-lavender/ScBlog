@@ -6,10 +6,6 @@ package com.wyz.common.exception;
  * 如：更新失败、插入失败、查询异常等
  * <p>
  * 抛出该异常时往往存在两部分信息，一是返回给用户的提示信息，二是该条数据
- *
- * @author 阿杆
- * @version 1.0
- * @date 2022/11/28 14:33
  */
 public class MapperException extends SystemException {
 

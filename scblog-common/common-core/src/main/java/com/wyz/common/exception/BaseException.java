@@ -4,10 +4,6 @@ package com.wyz.common.exception;
  * 微服务异常基类，该基类继承自RuntimeException
  * <p>
  * 模仿java的异常类写的，并在其基础上加了一个字段 {@link BaseException#errorCode}
- *
- * @author 阿杆
- * @version 1.0
- * @date 2022/11/27 16:08
  */
 public class BaseException extends RuntimeException {
 
