@@ -6,8 +6,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.List;
 
 /**
- * @author 阿杆
- * @date 2024/1/16
+ * 字段非空校验
  */
 public class NotBlankFieldsValidator implements ConstraintValidator<NotBlankFields, List<String>> {
 

@@ -13,10 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * 字段非空校验
  * <p>
- * 适用于List<String>类型的字段，要求List不为空，且List中的每个元素都不能为空
- *
- * @author 阿杆
- * @date 2024/1/16
+ * 用于List<String>类型的字段，要求List不为空，且List中的每个元素都不能为空
  */
 @Target(FIELD)
 @Retention(RUNTIME)
