@@ -24,7 +24,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>cn.sticki</groupId>
+			<groupId>com.wyz</groupId>
 			<artifactId>common-core</artifactId>
 			<version>1.0.0</version>
 			<scope>compile</scope>

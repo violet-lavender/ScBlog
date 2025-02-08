@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author 阿杆
+ * MybatisPlus默认(分页)配置
  */
 @Configuration
 public class MybatisPlusDefaultConfig {
