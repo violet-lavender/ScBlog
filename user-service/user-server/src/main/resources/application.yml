@@ -1,5 +1,6 @@
 server:
-  port: 40010
+  port: 8080
 
+# TODO 默认图像url
 user:
   default-avatar: default_avatar.jpg # 注册时自动填充的头像文件名

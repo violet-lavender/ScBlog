@@ -2,11 +2,11 @@ package com.wyz.user.config;
 
 import cn.sticki.blog.client.BlogClient;
 import cn.sticki.blog.dto.BlogGeneralDTO;
-import com.wyz.user.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wyz.user.mapper.UserGeneralMapper;
 import com.wyz.user.pojo.UserGeneral;
 import com.wyz.user.pojo.UserView;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.wyz.user.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Scheduled 配置类 TODO：具体信息
+ * Scheduled 配置类 每天凌晨2点执行一次任务, 检查和更新用户统计表中的数据
  */
 @Slf4j
 @Configuration

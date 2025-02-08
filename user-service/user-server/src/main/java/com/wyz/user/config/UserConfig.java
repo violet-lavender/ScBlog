@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * TODO: 该类作用
+ * 绑定配置属性, 管理默认头像配置
  */
 @Configuration
 @ConfigurationProperties("user")
