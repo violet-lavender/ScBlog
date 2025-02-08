@@ -9,10 +9,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
  * Redis默认序列化配置
- *
- * @author 阿杆
- * @version 1.0
- * @date 2022/6/17 22:22
  */
 @Configuration
 public class RedisSerializeDefaultConfig {
