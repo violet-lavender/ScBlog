@@ -12,7 +12,7 @@
     <!-- 管理的工程列表 -->
     <modules>
         <module>scblog-common</module>
-        <module>scblog-gateway</module>
+        <module>gateway-service</module>
         <module>user-service</module>
 <!--        <module>blog-service</module>
         <module>comment-service</module>-->
