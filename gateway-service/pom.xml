@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<artifactId>scblog-gateway</artifactId>
+	<artifactId>gateway-service</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
