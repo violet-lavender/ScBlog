@@ -3,8 +3,8 @@ spring:
     host: 8.140.235.93 # 主机名
     port: 5672 # 端口
     virtual-host: scblogs # 虚拟主机
-    username: root # 用户名
-    password: root # 密码
+    username: scblogs # 用户名
+    password: 021415 # 密码
     listener:
       simple:
-        prefetch: 1 # 每次只能获取一条消息，处理完成才能获取下一个消息
+        prefetch: 1 # 每次只能获取一条消息, 处理完成才能获取下一个消息
