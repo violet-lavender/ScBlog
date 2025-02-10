@@ -14,8 +14,8 @@
         <module>scblog-common</module>
         <module>gateway-service</module>
         <module>user-service</module>
-<!--        <module>blog-service</module>
-        <module>comment-service</module>-->
+        <module>blog-service</module>
+        <!--<module>comment-service</module>-->
     </modules>
 
     <parent>
