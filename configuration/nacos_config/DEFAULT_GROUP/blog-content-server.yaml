@@ -1,5 +1,3 @@
 spring:
   elasticsearch:
-    uris: "http://xxxx"
-    username: xxxx
-    password: xxxx
+    uris: "http://192.168.236.134:9200"
