@@ -16,6 +16,7 @@
         <module>user-service</module>
         <module>blog-service</module>
         <!--<module>comment-service</module>-->
+        <module>resource-service</module>
     </modules>
 
     <parent>
