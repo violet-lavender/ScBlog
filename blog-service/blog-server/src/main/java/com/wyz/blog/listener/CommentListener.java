@@ -16,8 +16,6 @@ import static com.wyz.comment.sdk.MqConstants.*;
 
 /**
  * 监听Comment模块的消息
- * <p>
- * todo 取消的动作也是需要减分的，参考BlogListener
  */
 @Slf4j
 @Component
