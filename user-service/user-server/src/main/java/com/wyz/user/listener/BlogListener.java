@@ -1,6 +1,6 @@
 package com.wyz.user.listener;
 
-import cn.sticki.blog.sdk.BlogOperateDTO;
+import com.wyz.blog.sdk.BlogOperateDTO;
 import com.wyz.user.mapper.UserGeneralMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import static cn.sticki.blog.sdk.BlogMqConstants.*;
+import static com.wyz.blog.sdk.BlogMqConstants.*;
 
 /**
  * Blog异步监听
