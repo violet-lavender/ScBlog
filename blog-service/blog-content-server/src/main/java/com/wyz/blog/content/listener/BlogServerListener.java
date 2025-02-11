@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static cn.sticki.blog.sdk.BlogMqConstants.*;
+import static com.wyz.blog.sdk.BlogMqConstants.*;
 
 /**
  * 博客服务消息队列监听器
