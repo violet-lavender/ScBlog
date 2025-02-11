@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 博客内容Controller
+ * 博客内容Controller, 主要是博客搜索项相关接口
  */
 @RestController
 @RequestMapping("/blog/content")
