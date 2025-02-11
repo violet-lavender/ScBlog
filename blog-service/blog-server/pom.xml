@@ -30,11 +30,11 @@
             <version>1.0.0</version>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>com.wyz</groupId>
             <artifactId>resource-client</artifactId>
             <version>1.0.0</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.wyz</groupId>
@@ -48,11 +48,11 @@
             <version>1.0.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.wyz</groupId>
-            <artifactId>comment-client</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+        <!--        <dependency>
+                    <groupId>com.wyz</groupId>
+                    <artifactId>comment-client</artifactId>
+                    <version>1.0.0</version>
+                </dependency>-->
 
         <dependency>
             <groupId>com.wyz</groupId>
@@ -66,12 +66,12 @@
             <version>1.0.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.wyz</groupId>
-            <artifactId>resource-sdk</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
+        <!--        <dependency>
+                    <groupId>com.wyz</groupId>
+                    <artifactId>resource-sdk</artifactId>
+                    <version>1.0.0</version>
+                    <scope>compile</scope>
+                </dependency>-->
 
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
