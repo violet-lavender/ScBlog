@@ -4,7 +4,7 @@ spring:
     port: 5672 # 端口
     virtual-host: scblogs # 虚拟主机
     username: scblogs # 用户名
-    password: 021415 # 密码
+    password: '021415' # 密码
     listener:
       simple:
         prefetch: 1 # 每次只能获取一条消息, 处理完成才能获取下一个消息
