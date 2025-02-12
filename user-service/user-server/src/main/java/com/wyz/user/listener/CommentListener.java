@@ -1,6 +1,6 @@
 package com.wyz.user.listener;
 
-import cn.sticki.comment.sdk.CommentDTO;
+import com.wyz.comment.sdk.CommentDTO;
 import com.wyz.user.mapper.UserGeneralMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +11,9 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import static cn.sticki.blog.sdk.BlogMqConstants.BLOG_TOPIC_EXCHANGE;
-import static cn.sticki.comment.sdk.MqConstants.BLOG_COMMENT_DECREASE_KEY;
-import static cn.sticki.comment.sdk.MqConstants.BLOG_COMMENT_INCREASE_KEY;
+import static com.wyz.blog.sdk.BlogMqConstants.BLOG_TOPIC_EXCHANGE;
+import static com.wyz.comment.sdk.MqConstants.BLOG_COMMENT_DECREASE_KEY;
+import static com.wyz.comment.sdk.MqConstants.BLOG_COMMENT_INCREASE_KEY;
 
 /**
  * Comment异步监听

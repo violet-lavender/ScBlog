@@ -12,7 +12,7 @@
 	<artifactId>user-server</artifactId>
 
 	<dependencies>
-<!--		<dependency>
+		<dependency>
 			<groupId>com.wyz</groupId>
 			<artifactId>resource-client</artifactId>
 			<version>1.0.0</version>
@@ -34,7 +34,7 @@
 			<groupId>com.wyz</groupId>
 			<artifactId>comment-sdk</artifactId>
 			<version>1.0.0</version>
-		</dependency>-->
+		</dependency>
 
 		<dependency>
 			<groupId>com.wyz</groupId>
