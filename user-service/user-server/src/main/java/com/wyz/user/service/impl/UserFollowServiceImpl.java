@@ -1,15 +1,15 @@
 package com.wyz.user.service.impl;
 
-import cn.sticki.common.exception.BusinessException;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wyz.common.exception.BusinessException;
 import com.wyz.user.mapper.FansViewMapper;
 import com.wyz.user.mapper.FollowViewMapper;
 import com.wyz.user.mapper.UserFollowMapper;
 import com.wyz.user.pojo.*;
 import com.wyz.user.service.UserFollowService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

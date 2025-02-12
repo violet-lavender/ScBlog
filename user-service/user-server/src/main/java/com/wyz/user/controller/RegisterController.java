@@ -1,8 +1,8 @@
 package com.wyz.user.controller;
 
-import cn.sticki.common.result.RestResult;
-import com.wyz.user.service.RegisterService;
+import com.wyz.common.result.RestResult;
 import com.wyz.user.pojo.UserRegisterBO;
+import com.wyz.user.service.RegisterService;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;

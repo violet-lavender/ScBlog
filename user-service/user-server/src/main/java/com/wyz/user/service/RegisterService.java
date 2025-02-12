@@ -1,9 +1,9 @@
 package com.wyz.user.service;
 
-import cn.sticki.common.result.RestResult;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.wyz.common.result.RestResult;
 import com.wyz.user.pojo.UserRegisterBO;
 import com.wyz.user.pojo.UserSafety;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * 用户注册服务接口

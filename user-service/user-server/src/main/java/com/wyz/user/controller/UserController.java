@@ -1,14 +1,14 @@
 package com.wyz.user.controller;
 
-import cn.sticki.common.result.RestResult;
-import cn.sticki.common.web.anno.RequestLimit;
-import cn.sticki.common.web.auth.AuthHelper;
-import cn.sticki.resource.type.FileType;
-import cn.sticki.resource.utils.FileUtils;
-import com.wyz.user.service.UserService;
+import com.wyz.common.result.RestResult;
+import com.wyz.common.web.anno.RequestLimit;
+import com.wyz.common.web.auth.AuthHelper;
+import com.wyz.resource.type.FileType;
+import com.wyz.resource.utils.FileUtils;
 import com.wyz.user.pojo.User;
 import com.wyz.user.pojo.UserGeneral;
 import com.wyz.user.pojo.UserView;
+import com.wyz.user.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;

@@ -1,10 +1,10 @@
 package com.wyz.user.controller;
 
-import cn.sticki.common.exception.BusinessException;
-import cn.sticki.common.web.auth.AuthHelper;
-import com.wyz.user.service.UserFollowService;
+import com.wyz.common.exception.BusinessException;
+import com.wyz.common.web.auth.AuthHelper;
 import com.wyz.user.pojo.FansViewListVO;
 import com.wyz.user.pojo.FollowViewListVO;
+import com.wyz.user.service.UserFollowService;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;

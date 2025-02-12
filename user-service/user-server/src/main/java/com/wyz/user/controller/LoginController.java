@@ -1,9 +1,9 @@
 package com.wyz.user.controller;
 
-import cn.sticki.common.exception.BusinessException;
-import com.wyz.user.service.LoginService;
+import com.wyz.common.exception.BusinessException;
 import com.wyz.user.config.JwtConfig;
 import com.wyz.user.pojo.UserLoginBO;
+import com.wyz.user.service.LoginService;
 import com.wyz.user.utils.JwtUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;

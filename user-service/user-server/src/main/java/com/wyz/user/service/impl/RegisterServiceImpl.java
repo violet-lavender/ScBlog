@@ -1,11 +1,12 @@
 package com.wyz.user.service.impl;
 
-import cn.sticki.common.exception.MapperException;
-import cn.sticki.common.regex.RegexUtils;
-import cn.sticki.common.result.RestResult;
-import cn.sticki.common.tool.utils.RandomUtils;
-import cn.sticki.resource.client.MessageClient;
-import cn.sticki.resource.client.pojo.MailDTO;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wyz.common.exception.MapperException;
+import com.wyz.common.regex.RegexUtils;
+import com.wyz.common.result.RestResult;
+import com.wyz.common.tool.utils.RandomUtils;
+import com.wyz.resource.client.MessageClient;
+import com.wyz.resource.client.pojo.MailDTO;
 import com.wyz.user.config.UserConfig;
 import com.wyz.user.mapper.UserGeneralMapper;
 import com.wyz.user.mapper.UserMapper;
@@ -16,7 +17,6 @@ import com.wyz.user.pojo.UserRegisterBO;
 import com.wyz.user.pojo.UserSafety;
 import com.wyz.user.service.RegisterService;
 import com.wyz.user.service.UserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

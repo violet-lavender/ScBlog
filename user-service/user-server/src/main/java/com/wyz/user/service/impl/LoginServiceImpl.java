@@ -1,14 +1,14 @@
 package com.wyz.user.service.impl;
 
-import cn.sticki.common.result.RestResult;
-import cn.sticki.resource.client.ResourceClient;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.wyz.common.result.RestResult;
+import com.wyz.resource.client.ResourceClient;
 import com.wyz.user.mapper.UserSafetyMapper;
 import com.wyz.user.mapper.UserViewMapper;
 import com.wyz.user.pojo.UserLoginBO;
 import com.wyz.user.pojo.UserSafety;
 import com.wyz.user.pojo.UserView;
 import com.wyz.user.service.LoginService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

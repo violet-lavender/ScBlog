@@ -1,8 +1,8 @@
 package com.wyz.user.config;
 
-import cn.sticki.blog.client.BlogClient;
-import cn.sticki.blog.dto.BlogGeneralDTO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.wyz.blog.client.BlogClient;
+import com.wyz.blog.dto.BlogGeneralDTO;
 import com.wyz.user.mapper.UserGeneralMapper;
 import com.wyz.user.pojo.UserGeneral;
 import com.wyz.user.pojo.UserView;
