@@ -23,7 +23,7 @@ public interface MinioService {
 	boolean existBucket(String name) throws MinioException;
 
 	/**
-	 * 上传文件，请手动关闭inputStream
+	 * 上传文件. 注意关闭inputStream
 	 *
 	 * @param filePath    文件名，包含上传路径
 	 * @param bucketName  桶名称
@@ -46,7 +46,7 @@ public interface MinioService {
 	void upload(MultipartFile multipartFile, String bucketName) throws MinioException, IOException;
 
 	/**
-	 * 上传文件，请手动关闭inputStream
+	 * 上传文件
 	 *
 	 * @param multipartFile 文件
 	 * @param filePath      文件名，包含上传路径
@@ -57,7 +57,7 @@ public interface MinioService {
 	void upload(MultipartFile multipartFile, String filePath, String bucketName) throws MinioException, IOException;
 
 	/**
-	 * 下载文件，需要自己关闭outputStream
+	 * 下载文件, 注意关闭流
 	 *
 	 * @param filePath     文件名(包括路径)
 	 * @param bucketName   储存桶
@@ -69,7 +69,7 @@ public interface MinioService {
 	void download(String filePath, String bucketName, ServletOutputStream outputStream) throws MinioException, IOException;
 
 	/**
-	 * 下载文件,使用response
+	 * 下载文件, 使用response
 	 *
 	 * @param filePath   文件路径
 	 * @param bucketName 桶名称
@@ -80,11 +80,11 @@ public interface MinioService {
 	void download(String filePath, String bucketName, HttpServletResponse response) throws MinioException, IOException;
 
 	/**
-	 * 下载文件，需要手动关闭流，否则会一直占用资源
+	 * 下载文件, 注意关闭流
 	 *
 	 * @param filePath   文件名(包括路径)
 	 * @param bucketName 桶名称
-	 * @return 输入流，直接复制给响应体就可以了
+	 * @return 输入流, 直接复制给响应体就可以了
 	 * @throws MinioException 获取失败，文件可能不存在
 	 */
 	InputStream download(String filePath, String bucketName) throws MinioException;

@@ -31,7 +31,7 @@ public class OBSServiceImpl implements OBSService {
     public String upload(InputStream inputStream, String fileName, String bucketName) throws ObsException, NoSuchAlgorithmException, IOException {
         ObsClient obsClient = null;
 
-        try {
+        try (inputStream) {
             // 如果 fileName 为 null，基于文件内容生成文件名
             byte[] fileBytes = getBytesFromInputStream(inputStream); // 获取 InputStream 的字节数组
             if (fileName == null) {
