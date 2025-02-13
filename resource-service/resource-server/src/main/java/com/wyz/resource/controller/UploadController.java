@@ -17,7 +17,7 @@ import java.io.IOException;
 
 /**
  * 上传图片相关接口
- * TODO 上传相关
+ * Minio存储图片, 云存储头像
  */
 @Slf4j
 @RestController
