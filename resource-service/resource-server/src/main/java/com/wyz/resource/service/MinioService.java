@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * TODO Minio服务接口
+ * Minio服务接口
  */
 public interface MinioService {
 
