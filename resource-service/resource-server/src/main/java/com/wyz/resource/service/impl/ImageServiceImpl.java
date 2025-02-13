@@ -10,7 +10,7 @@ import com.wyz.resource.mapper.ImageMapper;
 import com.wyz.resource.pojo.Image;
 import com.wyz.resource.service.ImageService;
 import com.wyz.resource.service.MinioService;
-import com.wyz.resource.service.QiNiuService;
+import com.wyz.resource.service.OBSService;
 import io.minio.errors.MinioException;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,14 +37,14 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image> implements
 	private MinioService minioService;
 
 	@Resource
-	private QiNiuService qiNiuService;
+	private OBSService obsService;
 
 	@Resource
 	private ImageMapper imageMapper;
 
 	@Override
 	public void getAvatarImage(String file, HttpServletResponse response) {
-		// todo 这里做一个可以减小尺寸的
+		// TODO 这里做一个可以减小尺寸的
 		getImage(file, "avatar", response);
 	}
 
@@ -78,7 +78,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image> implements
 	public String uploadAvatar(MultipartFile image, String name) {
 		try {
 			// 上传图片
-			return qiNiuService.upload(image, name, "scblogs-avatar");
+			return obsService.upload(image, name, "scblogs-avatar");
 		} catch (Exception e) {
 			log.error("头像上传失败:{},{}", name, e.getMessage());
 			throw new UploadException("头像上传失败");
