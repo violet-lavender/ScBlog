@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * OBS服务接口
+ */
 public interface OBSService {
 
     /**
