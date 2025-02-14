@@ -11,6 +11,7 @@ import com.wyz.blog.type.BlogStatusType;
 import com.wyz.common.exception.BusinessException;
 import com.wyz.common.exception.MapperException;
 import com.wyz.common.result.RestResult;
+import com.wyz.resource.client.ResourceClient;
 import com.wyz.resource.utils.FileUtils;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;

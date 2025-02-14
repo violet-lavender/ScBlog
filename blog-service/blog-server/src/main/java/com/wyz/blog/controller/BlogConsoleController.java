@@ -14,6 +14,7 @@ import com.wyz.blog.type.BlogStatusType;
 import com.wyz.common.exception.BusinessException;
 import com.wyz.common.result.RestResult;
 import com.wyz.common.web.auth.AuthHelper;
+import com.wyz.resource.type.FileType;
 import com.wyz.resource.utils.FileUtils;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
