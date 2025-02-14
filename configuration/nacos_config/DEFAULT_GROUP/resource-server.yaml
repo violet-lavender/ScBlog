@@ -3,26 +3,26 @@ spring:
     druid:
       url: jdbc:mysql://8.140.235.93:3306/resource?serverTimezone=Asia/Shanghai
       username: root
-      password: 021415
+      password: '021415'
       driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
-    host: xxxx
-    username: xxxx
-    password: xxxx
-    port: xxxx
+    host: smtp.qq.com
+    username: 1758083359@qq.com
+    password: szwrwhdxrfvkbgce  # qq邮箱授权码
+    port: 465
 
 minio:
-  url: http://127.0.0.1:59000
+  url: http://192.168.236.134:9000
   username: root
-  password: root
+  password: 'yqy021415'
 
 resource:
   path:
-    avatar-bucket: avatar
+    avatar-bucket: scblogs-avatar
     image-bucket: image
-    image-url-base: http://image.scblogs.cn/
+    image-url-base: http://192.168.236.134:9000/image/
 
-qiniu:
-  access-key: xxxx
-  secret-key: xxxx
-  prefix-url: xxxx
+obs:
+  access-key-id: ${OBS_ACCESS_KEY_ID}
+  access-key-secret: ${OBS_SECRET_ACCESS_KEY_ID}
+  endpoint: https://obs.cn-north-4.myhuaweicloud.com
