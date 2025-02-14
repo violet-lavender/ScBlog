@@ -44,8 +44,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image> implements
 
 	@Override
 	public void getAvatarImage(String file, HttpServletResponse response) {
-		// TODO 这里做一个可以减小尺寸的
-		getImage(file, "avatar", response);
+		getImage(file, "scblogs-avatar", response);
 	}
 
 	@Override
