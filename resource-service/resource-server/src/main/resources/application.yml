@@ -17,7 +17,6 @@ spring:
     properties:
       mail:
         #  debug: true # 开启发送邮件debug模式
-        # TODO 邮箱配置相关
         smtp:
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
