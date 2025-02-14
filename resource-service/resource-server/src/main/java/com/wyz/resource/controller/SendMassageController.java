@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 邮件信息发送控制器
+ * 允许外部应用或用户通过 HTTP 请求的方式触发邮件发送的操作. 用于用户注册、找回密码、系统通知等场景.
  */
 @Slf4j
 @RestController
