@@ -106,6 +106,13 @@
             <artifactId>gson</artifactId>
         </dependency>
 
+        <!-- 华为云OBS -->
+        <dependency>
+            <groupId>com.huaweicloud</groupId>
+            <artifactId>esdk-obs-java-bundle</artifactId>
+            <version>3.23.9</version>
+        </dependency>
+
         <!-- 发送邮件的依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
