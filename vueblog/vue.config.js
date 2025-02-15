@@ -1,22 +1,23 @@
 const {defineConfig} = require('@vue/cli-service')
-module.exports = defineConfig({
-	transpileDependencies: true
-})
 const webpack = require("webpack")
-module.exports = {
-	// publicPath:"./",
-	// devServer: {
-	//   proxy: {
-	//     '/api': {
-	//       target:'http://172.16.40.214',
-	//       // target: 'https://api.scblogs.cn/v1',// 后端接口
-	//       changeOrigin: true, // 是否跨域
-	//       pathRewrite: {
-	//         '/api': ''
-	//       }
-	//     }
-	//   }
-	// },
+
+module.exports = defineConfig({
+	transpileDependencies: true,
+	publicPath: "./",
+
+	devServer: {
+		port: 80, // 端口号
+
+		proxy: {
+			'/api': {
+				target: 'http://localhost:8081', // 后端接口(gateway端口号)
+				changeOrigin: true, // 是否跨域
+				pathRewrite: {
+					'^/api': ''
+				},
+			},
+		},
+	},
 
 	configureWebpack: {
 		externals: {
@@ -30,4 +31,4 @@ module.exports = {
 			'vue-router': 'VueRouter',
 		}
 	},
-}
+});
