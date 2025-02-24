@@ -3,7 +3,7 @@ const webpack = require("webpack")
 
 module.exports = defineConfig({
 	transpileDependencies: true,
-	publicPath: "./",
+	publicPath: "/",
 
 	devServer: {
 		port: process.env.VUE_APP_PORT, // 端口号

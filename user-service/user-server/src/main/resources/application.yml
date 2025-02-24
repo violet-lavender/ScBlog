@@ -1,6 +1,5 @@
 server:
   port: 8080
 
-# TODO 默认图像url
 user:
-  default-avatar: default_avatar.jpg # 注册时自动填充的头像文件名
+  default-avatar: https://scblogs-avatar.obs.cn-north-4.myhuaweicloud.com/%E5%B7%A5%E5%A4%A7.jpg # 注册时自动填充的头像文件名

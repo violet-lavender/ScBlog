@@ -31,14 +31,6 @@ create table `config`
   row_format = compact;
 
 -- ----------------------------
--- Records of config TODO : 配置信息相关
--- ----------------------------
-insert into `config`
-values (1, 'avatar_url', 'http://avatar.scblogs.cn/');
-insert into `config`
-values (2, 'test', 'test');
-
--- ----------------------------
 -- Table structure for user
 -- ----------------------------
 drop table if exists `user`;
@@ -58,14 +50,6 @@ create table `user`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of user
--- ----------------------------
-insert into `user`
-values (1, 'stick', 10001, '阿杆', '1_stick', '2022-04-13 22:09:32', 0);
-insert into `user`
-values (2, 'scblogs', 10001, '校园博客', 'default_avatar.jpg', '2022-07-03 22:32:42', 0);
 
 -- ----------------------------
 -- Table structure for user_basic
@@ -89,11 +73,6 @@ create table `user_basic`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of user_basic
--- ----------------------------
--- 暂无
 
 -- ----------------------------
 -- Table structure for user_education
@@ -121,11 +100,6 @@ create table `user_education`
   row_format = dynamic;
 
 -- ----------------------------
--- Records of user_education
--- ----------------------------
--- 暂无
-
--- ----------------------------
 -- Table structure for user_follow
 -- ----------------------------
 drop table if exists `user_follow`;
@@ -146,14 +120,6 @@ create table `user_follow`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of user_follow
--- ----------------------------
-insert into `user_follow`
-values (1, 1, 2, null, 1, '2022-05-13 12:38:10', 0);
-insert into `user_follow`
-values (2, 2, 1, null, 1, '2022-05-13 03:41:00', 0);
 
 -- ----------------------------
 -- Table structure for user_general
@@ -181,14 +147,6 @@ create table `user_general`
   row_format = dynamic;
 
 -- ----------------------------
--- Records of user_general
--- ----------------------------
-insert into `user_general`
-values (1, 1, 0, 0, 0, 0, 0, 0, null, null, 0);
-insert into `user_general`
-values (2, 2, 0, 0, 0, 0, 9, 0, null, null, 0);
-
--- ----------------------------
 -- Table structure for user_safety
 -- ----------------------------
 drop table if exists `user_safety`;
@@ -208,14 +166,6 @@ create table `user_safety`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of user_safety
--- ----------------------------
-insert into `user_safety`
-values (1, 'stick', '$2a$10$PDyiy9PeoTNn/Ad2VZmaeeVxoj1WhAlKV6AYEclcVtc4FnVSnHKEa', 'test1@qq.com', '111', 0);
-insert into `user_safety`
-values (2, 'scblogs', '$2a$10$PDyiy9PeoTNn/Ad2VZmaeeVxoj1WhAlKV6AYEclcVtc4FnVSnHKEa', 'test2@qq.com', '222', 0);
 
 -- ----------------------------
 -- View structure for user_view
@@ -273,24 +223,7 @@ from (`user_follow`
     left join `user_view` on ((`user_view`.`id` = `user_follow`.`follow_id`)))
 where (`user_follow`.`deleted` = 0);
 
-/* TODO : 外键相关 */
-set FOREIGN_KEY_CHECKS = 1;
 
-
-/*
- Create database `blog`
-
- Source Server         : scblogs
- Source Server Type    : MySQL
- Source Server Version : 50650
- Source Schema         : blog
-
- Target Server Type    : MySQL
- Target Server Version : 50650
- File Encoding         : 65001
-
- Date: 25/02/2023 15:11:40
-*/
 drop database if exists `blog`;
 create database `blog`;
 use `blog`;
@@ -509,10 +442,6 @@ create table `blog_set_tag`
   row_format = dynamic;
 
 -- ----------------------------
--- Records of blog_set_tag
--- ----------------------------
-
--- ----------------------------
 -- Table structure for collect_blog
 -- ----------------------------
 drop table if exists `collect_blog`;
@@ -550,10 +479,6 @@ create table `column`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = compact;
-
--- ----------------------------
--- Records of column
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for config
@@ -625,10 +550,6 @@ create table `tag`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of tag
--- ----------------------------
 
 -- ----------------------------
 -- View structure for blog_view
@@ -788,6 +709,12 @@ insert into `university`
 values (6, '北京航空航天大学', 4111010006, 10006, 1, 1, null);
 insert into `university`
 values (7, '北京理工大学', 4111010007, 10007, 1, 1, null);
+insert into `university`
+values (8, '哈尔滨工业大学(威海)', 4111010008, 19213, 1, 1, null);
+insert into `university`
+values (9, '哈尔滨工业大学', 4111010009, 10213, 1, 1, null);
+insert into `university`
+values (10, '哈尔滨工业大学(深圳)', 4111010010, 18213, 1, 1, null);
 
 -- ----------------------------
 -- Table structure for visit_log
