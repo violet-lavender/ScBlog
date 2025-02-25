@@ -2,4 +2,4 @@ server:
   port: 8080
 
 user:
-  default-avatar: https://scblogs-avatar.obs.cn-north-4.myhuaweicloud.com/%E5%B7%A5%E5%A4%A7.jpg # 注册时自动填充的头像文件名
+  default-avatar: default_avatar.jpg # 注册时自动填充的头像文件名

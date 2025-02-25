@@ -23,7 +23,7 @@
                             </div>
                             <!-- 用户个性签名部分-->
                             <div class="personwrite">
-                                宁故中的扶手
+                                {{ userMessage.intro }}
                             </div>
                         </div>
                         <!-- 左部编辑，设置按钮 -->

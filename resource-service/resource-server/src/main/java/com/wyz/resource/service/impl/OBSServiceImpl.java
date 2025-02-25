@@ -34,6 +34,7 @@ public class OBSServiceImpl implements OBSService {
         try (inputStream) {
             // 如果 fileName 为 null，基于文件内容生成文件名
             byte[] fileBytes = getBytesFromInputStream(inputStream); // 获取 InputStream 的字节数组
+            // 事实上, 这是完全冗余的判断操作, 不可能出现fileName为null的情况
             if (fileName == null) {
                 fileName = generateFileNameFromBytes(fileBytes); // 使用字节数组生成文件名
             }

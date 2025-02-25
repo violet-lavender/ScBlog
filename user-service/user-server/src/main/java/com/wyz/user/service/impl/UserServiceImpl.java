@@ -9,7 +9,6 @@ import com.wyz.common.tool.utils.RandomUtils;
 import com.wyz.resource.client.MessageClient;
 import com.wyz.resource.client.ResourceClient;
 import com.wyz.resource.client.pojo.MailDTO;
-import com.wyz.user.config.UserConfig;
 import com.wyz.user.mapper.UserGeneralMapper;
 import com.wyz.user.mapper.UserMapper;
 import com.wyz.user.mapper.UserSafetyMapper;
@@ -215,14 +214,15 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
     @Override
     public String updateAvatar(Integer id, MultipartFile avatarFile) {
         log.debug("updateAvatar,id->{}, fileName->{}", id, avatarFile.getOriginalFilename());
-        // 默认头像才需要更新数据库，非默认头像无需更新数据库
+        // 获取用户信息
         User user = userMapper.selectById(id);
-        if (UserConfig.DefaultAvatar.equals(user.getAvatarUrl())) {
-            // 拼接文件名的字符串，使用 userid+username 的格式来命名文件
-            user.setAvatarUrl(user.getId() + "_" + user.getUsername());
-            objectRedisTemplate.delete(USER_SERVICE_INFO_KEY + id);
-            userMapper.updateById(user);
-        }
+        // 提取文件的拓展名
+        String originalFilename = avatarFile.getOriginalFilename();
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        // 每次更新数据库, 生成新的文件名, 使用 userid+username+文件拓展名的格式来命名文件
+        user.setAvatarUrl(user.getId() + "_" + user.getUsername() + fileExtension);
+        objectRedisTemplate.delete(USER_SERVICE_INFO_KEY + id);
+        userMapper.updateById(user);
         RestResult<String> result = resourceClient.uploadAvatarImage(avatarFile, user.getAvatarUrl());
         return result.getStatus() ? result.getData() : null;
     }

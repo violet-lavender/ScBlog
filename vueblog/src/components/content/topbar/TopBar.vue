@@ -105,7 +105,7 @@
 										<el-button size="mini" type="text" @click="Cancel()">取消</el-button>
 										<el-button type="primary" size="mini" @click="ChangeSchool()">确定</el-button>
 									</div>
-									<el-text slot="reference">长沙大学</el-text>
+									<el-text slot="reference">哈尔滨工业大学(威海)</el-text>
 								</el-popover>
 								<!-- 资源分享 -->
 							</a>
