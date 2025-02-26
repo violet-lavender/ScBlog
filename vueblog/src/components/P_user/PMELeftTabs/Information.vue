@@ -35,7 +35,7 @@
                 </div>
               </li>
               <li><span>用户ID：{{this.$parent.userMessage.username}}</span></li>
-              <li><span>个人简介：这个人很懒，什么都没有留下</span></li>
+              <li><span>个人简介：{{this.$parent.userMessage.intro}}</span></li>
             </ul>
           </div>
         </div>

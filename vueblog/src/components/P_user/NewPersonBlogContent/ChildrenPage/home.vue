@@ -28,9 +28,9 @@
 			@infinite="infiniteHandler"
 			:distance="200"
 			class="infinite-loading-wrap">
-			<div slot="spinner">别催，正在加载中，等会儿！</div>
-			<div slot="no-more">别划了，到底了^_^</div>
-			<div slot="no-results">看啥看，你啥都没写！</div>
+			<div slot="spinner">正在玩儿命加载中！！！</div>
+			<div slot="no-more">我们也是有底线的^_^</div>
+			<div slot="no-results">您目前还没有发布过博客哦，去创作中心试试吧！</div>
 			<div slot="error" slot-scope="{ trigger }">
 				Error Data, click <a href="javascript:;" @click="trigger">here</a> toretry
 			</div>

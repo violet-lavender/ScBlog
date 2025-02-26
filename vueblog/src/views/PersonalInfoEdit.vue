@@ -64,7 +64,7 @@ export default {
         username: "",
         nickname: "",
         // 默认获取的个人头像照片地址
-        avatarUrl: "https://scblogs-avatar.obs.cn-north-4.myhuaweicloud.com/%E5%98%9F.jpg",
+        avatarUrl: "https://scblogs-avatar.obs.cn-north-4.myhuaweicloud.com/default_avatar.jpg",
         registerTime: ""
       },
       config: {

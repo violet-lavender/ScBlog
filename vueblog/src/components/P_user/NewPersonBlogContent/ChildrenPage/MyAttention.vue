@@ -4,7 +4,7 @@
         <div class="mytext">
             我的关注
         </div>
-		<div v-if="noattentiontip" class="noattention">你还没有关注哦，</div>
+		<div v-if="noattentiontip" class="noattention">您当前还没有关注哦！</div>
         <div class="attention" v-for="(item) in AttentionList" :key="item.followId">
             <div class="img">
                 <img :src="item.avatarUrl" alt="">

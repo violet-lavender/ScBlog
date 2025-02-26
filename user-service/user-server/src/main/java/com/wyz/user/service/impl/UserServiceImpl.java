@@ -54,6 +54,9 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
     private UserSafetyMapper userSafetyMapper;
 
     @Resource
+    private UserViewMapper userViewMapper;
+
+    @Resource
     private PasswordEncoder passwordEncoder;
 
     @Resource
@@ -75,17 +78,20 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
      * @return 用户信息
      */
     @Override
-    public User getById(Integer id) {
+    public UserView getById(Integer id) {
         // 1. 构造redis key
         String key = USER_SERVICE_INFO_KEY + id;
         // 2. 尝试从redis获取
-        User user = (User) objectRedisTemplate.opsForValue().get(key);
+        UserView user = (UserView) objectRedisTemplate.opsForValue().get(key);
         if (user != null) {
+            System.out.println("从redis获取用户信息");
+            System.out.println(user);
             // 3. 存在，直接返回
             return user;
         }
         // 4. 不存在，查数据库
-        user = super.getById(id);
+        user = userViewMapper.getById(id);
+        System.out.println(user);
         if (user != null) {
             // 4.1 查询成功，存入redis
             objectRedisTemplate.opsForValue().set(key, user, USER_SERVICE_INFO_TTL, TimeUnit.SECONDS);
@@ -101,7 +107,7 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
      * @return 用户信息
      */
     @Override
-    public UserView getByUsername(String username) {
+    public User getByUsername(String username) {
         return lambdaQuery().eq(UserView::getUsername, username).one();
     }
 

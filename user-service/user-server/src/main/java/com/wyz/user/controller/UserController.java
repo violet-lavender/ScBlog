@@ -5,7 +5,6 @@ import com.wyz.common.web.anno.RequestLimit;
 import com.wyz.common.web.auth.AuthHelper;
 import com.wyz.resource.type.FileType;
 import com.wyz.resource.utils.FileUtils;
-import com.wyz.user.pojo.User;
 import com.wyz.user.pojo.UserGeneral;
 import com.wyz.user.pojo.UserView;
 import com.wyz.user.service.UserService;
@@ -39,7 +38,7 @@ public class UserController {
      */
     @GetMapping
     @RequestLimit
-    public User getByUserId(Integer id) {
+    public UserView getByUserId(Integer id) {
         Integer getId = null;
         Integer userId = AuthHelper.getCurrentUserId();
         if (id == null && userId != null) {

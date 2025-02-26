@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div ref="writeBlog" class="writeBlog">
-                        <div>这里啥也没有啊</div>
+                        <div>您还没有发布任何博客哦，去创作中心试试吧！</div>
                         <button @click="TurnToWriteBlog">写博客</button>
                     </div>
                     <div ref="noneSearch" class="nonesearch">

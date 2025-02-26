@@ -1,9 +1,9 @@
 package com.wyz.user.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.wyz.user.pojo.User;
 import com.wyz.user.pojo.UserGeneral;
 import com.wyz.user.pojo.UserView;
-import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface UserService extends IService<UserView> {
 	 * @param id 用户id
 	 * @return 用户信息
 	 */
-	User getById(Integer id);
+	UserView getById(Integer id);
 
 	/**
 	 * 根据用户名获取用户信息

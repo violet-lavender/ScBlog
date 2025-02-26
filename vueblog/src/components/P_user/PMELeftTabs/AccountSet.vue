@@ -22,8 +22,8 @@
                     <div class="e-mail">
                         <div class="text">邮箱</div>
                         <div class="right">
-                            <span>{{}}</span>
-                            <span>绑定邮箱</span>
+                            <span>{{ this.$parent.userMessage.mail }}</span>
+                            <span>修改邮箱</span>
                         </div>
                     </div>
                 </li>
@@ -69,7 +69,7 @@
                     <el-button @click="resetForm('ruleForm2')">重置</el-button>
                 </el-form-item>
                </el-form>
-               <div class="errorTip" v-if="tipSeen">你小子原密码输入错了,是不是想盗号,报警抓你丫的</div>
+               <div class="errorTip" v-if="tipSeen">密码输入错误,请重试</div>
           </div>
       </div>
   </div>
@@ -81,7 +81,7 @@
               <span  >修改密码</span>
           </div>
           <div class="deleteaccountA">
-                你惨了放学别走！有种填密码
+                确定注销吗？该行为无法撤销，请谨慎操作！
           </div>
 
           <div class="button">
@@ -98,8 +98,8 @@
                     <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="DeleteTrue('ruleForm2')">我就删,咋滴</el-button>
-                    <el-button @click="resetForm('ruleForm2')">大哥我错了</el-button>
+                    <el-button type="primary" @click="DeleteTrue('ruleForm2')">狠心注销</el-button>
+                    <el-button @click="resetForm('ruleForm2')">取消注销</el-button>
                 </el-form-item>
                </el-form>
           </div>

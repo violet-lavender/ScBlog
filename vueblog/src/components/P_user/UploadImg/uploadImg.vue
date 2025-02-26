@@ -29,7 +29,7 @@ export default {
     return {
       limit: 1,		   // 最大上传数量
       fileSize: 5,	   // 上传图片的最大限制（MB）
-      uploadImgUrl: 'https://local.sticki.cn/api/v1/user/avatar'  , // 上传图片的接口地址
+      uploadImgUrl: 'https://localhost:8081/user/avatar'  , // 上传图片的接口地址
       fileType: ["png", "jpg", "jpeg"], // 上传类型
       fileList:[],
       autoUpload:false,

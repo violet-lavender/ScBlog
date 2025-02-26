@@ -52,7 +52,7 @@
                         </ul>
                     </div>
                 </div>
-				<div v-if="nodynamictip" class="nodynamic">当前你还没有动态发布过哦！</div>
+				<div v-if="nodynamictip" class="nodynamic">您当前还没有发布过动态哦！</div>
             </div>
         </div>
   </div>
