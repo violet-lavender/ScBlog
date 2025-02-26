@@ -79,7 +79,7 @@ export default {
           username:"",
           nickname:"",
           // 获取的个人头像照片地址
-          avatarUrl:"https://profile.csdnimg.cn/2/8/8/1_qq_55817438",
+        avatarUrl:"https://scblogs-avatar.obs.cn-north-4.myhuaweicloud.com/default_avatar.jpg",
           registerTime:""
       },
       config:{

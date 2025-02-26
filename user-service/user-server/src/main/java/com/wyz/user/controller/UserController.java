@@ -94,6 +94,20 @@ public class UserController {
     }
 
     /**
+     * 修改简介
+     *
+     * @param intro 简介
+     */
+    @PutMapping("/intro")
+    public RestResult<Object> updateIntro(@NotNull String intro) {
+        Integer userId = AuthHelper.getCurrentUserIdOrExit();
+        if (userService.updateIntro(userId, intro)) {
+            return RestResult.ok();
+        }
+        return RestResult.fail();
+    }
+
+    /**
      * 修改头像
      *
      * @param avatarFile 文件流

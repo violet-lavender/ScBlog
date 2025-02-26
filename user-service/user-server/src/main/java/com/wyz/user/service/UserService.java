@@ -109,6 +109,15 @@ public interface UserService extends IService<UserView> {
 	boolean updateSchoolCode(Integer id, Integer schoolCode);
 
 	/**
+	 * 更新用户的个人简介
+	 *
+	 * @param id    用户id
+	 * @param intro 用户简介
+	 * @return 是否更新成功
+	 */
+	boolean updateIntro(Integer id, String intro);
+
+	/**
 	 * 更新用户邮箱
 	 *
 	 * @param id   用户id

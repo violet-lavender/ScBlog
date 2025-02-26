@@ -12,9 +12,14 @@ import java.sql.Timestamp;
 public class UserBasic {
 
     /**
-     * 用户名
+     * 用户id
      */
     @TableId
+    Integer userId;
+
+    /**
+     * 用户名
+     */
     String username;
 
     /**

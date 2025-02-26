@@ -9,14 +9,8 @@ import com.wyz.common.tool.utils.RandomUtils;
 import com.wyz.resource.client.MessageClient;
 import com.wyz.resource.client.ResourceClient;
 import com.wyz.resource.client.pojo.MailDTO;
-import com.wyz.user.mapper.UserGeneralMapper;
-import com.wyz.user.mapper.UserMapper;
-import com.wyz.user.mapper.UserSafetyMapper;
-import com.wyz.user.mapper.UserViewMapper;
-import com.wyz.user.pojo.User;
-import com.wyz.user.pojo.UserGeneral;
-import com.wyz.user.pojo.UserSafety;
-import com.wyz.user.pojo.UserView;
+import com.wyz.user.mapper.*;
+import com.wyz.user.pojo.*;
 import com.wyz.user.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -55,6 +49,9 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
 
     @Resource
     private UserViewMapper userViewMapper;
+
+    @Resource
+    private UserBasicMapper userBasicMapper;
 
     @Resource
     private PasswordEncoder passwordEncoder;
@@ -177,8 +174,8 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
     public boolean removeById(Integer id) {
         // 由于user表当中username字段为唯一索引，且该项目使用了逻辑删除
         // 所以我重写了userMapper的deleteById方法，将deleted字段值修改为id
-        // user_safety也是一样
-        if (userSafetyMapper.deleteById(id) == 1 && userMapper.deleteById(id) == 1) {
+        // user_safety、user_basic也是一样
+        if (userSafetyMapper.deleteById(id) == 1 && userMapper.deleteById(id) == 1 && userBasicMapper.deleteById(id) == 1) {
             return true;
         }
         throw new MapperException("删除失败", "remove by id error,id->" + id);
@@ -247,6 +244,22 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
         user.setNickname(nickname);
         objectRedisTemplate.delete(USER_SERVICE_INFO_KEY + id);
         return userMapper.updateById(user) == 1;
+    }
+
+    /**
+     * 更新用户简介
+     *
+     * @param id    用户id
+     * @param intro 用户简介
+     * @return 是否更新成功
+     */
+    @Override
+    public boolean updateIntro(Integer id, String intro) {
+        UserBasic userBasic = new UserBasic();
+        userBasic.setUserId(id);
+        userBasic.setIntro(intro);
+        objectRedisTemplate.delete(USER_SERVICE_INFO_KEY + id);
+        return userBasicMapper.updateById(userBasic) == 1;
     }
 
     /**

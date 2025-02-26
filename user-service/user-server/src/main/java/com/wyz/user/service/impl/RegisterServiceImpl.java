@@ -8,13 +8,11 @@ import com.wyz.common.tool.utils.RandomUtils;
 import com.wyz.resource.client.MessageClient;
 import com.wyz.resource.client.pojo.MailDTO;
 import com.wyz.user.config.UserConfig;
+import com.wyz.user.mapper.UserBasicMapper;
 import com.wyz.user.mapper.UserGeneralMapper;
 import com.wyz.user.mapper.UserMapper;
 import com.wyz.user.mapper.UserSafetyMapper;
-import com.wyz.user.pojo.User;
-import com.wyz.user.pojo.UserGeneral;
-import com.wyz.user.pojo.UserRegisterBO;
-import com.wyz.user.pojo.UserSafety;
+import com.wyz.user.pojo.*;
 import com.wyz.user.service.RegisterService;
 import com.wyz.user.service.UserService;
 import jakarta.annotation.Resource;
@@ -43,6 +41,9 @@ public class RegisterServiceImpl extends ServiceImpl<UserSafetyMapper, UserSafet
 
     @Resource
     private UserSafetyMapper userSafetyMapper;
+
+    @Resource
+    private UserBasicMapper userBasicMapper;
 
     @Resource
     private MessageClient messageClient;
@@ -145,7 +146,14 @@ public class RegisterServiceImpl extends ServiceImpl<UserSafetyMapper, UserSafet
         }
         // 6.从redis中删除验证码
         stringRedisTemplate.delete(REGISTER_MAIL_CODE_KEY + userRegisterBO.getMail());
-        // 7. 增加用户数据统计表数据
+        // 7. 增加用户基础信息表数据
+        UserBasic userBasic = new UserBasic();
+        userBasic.setUserId(user.getId());
+        userBasic.setUsername(user.getUsername());
+        userBasic.setNameModifyTime(user.getRegisterTime());
+        userBasic.setDeleted(0);
+        userBasicMapper.insert(userBasic);
+        // 8. 增加用户数据统计表数据
         UserGeneral userGeneral = new UserGeneral();
         userGeneral.setUserId(user.getId());
         if (userGeneralMapper.insert(userGeneral) != 1) {
