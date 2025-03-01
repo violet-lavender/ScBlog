@@ -5,8 +5,11 @@ spring:
   cloud:
     gateway:
       httpclient:
-        connect-timeout: 1000
-        response-timeout: 5s
+        connect-timeout: 5000    # 连接超时时间
+        response-timeout: 60s    # 响应超时时间
+        pool:
+          type: ELASTIC    # 使用ELASTIC连接池, 避免频繁创建连接
+          max-connections: 500  # 最大连接数
       routes:
         # 用户服务
         - id: user-server # 路由标识, 必须唯一
