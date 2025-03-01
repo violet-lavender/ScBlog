@@ -171,11 +171,13 @@ public class UserController {
 
     /**
      * 发送邮箱验证码
+     *
+     * @param mail 新邮箱
      */
     @PostMapping("/mail/send-mail-verify")
-    public Boolean sendMailVerifyForUpdateMail() {
+    public Boolean sendMailVerifyForUpdateMail(@NotNull String mail) {
         Integer id = AuthHelper.getCurrentUserIdOrExit();
-        return userService.sendMailVerify(id);
+        return userService.sendMailVerify(id, mail);
     }
 
     /**

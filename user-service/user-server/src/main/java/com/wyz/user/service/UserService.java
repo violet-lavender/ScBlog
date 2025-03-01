@@ -129,10 +129,11 @@ public interface UserService extends IService<UserView> {
 	/**
 	 * 发送邮箱验证码
 	 *
-	 * @param id 用户id
+	 * @param id   用户id
+	 * @param mail 新邮箱
 	 * @return 是否发送成功
 	 */
-	boolean sendMailVerify(Integer id);
+	boolean sendMailVerify(Integer id, String mail);
 
 	/**
 	 * 检查验证码

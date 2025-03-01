@@ -294,11 +294,12 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
     /**
      * 发送邮箱验证码
      *
-     * @param id 用户id
+     * @param id   用户id
+     * @param mail 新邮箱
      * @return 是否发送成功
      */
     @Override
-    public boolean sendMailVerify(Integer id) {
+    public boolean sendMailVerify(Integer id, String mail) {
         // 0. 构造redis key
         String key = USER_SERVICE_MAIL_CODE_KEY + id;
         // 1. 查询当前用户的最近发送记录，通过ttl判断
@@ -309,14 +310,11 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
             // 1.1 若时间不为空且未超过固定的时间间隔，则不允许发送
             throw new BusinessException("发送频繁");
         }
-        // 2 若为空或已经超过固定的时间间隔，则允许发送
-        // 2.1 查询用户的邮箱
-        UserSafety userSafety = userSafetyMapper.selectById(id);
-        // 2.2 生成验证码，并构造发送邮件类型
+        // 2 若为空或已经超过固定的时间间隔，则允许发送。生成验证码，并构造发送邮件类型
         String code = RandomUtils.generator(6);
         MailDTO mailDTO = new MailDTO();
         mailDTO.setFrom("校园博客");
-        mailDTO.setTo(userSafety.getMail());
+        mailDTO.setTo(mail);
         mailDTO.setSubject("校园博客验证码");
         mailDTO.setText("亲爱的用户：\n" + "你正在操作你的账户信息，你的邮箱验证码为：" + code + "，此验证码有效时长5分钟，请勿转发他人。");
         // 3. 将验证码保存到redis
