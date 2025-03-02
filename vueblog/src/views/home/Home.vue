@@ -5,14 +5,12 @@
 
 			<div class="main-container">
 				<div class="grid-content">
-					<Swiper class="swiper"/>
+					<Swiper class="swiper" />
 					<div class="main-right-item" v-for="(item, index) in mainRightBlogList" :key="index">
-						<router-link
-							:to="{ name: 'BlogDetail', params: { blogId: item.id } }"
-							target="_blank"
-						>
+						<router-link :to="{ name: 'BlogDetail', params: { blogId: item.id } }" target="_blank">
 							<div class="item-img">
-								<img :src="item.coverImage?item.coverImage:require('../../assets/img/home/003.jpg')" alt=""/>
+								<img :src="item.coverImage ? item.coverImage : require('../../assets/img/home/003.jpg')"
+									alt="" />
 							</div>
 							<div class="item-title">
 								{{ item.title }}
@@ -37,80 +35,16 @@
 				<div class="tabs">
 					<el-tabs v-model="activeName" @tab-click="handleClick">
 						<el-tab-pane label="关注" name="first">
-							<FollowArticleItem/>
+							<FollowArticleItem />
 						</el-tab-pane>
 						<el-tab-pane label="推荐" name="second">
-							<RecommendArticleItem style="margin-top: 2px"/>
+							<RecommendArticleItem style="margin-top: 2px" />
 						</el-tab-pane>
 						<el-tab-pane label="最新" name="third">
-							<NewArticleItem/>
+							<NewArticleItem />
 						</el-tab-pane>
 						<!--            <el-tab-pane label="热榜" name="fourth">热榜</el-tab-pane>-->
 					</el-tabs>
-				</div>
-			</div>
-
-			<!-- 右边-->
-			<div class="article-right">
-				<!--        关于我们-->
-				<div class="template">
-					<div class="template-title">
-						<span>关于我们</span>
-					</div>
-					<div class="template-cont">
-						<div class="hot1">
-							<div class="our-content">
-								<div>
-									<div style="display: flex;justify-content: center;margin-bottom: 10px">
-										<a target="_blank" href="https://github.com/stick-i/scblogs"
-											 style="color:#555666;">GitHub地址&nbsp;</a>
-										|
-										<a target="_blank" href="https://gitee.com/sticki/scblogs"
-											 style="color:#555666;">&nbsp;Gitee地址</a>
-									</div>
-									<a target="_blank" href="https://beian.miit.gov.cn/" style="
-												display:flex;
-												justify-content: center;
-                        height: 20px;
-                        line-height: 20px;
-                        color: #939393;
-                        margin-bottom: 10px
-                      ">湘ICP备2021015916号-2</a>
-									<a
-										target="_blank"
-										href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43010502001444"
-										style="
-                      display: flex;
-                      justify-content: center;
-                      text-decoration: none;
-                      height: 20px;
-                      line-height: 20px;
-                      margin-bottom: 10px
-                    "
-									>
-										<img
-											src="../../assets/img/home/备案图标.png"
-											style="
-                        width: 20px;
-                        height: 20px;
-                        line-height: 20px;
-                      "
-										/>
-										<p
-											style="
-                        height: 20px;
-                        line-height: 20px;
-                        margin: 0px 0px 0px 5px;
-                        color: #939393;
-                      "
-										>
-											湘公网安备 43010502001444号
-										</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -150,7 +84,7 @@ export default {
 		getData() {
 			this.$axios
 				.get("/blog/list/recommend?page=" + this.page, {
-					headers: {token: localStorage.getItem("token")},
+					headers: { token: localStorage.getItem("token") },
 				})
 				.then((res) => {
 					if (res.data.data.records.length) {

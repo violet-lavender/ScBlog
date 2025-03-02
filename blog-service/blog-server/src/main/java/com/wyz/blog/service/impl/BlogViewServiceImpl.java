@@ -124,12 +124,12 @@ public class BlogViewServiceImpl extends ServiceImpl<BlogViewMapper, BlogView> i
 		if (blogIds.length == 0) {
 			return map;
 		}
-		Map<Integer, Integer> likeMap = likeBlogMapper.selectMapByUserIdAndBlogIdList(userId, blogIds);
-		Map<Integer, Integer> collectMap = collectBlogMapper.selectMapByUserIdAndBlogIdList(userId, blogIds);
+		Set<Integer> likeBlogIds = likeBlogMapper.selectMapByUserIdAndBlogIdList(userId, blogIds);
+		Set<Integer> collectBlogIds = collectBlogMapper.selectMapByUserIdAndBlogIdList(userId, blogIds);
 		for (Integer blogId : blogIds) {
 			ActionStatusBO statusDTO = new ActionStatusBO();
-			statusDTO.setIsLike(likeMap.containsKey(blogId));
-			statusDTO.setIsCollect(collectMap.containsKey(blogId));
+			statusDTO.setIsLike(likeBlogIds.contains(blogId));
+			statusDTO.setIsCollect(collectBlogIds.contains(blogId));
 			map.put(blogId, statusDTO);
 		}
 		return map;
