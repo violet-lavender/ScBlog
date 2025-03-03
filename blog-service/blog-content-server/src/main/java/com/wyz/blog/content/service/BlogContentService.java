@@ -4,9 +4,7 @@ import com.wyz.blog.content.pojo.BlogListVO;
 import com.wyz.blog.content.pojo.SearchQuery;
 
 /**
- * @author 阿杆
- * @version 1.0
- * @date 2022/7/8 17:39
+ * 博客内容服务接口
  */
 public interface BlogContentService {
 
