@@ -28,7 +28,7 @@
         width: 100%;
         height: calc(100vh - 48px);
         /*background-color: skyblue;*/
-        background: url("../../assets/img/cool-background02.png");
+        background: url("../../assets/img/cool-background02.jpg");
         background-size: cover;
     }
     .register-login-box {
