@@ -7,7 +7,7 @@
         <div class="so-toolbar">
           <div class="toolbar-main">
             <div class="search-box">
-              <input type="text" placeholder="vue的常用指令" v-model="key" />
+              <input type="text" placeholder="vue常用指令" v-model="key" />
               <button id="search" @click="searchBlogs">搜索</button>
             </div>
           </div>
@@ -35,7 +35,6 @@
               </li>
             </ul>
           </div>
-          <div class="box">关于我们-{{ key }}</div>
         </div>
       </div>
     </div>
@@ -87,7 +86,7 @@ export default {
       this.$store.commit("copySearchKey", this.key);
       sessionStorage.setItem("store", JSON.stringify(this.$store.state));
 
-      this.$axios.get("/blog/search?key=" + this.key).then((res) => {
+      this.$axios.get("/blog/content/search?key=" + this.key).then((res) => {
         console.log("加载后再次点击搜索", res);
         this.blogSearchList = res.data.data;
       });
