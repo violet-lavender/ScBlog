@@ -10,6 +10,11 @@ spring:
     username: 1758083359@qq.com
     password: szwrwhdxrfvkbgce  # qq邮箱授权码
     port: 465
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8090
+      http-method-specify: true # 开启请求方式前缀
 
 minio:
   url: http://192.168.236.134:9000
