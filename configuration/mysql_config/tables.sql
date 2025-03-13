@@ -223,6 +223,8 @@ from (`user_follow`
     left join `user_view` on ((`user_view`.`id` = `user_follow`.`follow_id`)))
 where (`user_follow`.`deleted` = 0);
 
+set FOREIGN_KEY_CHECKS = 1;
+
 
 drop database if exists `blog`;
 create database `blog`;
@@ -259,46 +261,6 @@ create table `blog`
   row_format = dynamic;
 
 -- ----------------------------
--- Records of blog
--- ----------------------------
-insert into `blog`
-values (1, 1, '这是一篇测试文章1', '这是一篇测试文章1', null, null, null, 1, 2, '2022-11-29 23:13:17',
-        '2022-11-29 23:13:16', 0);
-insert into `blog`
-values (2, 2, '这是一篇测试文章2', '这是一篇测试文章2', null, null, '2022-11-29 23:15:11', 1, 1, '2022-11-29 23:15:11',
-        '2022-11-29 23:15:11', 0);
-insert into `blog`
-values (3, 2, '基于Spring-Data-Elasticsearch 优雅的实现 多字段搜索 + 高亮 + 分页 + 数据同步 功能',
-        '技术要点\r\n1. 使用 *copyTo* 和  *ElasticsearchRepository* 完成的多字段搜索。\r\n2. 使用注解 *@Highlight* 和 *@HighlightField* 完成的高亮显示。\r\n3. 使用 *Pageable* 和 *SearchPage* 实现分页和高亮两不误的接口。\r\n4. 使用 *RabbitMQ* 完成 *MySQL* 和 *elasticsearch* 的数据同步。......',
-        null, '7eaec2ec52592cd860526fb5469c9d58', '2022-07-13 11:09:08', 1, 1, '2022-07-13 11:09:08',
-        '2023-01-13 15:25:08', 0);
-insert into `blog`
-values (4, 1, 'SpringCloud Fegin CircuitBreaker (原hystrix) 失效原因 —— 版本3.1.2',
-        '今天想着给自己的微服务项目添加一个的功能，正好项目内远程调用是用的feign，那就直接用hystrix好了，也比较方便。然后呢，我以为比较简单的东西，却一直不生效，资料查了个遍，硬是弄了我一上午+一下午的时间，所以记录一下，给大家避坑。如果你的环境跟我差的有点多，那这篇文章可能对你的帮助不大。原因主要有二配置文件网上很多教程都是给的旧版本的配置文件，都是，但在新版本这是不生效的，正确的配置应该是下面我这样',
-        null, 'b2105bb92a220e1f26a1772ba8d674f0', '2022-07-14 11:16:54', 1, 1, '2022-07-14 11:16:54',
-        '2022-08-04 21:30:39', 0);
-insert into `blog`
-values (5, 1, 'MySQL占用内存过大解决方案',
-        '对于部分小资玩家来说，服务器数量和内存往往是很有限的，像我个人的服务器配置就是2核4G5M。4G内存对于Java玩家来说，真的不大，开几个中间件+自己的微服务真的还蛮挤的，然后又摊上MySQL这个大冤种。我本机上的MySQL仅仅只占几M内存（虽然我不怎么用，但是本机MySQL确实是开着的）：而服务器的则要占400M，怎么说其实没什么吞吐量，纯粹是自己玩一玩，这内存占用属实有点吃不消啊。。。了解到可以通过修改配置来减小MySQL的内存占用，便尝试了一下，并进行了记录。由于我同时有两台服务器，一台装的是',
-        null, '76ddaea9cd3b5f473712a3dc71381fe9', '2022-07-15 11:19:46', 1, 1, '2022-07-15 11:19:46',
-        '2022-07-15 11:19:46', 0);
-insert into `blog`
-values (6, 1, '记一次云服务器被密码爆破的经历——关小黑屋、改密码、改端口',
-        '当我登录时看到这条警告，我意识到我的服务器可能正在被爆破于是我马上通过指令  查询了登录失败的记录，输出结果令我大为震惊，大概刷新了五六秒？可能更多，登录记录显示，从本月的1号开始，到现在我写这篇博客，整整一个月，都一直有人在尝试登陆我的服务器。。。这些ip都是来自国外的，且攻击者目前还在尝试爆破，说明他可能还没有登录成功，于是我输入last指令，查看登录成功的ip：然后我把这些ip都查询了一遍，没有发现异常ip（这里都是我的ip，我就打码了）。到这，我暂时可以确定，攻击者还没有登录上我的服务器，那就不着',
-        null, '1b758ffa5893eb149b2b59fdb84de221', '2022-07-16 11:21:07', 1, 1, '2022-07-16 11:21:07',
-        '2022-07-16 11:21:07', 0);
-insert into `blog`
-values (7, 1, 'Postman 中级使用教程【环境变量、测试脚本、断言、接口文档等】',
-        'Postman\r\n首先介绍一个转中文版的方式，GitHub链接：https://github.com/hlmd/Postman-cn\r\n目录Postman前言环境变量新建环境变量切换环境变量接口关联编写测试脚本动态参数内置动态参数自定义动态参数获取全局变量的方式：断言MokeService编写接口文档保存测试示例结语\r\n前言\r\n本文为postman中级使用教程，适合有一定的postman基础的小伙伴阅读，如果没有使用过',
-        null, 'c6ef2efad320f2e4ab47aecb51f4c33e', '2022-07-17 11:22:54', 1, 1, '2022-07-17 11:22:54',
-        '2022-07-17 11:22:54', 0);
-insert into `blog`
-values (8, 1, 'SpringBoot配置SSL 坑点总结【密码验证失败、连接不安全】',
-        'SpringBoot配置SSL坑点总结，包括四种常见错误和不常见错误，导致出现 密码验证失败、网站不安全 的原因。', null,
-        '9db4a9b6f54fc771d8ac5f3e02401f98', '2022-07-18 11:24:12', 1, 1, '2022-07-18 11:24:12', '2022-07-18 11:24:12',
-        0);
-
--- ----------------------------
 -- Table structure for blog_content
 -- ----------------------------
 drop table if exists `blog_content`;
@@ -316,28 +278,6 @@ create table `blog_content`
   row_format = dynamic;
 
 -- ----------------------------
--- Records of blog_content
--- ----------------------------
-insert into `blog_content`
-values (1, '加粗文本 加粗文本\n\n==标记文本==\n\n~~删除文本~~\n', '2022-10-26 16:16:18', 0);
-insert into `blog_content`
-values (2,
-        '# 这是一篇测试文章\r\n## 这是一篇测试文章\r\n### 这是一篇测试文章\r\n::: hljs-right\r\n\r\n这是一篇测试文章这是一篇测试文章这是一篇测试文章这是一篇测试文章\r\n\r\n:::\r\n',
-        '2022-11-29 23:15:11', 0);
-insert into `blog_content`
-values (3, '加粗文本 加粗文本\n\n==标记文本==\n\n~~删除文本~~\n', '2022-10-26 16:16:18', 0);
-insert into `blog_content`
-values (4, '加粗文本 加粗文本\n\n==标记文本==\n\n~~删除文本~~\n', '2022-10-26 16:16:18', 0);
-insert into `blog_content`
-values (5, '加粗文本 加粗文本\n\n==标记文本==\n\n~~删除文本~~\n', '2022-10-26 16:16:18', 0);
-insert into `blog_content`
-values (6, '加粗文本 加粗文本\n\n==标记文本==\n\n~~删除文本~~\n', '2022-10-26 16:16:18', 0);
-insert into `blog_content`
-values (7, '加粗文本 加粗文本\n\n==标记文本==\n\n~~删除文本~~\n', '2022-10-26 16:16:18', 0);
-insert into `blog_content`
-values (8, '加粗文本 加粗文本\n\n==标记文本==\n\n~~删除文本~~\n', '2022-10-26 16:16:18', 0);
-
--- ----------------------------
 -- Table structure for blog_content_html
 -- ----------------------------
 drop table if exists `blog_content_html`;
@@ -353,35 +293,6 @@ create table `blog_content_html`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of blog_content_html
--- ----------------------------
-insert into `blog_content_html`
-values (1, '<p>加粗文本 加粗文本</p>\n<p><mark>标记文本</mark></p>\n<p><s>删除文本</s></p>\n', '2022-10-26 16:16:18',
-        0);
-insert into `blog_content_html`
-values (2,
-        '<h1><a id=\"_0\"></a>这是一篇测试文章</h1>\r\n<h2><a id=\"_1\"></a>这是一篇测试文章</h2>\r\n<h3><a id=\"_2\"></a>这是一篇测试文章</h3>\r\n<div class=\"hljs-right\">\r\n<p>这是一篇测试文章这是一篇测试文章这是一篇测试文章这是一篇测试文章</p>\r\n</div>\r\n',
-        '2022-11-29 23:15:11', 0);
-insert into `blog_content_html`
-values (3, '<p>加粗文本 加粗文本</p>\n<p><mark>标记文本</mark></p>\n<p><s>删除文本</s></p>\n', '2022-10-26 16:16:18',
-        0);
-insert into `blog_content_html`
-values (4, '<p>加粗文本 加粗文本</p>\n<p><mark>标记文本</mark></p>\n<p><s>删除文本</s></p>\n', '2022-10-26 16:16:18',
-        0);
-insert into `blog_content_html`
-values (5, '<p>加粗文本 加粗文本</p>\n<p><mark>标记文本</mark></p>\n<p><s>删除文本</s></p>\n', '2022-10-26 16:16:18',
-        0);
-insert into `blog_content_html`
-values (6, '<p>加粗文本 加粗文本</p>\n<p><mark>标记文本</mark></p>\n<p><s>删除文本</s></p>\n', '2022-10-26 16:16:18',
-        0);
-insert into `blog_content_html`
-values (7, '<p>加粗文本 加粗文本</p>\n<p><mark>标记文本</mark></p>\n<p><s>删除文本</s></p>\n', '2022-10-26 16:16:18',
-        0);
-insert into `blog_content_html`
-values (8, '<p>加粗文本 加粗文本</p>\n<p><mark>标记文本</mark></p>\n<p><s>删除文本</s></p>\n', '2022-10-26 16:16:18',
-        0);
 
 -- ----------------------------
 -- Table structure for blog_general
@@ -402,26 +313,6 @@ create table `blog_general`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of blog_general
--- ----------------------------
-insert into `blog_general`
-values (1, 0, 0, 0, 0, 30, 0);
-insert into `blog_general`
-values (2, 0, 0, 0, 0, 98, 0);
-insert into `blog_general`
-values (3, 0, 0, 0, 0, 102, 0);
-insert into `blog_general`
-values (4, 0, 0, 0, 0, 934, 0);
-insert into `blog_general`
-values (5, 0, 0, 0, 0, 984, 0);
-insert into `blog_general`
-values (6, 0, 0, 0, 0, 958, 0);
-insert into `blog_general`
-values (7, 0, 0, 0, 0, 198, 0);
-insert into `blog_general`
-values (8, 0, 0, 0, 0, 998, 0);
 
 -- ----------------------------
 -- Table structure for blog_set_tag
@@ -462,12 +353,6 @@ create table `collect_blog`
   row_format = dynamic;
 
 -- ----------------------------
--- Records of collect_blog
--- ----------------------------
-insert into `collect_blog`
-values (1, 1, 1, '2022-06-08 22:12:25', 0);
-
--- ----------------------------
 -- Table structure for column
 -- ----------------------------
 drop table if exists `column`;
@@ -498,14 +383,6 @@ create table `config`
   row_format = compact;
 
 -- ----------------------------
--- Records of config
--- ----------------------------
-insert into `config`
-values (1, 'cover_url', 'http://image.scblogs.cn/');
-insert into `config`
-values (2, 'test', 'test');
-
--- ----------------------------
 -- Table structure for like_blog
 -- ----------------------------
 drop table if exists `like_blog`;
@@ -524,12 +401,6 @@ create table `like_blog`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of like_blog
--- ----------------------------
-insert into `like_blog`
-values (1, 1, 2, '2022-06-08 22:12:12', 0);
 
 -- ----------------------------
 -- Table structure for tag
@@ -579,20 +450,6 @@ where (`blog`.`deleted` = 0);
 set FOREIGN_KEY_CHECKS = 1;
 
 
-/*
- Create database `resource`
-
- Source Server         : scblogs
- Source Server Type    : MySQL
- Source Server Version : 50650
- Source Schema         : resource
-
- Target Server Type    : MySQL
- Target Server Version : 50650
- File Encoding         : 65001
-
- Date: 25/02/2023 15:11:22
-*/
 drop database if exists `resource`;
 create database `resource`;
 use `resource`;
@@ -618,12 +475,6 @@ create table `city`
   row_format = compact;
 
 -- ----------------------------
--- Records of city
--- ----------------------------
-insert into `city`
-values (1, '北京市', 1);
-
--- ----------------------------
 -- Table structure for image
 -- ----------------------------
 drop table if exists `image`;
@@ -643,11 +494,6 @@ create table `image`
   row_format = compact;
 
 -- ----------------------------
--- Records of image
--- ----------------------------
-
-
--- ----------------------------
 -- Table structure for province
 -- ----------------------------
 drop table if exists `province`;
@@ -661,12 +507,6 @@ create table `province`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = compact;
-
--- ----------------------------
--- Records of province
--- ----------------------------
-insert into `province`
-values (1, '北京市');
 
 -- ----------------------------
 -- Table structure for university
@@ -696,25 +536,23 @@ create table `university`
 -- Records of university
 -- ----------------------------
 insert into `university`
-values (1, '北京大学', 4111010001, 10001, 1, 1, null);
+values (2, '北京大学', 4111010001, 10001, 2, 1, null);
 insert into `university`
-values (2, '中国人民大学', 4111010002, 10002, 1, 1, null);
+values (3, '中国人民大学', 4111010002, 10002, 2, 1, null);
 insert into `university`
-values (3, '清华大学', 4111010003, 10003, 1, 1, null);
+values (4, '清华大学', 4111010003, 10003, 2, 1, null);
 insert into `university`
-values (4, '北京交通大学', 4111010004, 10004, 1, 1, null);
+values (5, '北京交通大学', 4111010004, 10004, 2, 1, null);
 insert into `university`
-values (5, '北京工业大学', 4111010005, 10005, 1, 1, null);
+values (6, '北京工业大学', 4111010005, 10005, 2, 1, null);
 insert into `university`
-values (6, '北京航空航天大学', 4111010006, 10006, 1, 1, null);
+values (7, '北京航空航天大学', 4111010006, 10006, 2, 1, null);
 insert into `university`
-values (7, '北京理工大学', 4111010007, 10007, 1, 1, null);
+values (8, '北京理工大学', 4111010007, 10007, 2, 1, null);
 insert into `university`
-values (8, '哈尔滨工业大学(威海)', 4111010008, 19213, 1, 1, null);
+values (9, '哈尔滨工业大学', 4111010009, 10213, 5, 1, null);
 insert into `university`
-values (9, '哈尔滨工业大学', 4111010009, 10213, 1, 1, null);
-insert into `university`
-values (10, '哈尔滨工业大学(深圳)', 4111010010, 18213, 1, 1, null);
+values (10, '哈尔滨工业大学(深圳)', 4111010010, 18213, 6, 1, null);
 
 -- ----------------------------
 -- Table structure for visit_log
@@ -736,38 +574,6 @@ create table `visit_log`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of visit_log
--- ----------------------------
-insert into `visit_log`
-values (1, 2130706433, 'GET', '/', 'id=1', 404, null, '2023-01-18 20:57:51');
-insert into `visit_log`
-values (2, 2130706433, 'GET', '/', null, 404, null, '2023-01-18 21:04:05');
-insert into `visit_log`
-values (3, 2130706433, 'GET', '/', null, 404, null, '2023-01-18 21:04:56');
-insert into `visit_log`
-values (4, 2130706433, 'GET', '/user', null, 200, 1, '2023-01-18 21:42:43');
-insert into `visit_log`
-values (5, 2130706433, 'GET', '/user', null, 200, 1, '2023-01-18 21:43:51');
-insert into `visit_log`
-values (6, 2130706433, 'GET', '/user', null, 400, 1, '2023-01-18 22:05:27');
-insert into `visit_log`
-values (7, 2130706433, 'GET', '/user', null, 503, 1, '2023-01-18 22:05:57');
-insert into `visit_log`
-values (8, 2130706433, 'GET', '/blog/list/recommend', 'page=1', 200, 1, '2023-01-18 22:31:29');
-insert into `visit_log`
-values (9, 2130706433, 'GET', '/blog/list/recommend', 'page=1', 200, 1, '2023-01-18 22:31:31');
-insert into `visit_log`
-values (10, 2130706433, 'GET', '/blog/list/recommend', 'page=1', 200, 1, '2023-01-18 22:31:31');
-insert into `visit_log`
-values (11, 2130706433, 'GET', '/blog/list/recommend', 'page=1', 200, 1, '2023-01-18 22:31:31');
-insert into `visit_log`
-values (12, 2130706433, 'GET', '/blog/list/recommend', 'page=1', 200, 1, '2023-01-18 22:31:32');
-insert into `visit_log`
-values (13, 2130706433, 'GET', '/blog/list/recommend', 'page=1', 200, 1, '2023-01-18 22:31:32');
-insert into `visit_log`
-values (14, 2130706433, 'GET', '/blog/list/recommend', 'page=1', 200, 1, '2023-01-18 22:31:54');
 
 -- ----------------------------
 -- View structure for university_view
@@ -804,21 +610,6 @@ from `visit_log`;
 set FOREIGN_KEY_CHECKS = 1;
 
 
-/*
- Create database `blink`
-
- Source Server         : scblogs
- Source Server Type    : MySQL
- Source Server Version : 50650
- Source Host           : default.server.sticki.scblogs.cn:3306
- Source Schema         : blink
-
- Target Server Type    : MySQL
- Target Server Version : 50650
- File Encoding         : 65001
-
- Date: 25/02/2023 15:11:49
-*/
 drop database if exists `blink`;
 create database `blink`;
 use `blink`;
@@ -848,14 +639,6 @@ create table `blink`
   row_format = dynamic;
 
 -- ----------------------------
--- Records of blink
--- ----------------------------
-insert into `blink`
-values (1, 1, 10001, '动态内容测试', '2022-05-29 17:58:34', '2023-01-16 11:08:01', 0);
-insert into `blink`
-values (2, 1, 10001, '动态内容58', '2022-05-29 17:59:09', '2022-05-29 18:00:23', 0);
-
--- ----------------------------
 -- Table structure for blink_general
 -- ----------------------------
 drop table if exists `blink_general`;
@@ -872,14 +655,6 @@ create table `blink_general`
   character set = `utf8mb4`
   collate = `utf8mb4_unicode_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of blink_general
--- ----------------------------
-insert into `blink_general`
-values (1, 0, 0, 0, 0, 0);
-insert into `blink_general`
-values (2, 0, 0, 0, 0, 0);
 
 -- ----------------------------
 -- View structure for blink_view
@@ -903,21 +678,6 @@ where (`blink`.`deleted` = 0);
 set FOREIGN_KEY_CHECKS = 1;
 
 
-/*
- Create database `comment`
-
- Source Server         : scblogs
- Source Server Type    : MySQL
- Source Server Version : 50650
- Source Host           : default.server.sticki.scblogs.cn:3306
- Source Schema         : comment
-
- Target Server Type    : MySQL
- Target Server Version : 50650
- File Encoding         : 65001
-
- Date: 25/02/2023 15:11:32
-*/
 drop database if exists `comment`;
 create database `comment`;
 use `comment`;
@@ -947,22 +707,6 @@ create table `comment`
   character set = `utf8`
   collate = `utf8_general_mysql500_ci`
   row_format = dynamic;
-
--- ----------------------------
--- Records of comment
--- ----------------------------
-insert into `comment`
-values (1, 1, 1, 'comment test', null, null, '2022-05-04 16:05:44', 0);
-insert into `comment`
-values (2, 1, 1, 'emmm', 1, 1, '2022-05-04 16:47:46', 0);
-insert into `comment`
-values (3, 1, 1, 'comment test', null, null, '2022-05-04 17:30:49', 0);
-insert into `comment`
-values (4, 1, 1, 'comment test', 1, 1, '2022-05-05 11:12:53', 0);
-insert into `comment`
-values (5, 2, 1, '1231', 1, 1, '2022-05-05 16:57:14', 0);
-insert into `comment`
-values (6, 2, 1, '12321', 5, 2, '2022-05-05 16:59:16', 0);
 
 set FOREIGN_KEY_CHECKS = 1;
 
