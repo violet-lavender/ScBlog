@@ -108,18 +108,20 @@ export default {
             // 搜索博客
             searchblog: "",
             config: {
-                params: { status: "0", page: "0" },
+                params: { status: 0, page: 0, pageSize: 20 },
                 headers: {
                     'token': localStorage.getItem('token')
                 }
             },
-            visible2: false
+            visible2: false,
+            isSearching: false,
+            searchParams: {}
         }
     },
     async mounted() {
         // 获取全部用户博客数据显示各种状态下的数据
         //    await this.GetData()
-        this.$refs.noneSearch.style.display = "none"
+        this.$refs.noneSearch.style.display = "none";
     },
     // watch:{
     //     config:{
@@ -147,44 +149,83 @@ export default {
         handleClick(tab, event) {
             console.log(tab, event);
         },
-        //   滑动触底时调用
-        async infiniteHandler($state) {
-            await this.$axios
-                .get("/blog/console/list", this.config)
-                .then((res) => {
-                    if (res.data.data.records.length > 0) {
-                        this.config.params.page += 1;  // 下一页
-                        this.allList = this.allList.concat(res.data.data.records);
-                        this.List = this.allList
-                        $state.loaded();
-                    } else {
-                        $state.complete();
-                    }
+        // 修改后的搜索方法
+        async SearchBlog() {
+            this.isSearching = true
+            this.searchParams = {
+                key: this.searchblog,
+                status: this.config.params.status,
+                page: 1,  // 搜索从第一页开始
+                pageSize: this.config.params.pageSize
+            }
+
+            try {
+                const res = await this.$axios.get("/blog/console/search", {
+                    params: this.searchParams,
+                    headers: this.config.headers
                 })
+
+                if (res.data.data.records.length === 0) {
+                    this.$refs.firstContent.style.display = "none"
+                    this.$refs.noneSearch.style.display = "block"
+                    this.List = []
+                } else {
+                    this.List = res.data.data.records
+                    this.$refs.firstContent.style.display = "block"
+                    this.$refs.noneSearch.style.display = "none"
+                }
+            } catch (error) {
+                console.error("搜索失败:", error)
+                this.$message.error("搜索失败，请稍后重试")
+            }
+        },
+        //   滑动触底时调用, 无限滚动处理
+        async infiniteHandler($state) {
+            try {
+                if (this.isSearching) {
+                    // 处理搜索分页
+                    this.searchParams.page++
+                    const res = await this.$axios.get("/blog/console/search", {
+                        params: this.searchParams,
+                        headers: this.config.headers
+                    })
+
+                    this.handlePaginationData(res, $state)
+                } else {
+                    // 处理普通列表分页
+                    this.config.params.page++
+                    const res = await this.$axios.get("/blog/console/list", this.config)
+
+                    this.handlePaginationData(res, $state)
+                }
+            } catch (error) {
+                $state.error()
+                console.error("加载失败:", error)
+            }
+        },
+
+        // 公共分页数据处理
+        handlePaginationData(res, $state) {
+            const newData = res.data.data?.records || []
+            const pagination = res.data.data
+
+            if (newData.length) {
+                this.List = this.List.concat(newData)
+                $state.loaded()
+
+                // 检查是否还有更多数据
+                if (pagination.current >= pagination.pages) {
+                    $state.complete()
+                }
+            } else {
+                $state.complete()
+            }
+
+            // 更新空状态显示
             if (this.List.length > 0) {
                 this.$refs.writeBlog.style.display = "none"
                 this.$refs.noneSearch.style.display = "none"
             }
-            console.log("此时所有的博客列表是", this.List)
-        },
-        //   查找关键字博客列表
-        SearchBlog() {
-            this.$axios.get("/blog/search", {
-                params: {
-                    key: this.searchblog,
-                }
-            }).then(res => {
-                console.log("搜索返回的数据是", res.data)
-                if (res.data.data.records.length == 0) {
-                    // 显示啥都没搜到
-                    this.$refs.firstContent.style.display = "none"
-                    this.$refs.noneSearch.style.display = "block"
-                } else {
-                    this.$refs.firstContent.style.display = "block"
-                    this.$refs.noneSearch.style.display = "none"
-                    this.List = res.data.records
-                }
-            })
         },
         // 跳转至博客具体内容列表
         TurnToShow(index) {
@@ -202,6 +243,7 @@ export default {
                     this.ScreenList[i].chose = false
                 }
                 this.ScreenList[index].chose = true
+                this.isSearching = false
                 this.config.params.status = (index - 1).toString()
                 this.config.params.page = 1
                 this.GetData()//所有博客

@@ -6,3 +6,6 @@ spring:
       transport:
         dashboard: localhost:8090
       http-method-specify: true # 开启请求方式前缀
+
+blog:
+  image-prefix: http://192.168.236.134:9000/image/
