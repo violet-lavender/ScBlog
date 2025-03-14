@@ -86,6 +86,8 @@
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
+import _ from 'lodash'
+
 export default {
     name: "ManageContent",
     components: {
@@ -108,7 +110,7 @@ export default {
             // 搜索博客
             searchblog: "",
             config: {
-                params: { status: 0, page: 0, pageSize: 20 },
+                params: { status: 0, page: 0, pageSize: 20, month: null },
                 headers: {
                     'token': localStorage.getItem('token')
                 }
@@ -123,27 +125,27 @@ export default {
         //    await this.GetData()
         this.$refs.noneSearch.style.display = "none";
     },
-    // watch:{
-    //     config:{
-    //         handler(newName, oldName) {
-    //             console.log('注意此时的config对象变化了',this.config);
-    //             },
-    //             immediate: true
-    //     }
-    // },
     methods: {
+        // 添加日期格式化方法
+        formatMonth(date) {
+            if (!date) return null;
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            return `${year}-${month.toString().padStart(2, '0')}`;
+        },
         async GetData() {
-            this.List = []
-            await this.$axios.get("/blog/console/list", this.config).then(res => {
-                this.allList = res.data.data.records
-                // this.page=res.data.data.pages
-                this.List = this.List.concat(this.allList)
-                // 将传参的页数标记增大1
-                this.config.params.page + 1
-                if (this.List.length > 0) {
-                    this.$refs.writeBlog.style.display = "none"
-                }
-            })
+            this.List = [];
+            this.config.params.month = this.formatMonth(this.timechose);
+
+            try {
+                const res = await this.$axios.get("/blog/console/list", this.config);
+                this.List = res.data.data.records; // 直接赋值新数据
+                // 更新空状态
+                this.$refs.writeBlog.style.display = this.List.length ? "none" : "block";
+            } catch (error) {
+                console.error("数据加载失败:", error);
+                this.$message.error("数据加载失败");
+            }
         },
         // 手动选择部分
         handleClick(tab, event) {
@@ -155,9 +157,10 @@ export default {
             this.searchParams = {
                 key: this.searchblog,
                 status: this.config.params.status,
+                month: this.formatMonth(this.timechose),
                 page: 1,  // 搜索从第一页开始
                 pageSize: this.config.params.pageSize
-            }
+            };
 
             try {
                 const res = await this.$axios.get("/blog/console/search", {
@@ -244,10 +247,21 @@ export default {
                 }
                 this.ScreenList[index].chose = true
                 this.isSearching = false
+                this.searchblog=""
                 this.config.params.status = (index - 1).toString()
                 this.config.params.page = 1
                 this.GetData()//所有博客
             }
+        }
+    },
+    watch: {
+        timechose: {
+            handler: _.debounce(function (newVal) {
+                this.config.params.page = 1;
+                this.isSearching = false;
+                this.GetData();
+            }, 300),
+            immediate: true
         }
     }
 }

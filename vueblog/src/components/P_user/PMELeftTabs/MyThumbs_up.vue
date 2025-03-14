@@ -5,20 +5,20 @@
             <div v-if="noneLike" class="noneLike">
                 你都舍不得点赞吗？
             </div>
-            <div v-else class="myLikeA" v-for="(item,index) in likeList" :key="item.id" >
-                <div class="myLikeTitle">
-                    <div class="title" @click="TurnToDetail(item.id)">{{item.title}}</div>
-                    <div class="description">{{item.description}}</div>
-                </div>
-                <div class="myLikeStar">
-					<svg
-						:class="{active:item.thumbs}"
-						 @click="Like(item.id,item.authorId,index)"
-						 aria-hidden="true">
-						<use xlink:href="#icon-dianzan_kuai"></use>
-						<!-- use是复制一个图标的意思 -->
-					</svg>
-                    {{item.thumbs}}{{likeList[index].thumbs}}
+            <div v-else>
+                <div v-for="(item, index) in likeList" :key="item.id" class="myLikeA">
+                    <div class="myLikeTitle">
+                        <div class="title" @click="TurnToDetail(item.id)">{{ item.title }}</div>
+                        <div class="description">{{ item.description }}</div>
+                    </div>
+                    <div class="myLikeStar">
+                        <svg :class="{ active: item.thumbs }" @click="Like(item.id, item.authorId, index)"
+                            aria-hidden="true">
+                            <use xlink:href="#icon-dianzan_kuai"></use>
+                            <!-- use是复制一个图标的意思 -->
+                        </svg>
+                        {{ item.thumbs }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,25 +73,28 @@ export default {
             // 开始收藏状态修正
             this.Like(index)
         },
-        Like(blogid,authorId,index){
-			let formdata = new FormData()
-			formdata.append("blogId", blogid)
-			formdata.append("id",authorId)
-			this.$axios.post('/blog/action/like',formdata,this.config).then(res=>{
-					if(res.status){
-						this.likeList[index].thumbs=!this.likeList[index].thumbs
-                        console.log("点赞后的的状态thumbs",this.likeList[index].thumbs)
-						this.$message({
-							message: '操作成功',
-							type:'success',
-						});
-					}else {
-						this.$message({
-							message: '操作失败',
-							type: 'error'
-						});
-					}
-                })
+        Like(blogid, authorId, index) {
+            let formdata = new FormData();
+            formdata.append("blogId", blogid);
+            formdata.append("id", authorId);
+            this.$axios.post('/blog/action/like', formdata, this.config).then(res => {
+                if (res.status) {
+                    // 在这里更新单个点赞状态
+                    this.likeList[index].thumbs = !this.likeList[index].thumbs;
+                    console.log("点赞后的的状态thumbs", this.likeList[index].thumbs);
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success',
+                    });
+                    // 重新获取点赞列表以确保显示最新数据
+                    this.GetData();
+                } else {
+                    this.$message({
+                        message: '操作失败',
+                        type: 'error'
+                    });
+                }
+            });
         }
     }
 }

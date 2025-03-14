@@ -1,5 +1,6 @@
 package com.wyz.blog.controller;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -24,6 +25,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -62,9 +65,13 @@ public class BlogConsoleController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int pageSize,
             @RequestParam(defaultValue = "0") int status,
-            @RequestParam(name = "userId", required = false) Integer authorId) {
+            @RequestParam(name = "userId", required = false) Integer authorId,
+            @RequestParam(name = "month", required = false) String month) {
         if (pageSize > 200 || pageSize < 1 || status > 10 || status < 0) {
             throw new BusinessException("参数异常");
+        }
+        if (month != null && !month.matches("\\d{4}-\\d{2}")) {
+            throw new BusinessException("月份格式错误, 应为yyyy-MM");
         }
         // 判断要获取的用户id信息
         Integer userId = AuthHelper.getCurrentUserId();
@@ -82,9 +89,17 @@ public class BlogConsoleController {
 
         // 获取博客列表
         LambdaQueryWrapper<BlogView> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(BlogView::getAuthorId, authorId);
-        // 若status为0，则查找显示全部博客，否则查找某部分博客
-        wrapper.eq(status != 0, BlogView::getStatus, status);
+        wrapper.eq(BlogView::getAuthorId, authorId)
+                .eq(status != 0, BlogView::getStatus, status);  // 若status为0, 则查找显示全部博客, 否则查找某部分博客
+        // 月份过滤逻辑
+        if (StringUtils.isNotBlank(month)) {
+            // 解析月份为时间范围
+            LocalDate startDate = LocalDate.parse(month + "-01");
+            LocalDateTime startOfMonth = startDate.atStartOfDay();
+            LocalDateTime endOfMonth = startDate.plusMonths(1).atStartOfDay().minusNanos(1);
+
+            wrapper.between(BlogView::getReleaseTime, startOfMonth, endOfMonth);
+        }
         // 使用mybatis进行分页
         IPage<BlogView> blogPage = new Page<>(page, pageSize);
         blogViewService.page(blogPage, wrapper);
@@ -100,12 +115,15 @@ public class BlogConsoleController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int pageSize,
             @RequestParam(defaultValue = "0") int status,
-            @RequestParam(name = "key") String key) {
+            @RequestParam(name = "key") String key,
+            @RequestParam(name = "month", required = false) String month) {
         if (pageSize > 200 || pageSize < 1 || status > 10 || status < 0) {
             throw new BusinessException("参数异常");
         }
+        if (month != null && !month.matches("\\d{4}-\\d{2}")) {
+            throw new BusinessException("月份格式错误, 应为yyyy-MM");
+        }
         Integer userId = AuthHelper.getCurrentUserId();
-        System.out.println(userId);
         // 获取博客列表
         LambdaQueryWrapper<BlogView> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(BlogView::getAuthorId, userId)
@@ -113,8 +131,17 @@ public class BlogConsoleController {
                         .like(BlogView::getTitle, "%" + key + "%")
                         .or()
                         .like(BlogView::getDescription, "%" + key + "%")
-                );
+                )
+                .eq(status != 0, BlogView::getStatus, status);
+        // 月份过滤逻辑
+        if (StringUtils.isNotBlank(month)) {
+            // 解析月份为时间范围
+            LocalDate startDate = LocalDate.parse(month + "-01");
+            LocalDateTime startOfMonth = startDate.atStartOfDay();
+            LocalDateTime endOfMonth = startDate.plusMonths(1).atStartOfDay().minusNanos(1);
 
+            wrapper.between(BlogView::getReleaseTime, startOfMonth, endOfMonth);
+        }
         // 使用mybatis进行分页
         IPage<BlogView> blogPage = new Page<>(page, pageSize);
         blogViewService.page(blogPage, wrapper);
