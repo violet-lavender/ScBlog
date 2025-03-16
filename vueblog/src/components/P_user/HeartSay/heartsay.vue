@@ -12,7 +12,7 @@
           <p>当前没有动态哦</p>
         </div>
         <!-- 表白墙正文显示区域 -->
-        <div class="heartsay" v-for="item in DynamicList">
+        <div class="heartsay" v-for="item in DynamicList" :key="item.id">
           <div class="heartA">
             <div class="img">
               <img :src="item.user.avatarUrl" alt="">
@@ -29,13 +29,9 @@
           </div>
           <div class="heartC">
             <ul>
-              <li v-for="(item,index) in iconList">
-                <svg class="icon"
-                     :class="{active:likeactive}"
-                     @click="Like(index)"
-                     aria-hidden="true">
+              <li v-for="(item, index) in iconList" :key="index">
+                <svg class="icon" :class="{ active: likeactive }" @click="Like(index)" aria-hidden="true">
                   <use :xlink:href="item"></use>
-                  <!-- use是复制一个图标的意思 -->
                 </svg>
               </li>
             </ul>

@@ -24,6 +24,7 @@ public interface BlogRepository extends ElasticsearchRepository<BlogDoc, Long> {
 	 * <br>
 	 * 得到结果后仅需将分页的内容替换掉实体类的内容即可，已经是封装好的了
 	 *
+	 * @param status             状态
 	 * @param descriptiveContent 描述语句
 	 * @param pageable           分页
 	 * @return 博客列表
@@ -33,6 +34,6 @@ public interface BlogRepository extends ElasticsearchRepository<BlogDoc, Long> {
 			@HighlightField(name = "title", parameters = @HighlightParameters(requireFieldMatch = false)),
 			@HighlightField(name = "description", parameters = @HighlightParameters(requireFieldMatch = false)),
 	})
-	SearchPage<BlogDoc> findByDescriptiveContent(String descriptiveContent, Pageable pageable);
+	SearchPage<BlogDoc> findByStatusAndDescriptiveContent(Integer status, String descriptiveContent, Pageable pageable);
 
 }

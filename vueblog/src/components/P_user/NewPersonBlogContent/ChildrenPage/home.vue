@@ -24,6 +24,7 @@
 		</div>
 		<!-- 给下拉刷新预留位置 -->
 		<infinite-loading
+			ref="infiniteLoading"
 			spinner="spiral"
 			@infinite="infiniteHandler"
 			:distance="200"
@@ -58,7 +59,7 @@ export default {
 			//博客列表显示部分
 			List: [],
 			config: {
-				params: {userId:this.userId, status: 0, page: 1},
+				params: {status: 0, page: 1},
 				headers: {
 					'token': localStorage.getItem('token')
 				}
@@ -70,36 +71,49 @@ export default {
 	mounted() {
 	},
 	watch : {
-		userId() {
-			// console.log(this.userId);
-			this.config.params.userId = this.userId;
-			this.$axios
-				.get("/blog/console/list", this.config)
-				.then((res) => {
-					if (res.data.data.records.length > 0) {
-						this.config.params.page+=1;  // 下一页
-						this.List = this.List.concat(res.data.data.records);
-					} else {
-					}
-				})
+		userId(newVal, oldVal) {
+			if (newVal !== oldVal) {
+				// 重置分页和列表
+				this.config.params.page = 1;
+				this.List = [];
+				// 强制重置infinite-loading组件以触发重新加载
+				const loader = this.$refs.infiniteLoading;
+				if (loader) {
+					loader.stateChanger.reset();
+				}
+			}
 		},
 	},
 	methods: {
 		// 底部刷新函数
 		async infiniteHandler($state) {
-			console.log(this.userId);
-			// 个人博客列表数据获取
-			this.$axios
-				.get("/blog/console/list", this.config)
-				.then((res) => {
-					if (res.data.data.records.length > 0) {
-						this.config.params.page+=1;  // 下一页
-						this.List = this.List.concat(res.data.data.records);
-						$state.loaded();
-					} else {
-						$state.complete();
-					}
-				})
+			// 无效userId时不加载
+			if (this.userId <= 0) {
+				$state.complete();
+				return;
+			}
+
+			try {
+				const res = await this.$axios.get("/blog/console/list", {
+					params: {
+						userId: this.userId, // 直接使用当前prop值
+						status: 0,
+						page: this.config.params.page
+					},
+					headers: this.config.headers
+				});
+
+				const records = res.data.data?.records || [];
+				if (records.length > 0) {
+					this.List = this.List.concat(records);
+					this.config.params.page += 1;
+					$state.loaded();
+				} else {
+					$state.complete();
+				}
+			} catch (error) {
+				$state.error();
+			}
 		},
 		// 跳转去显示博客的详情
 		TurnToShow(id) {

@@ -46,15 +46,31 @@
                                     </div>
                                 </div>
                                 <div class="BlogContent-b">
-                                    <el-popover placement="top" width="160" v-model="visible2">
-                                        <p>确定删除吗？</p>
+                                    <!-- 修改删除弹窗部分 -->
+                                    <el-popover placement="top" width="160" v-model="popoverVisible[item.id]">
+                                        <p>
+                                            {{ item.status === 2 ? '确定删除草稿吗？草稿删除不可恢复'
+                                            : item.status === 4 ? '确定永久删除该博客吗？该操作不可逆'
+                                            : '确定删除该博客吗？您可以在回收站中恢复' }}
+                                        </p>
                                         <div style="text-align: right; margin: 0">
-                                            <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
+                                            <el-button size="mini" type="text"
+                                                @click="popoverVisible[item.id] = false">取消</el-button>
                                             <el-button type="primary" size="mini"
-                                                @click="visible2 = false">确定</el-button>
+                                                @click="handleDeleteConfirm(item.id, item.status)">
+                                                确定
+                                            </el-button>
                                         </div>
-                                        <el-button style="pointer-events: auto;" slot="reference">删除</el-button>
+                                        <el-button slot="reference"
+                                            :type="item.status === 2 || item.status === 4 ? 'danger' : 'text'"
+                                            style="pointer-events: auto;">
+                                            删除
+                                        </el-button>
                                     </el-popover>
+                                    <el-button v-if="item.status === 4" type="success" 
+                                        style="margin-left:10px;padding:12px 15px" @click="handleRecovery(item.id)">
+                                        <i class="el-icon-refresh-left"></i> 恢复
+                                    </el-button>
                                 </div>
                             </div>
                             <!--infinite-loading这个组件要放在列表的底部，滚动的盒子里面-->
@@ -96,7 +112,15 @@ export default {
     data() {
         return {
             // status选择部分列表
-            ScreenList: [{ title: "状态" }, { title: "全部", chose: true }, { title: "全部可见", chose: false }, { title: "仅我可见", chose: false }, { title: "审核", chose: false }, { title: "草稿箱", chose: false }, { title: "回收站", chose: false }],
+            ScreenList: [
+                { title: "状态" },
+                { title: "全部", chose: true, status: 0 },      // 0表示所有状态
+                { title: "已发表", chose: false, status: 1 },    // 对应status=1
+                { title: "仅我可见", chose: false, status: 3 },  // 对应status=3
+                { title: "审核中", chose: false, status: 5 },    // 对应status=5
+                { title: "草稿箱", chose: false, status: 2 },    // 对应status=2
+                { title: "回收站", chose: false, status: 4 }     // 对应status=4
+            ],
             // 显示全部的列表
             allList: [],
             // 头部导航选择的部分
@@ -117,7 +141,8 @@ export default {
             },
             visible2: false,
             isSearching: false,
-            searchParams: {}
+            searchParams: {},
+            popoverVisible: {},
         }
     },
     async mounted() {
@@ -126,6 +151,18 @@ export default {
         this.$refs.noneSearch.style.display = "none";
     },
     methods: {
+        // 状态映射方法
+        getStatusText(status) {
+            const statusMap = {
+                0: '全部',
+                1: '已发表',
+                2: '草稿箱',
+                3: '仅我可见',
+                4: '回收站',
+                5: '审核中'
+            }
+            return statusMap[status] || '未知状态'
+        },
         // 添加日期格式化方法
         formatMonth(date) {
             if (!date) return null;
@@ -247,10 +284,71 @@ export default {
                 }
                 this.ScreenList[index].chose = true
                 this.isSearching = false
-                this.searchblog=""
-                this.config.params.status = (index - 1).toString()
+                this.searchblog = ""
+                // 使用筛选条件中的status值
+                this.config.params.status = this.ScreenList[index].status
                 this.config.params.page = 1
-                this.GetData()//所有博客
+                this.GetData()
+            }
+        },
+        // 删除处理方法
+        async handleDeleteConfirm(blogId, status) {
+            try {
+                this.popoverVisible[blogId] = false;
+
+                // 判断是否应该直接删除（状态2草稿或状态4回收站）
+                const isCompletelyDelete = [2, 4].includes(status);
+                const apiUrl = isCompletelyDelete ? '/blog/console/blog/delete' : 'blog/console/blog';
+
+                const res = await this.$axios.delete(apiUrl, {
+                    params: { id: blogId },
+                    headers: this.config.headers
+                });
+
+                if (res.data.code === 200) {
+                    // 更新列表数据
+                    if (isCompletelyDelete) {
+                        this.List = this.List.filter(item => item.id !== blogId);
+                    } else {
+                        // 修改为正确的状态更新逻辑
+                        this.List = this.List.map(item => {
+                            if (item.id === blogId) {
+                                return { ...item, status: 4 }; // 更新状态为回收站
+                            }
+                            return item;
+                        });
+                    }
+
+                    this.$message.success(isCompletelyDelete ? '删除成功' : '已移入回收站');
+                    this.$forceUpdate();
+                }
+            } catch (error) {
+                console.error('删除失败:', error);
+                this.$message.error('操作失败: ' + (error.response?.data?.message || '未知错误'));
+            }
+        },
+        // 恢复处理方法
+        async handleRecovery(blogId) {
+            try {
+                const res = await this.$axios.put('/blog/console/blog/recovery', null, {
+                    params: { id: blogId },
+                    headers: this.config.headers
+                });
+
+                if (res.data.code === 200) {
+                    // 如果是回收站列表直接过滤
+                    if (this.config.params.status === 4) {
+                        this.List = this.List.filter(item => item.id !== blogId);
+                    }
+                    // 其他情况需要刷新数据
+                    else {
+                        await this.GetData();
+                    }
+                    this.$message.success('恢复成功');
+                }
+            } catch (error) {
+                console.error('恢复失败:', error);
+                this.$message.error('恢复失败: ' + (error.response?.data?.message || '未知错误'));
             }
         }
     },
@@ -415,10 +513,43 @@ export default {
     height: 20%;
     font-size: 16px;
     font-weight: 600;
-    color: #555666;
 }
 
 .BlogContent-3 span {
     margin: 0 5px;
+}
+
+/* 增加删除按钮的悬停效果 */
+.el-button[type="danger"] {
+    color: #ff4444;
+}
+
+.el-button[type="danger"]:hover {
+    color: #ff0000;
+}
+
+/* 回收站状态的特殊样式 */
+.BlogContent-b .el-button--danger {
+    font-weight: bold;
+}
+
+/* 保证操作按钮区域垂直居中 */
+.BlogContent-b {
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 20px;
+}
+
+/* 恢复按钮样式 */
+.BlogContent-b .el-button--success {
+    margin-left: 10px;
+    padding: 7px 12px;
+    background-color: #67C23A;
+    border-color: #67C23A;
+}
+
+.BlogContent-b .el-button--success:hover {
+    background-color: #85ce61;
+    border-color: #85ce61;
 }
 </style>

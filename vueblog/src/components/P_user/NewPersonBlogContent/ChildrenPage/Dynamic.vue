@@ -124,7 +124,7 @@ export default {
         },
 	//	跳转至编辑动态页面
 		TurnToDynamicEdit(){
-			var routeUrl= this.$router.resolve({path:'./DynamicEdit'})
+			var routeUrl= this.$router.resolve({path:'/DynamicEdit'})
 			window.open(routeUrl.href, '_blank');
 		}
     }

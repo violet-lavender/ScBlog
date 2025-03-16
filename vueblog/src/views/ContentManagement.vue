@@ -4,7 +4,7 @@
             <div class="content">
               <div class="left">
                 <div class="leftcontent">
-                  <button class="release">内容管理</button>
+                  <button class="release">发布</button>
                   <div class="collapse">
                       <el-collapse v-model="activeNames" @change="handleChange">
                           <el-collapse-item  title="首页" name="1">

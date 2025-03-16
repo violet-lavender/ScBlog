@@ -245,54 +245,85 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 	 * @return 操作是否成功
 	 */
 	@Override
-	public Boolean deleteBlog(Integer blogId, Integer userId) {
-		Blog blog = getById(blogId);
-		// 权限校验
-		if (blog == null || !blog.getAuthorId().equals(userId)) {
-			throw new BusinessException("非法删除他人博客");
-		}
-		// 判断博客当前状态,是否已经是存在回收站里了
-		if (BlogStatusType.DELETED.getValue().equals(blog.getStatus())) {
-			log.info("博客删除失败：已经存入回收站，id {}", blogId);
-			return false;
-		}
-		// 更新数据库
-		blog.setStatus(BlogStatusType.DELETED.getValue());
-		blog.setModifiedTime(new Timestamp(System.currentTimeMillis()));
-		boolean isSuccess = lambdaUpdate().eq(Blog::getId, blogId).eq(Blog::getAuthorId, userId)
-				.set(Blog::getStatus, blog.getStatus()).update();
-		if (isSuccess) {
-			// 发送消息到MQ
-			rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_UPDATE_KEY, blog);
-		}
-		return isSuccess;
-	}
+    public Boolean deleteBlog(Integer blogId, Integer userId) {
+        Blog blog = getById(blogId);
+        // 权限校验
+        if (blog == null || !blog.getAuthorId().equals(userId)) {
+            throw new BusinessException("非法删除他人博客");
+        }
+        // 判断博客当前状态,是否已经是存在回收站里了
+        if (BlogStatusType.DELETED.getValue().equals(blog.getStatus())) {
+            log.info("博客删除失败：已经存入回收站，id {}", blogId);
+            return false;
+        }
+        // 更新数据库
+        blog.setStatus(BlogStatusType.DELETED.getValue());
+        blog.setModifiedTime(new Timestamp(System.currentTimeMillis()));
+        boolean isSuccess = lambdaUpdate().eq(Blog::getId, blogId).eq(Blog::getAuthorId, userId)
+                .set(Blog::getStatus, blog.getStatus()).update();
+        if (isSuccess) {
+            // 发送消息到MQ
+            rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_UPDATE_KEY, blog);
+        }
+        return isSuccess;
+    }
 
-	/**
-	 * 完全删除博客
-	 *
-	 * @param blogId 博客id
-	 * @param userId 用户id
-	 * @return 操作是否成功
+    /**
+     * 恢复博客（将博客从回收站还原）
+     *
+     * @param blogId 博客id
+     * @param userId 用户id
+     * @return 操作是否成功
+     */
+    @Override
+    public Boolean recoveryBlog(Integer blogId, Integer userId) {
+        Blog blog = getById(blogId);
+        // 权限校验
+        if (blog == null || !blog.getAuthorId().equals(userId)) {
+            throw new BusinessException("非法恢复他人博客");
+        }
+        // 判断博客当前状态,是否已经是存在回收站里了
+        if (!BlogStatusType.DELETED.getValue().equals(blog.getStatus())) {
+            log.info("博客恢复失败：不在回收站中，id {}", blogId);
+            return false;
+        }
+        // 更新数据库
+        blog.setStatus(BlogStatusType.PUBLISH.getValue());
+        blog.setModifiedTime(new Timestamp(System.currentTimeMillis()));
+        boolean isSuccess = lambdaUpdate().eq(Blog::getId, blogId).eq(Blog::getAuthorId, userId)
+                .set(Blog::getStatus, blog.getStatus()).update();
+        if (isSuccess) {
+            // 发送消息到MQ
+            rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_UPDATE_KEY, blog);
+        }
+        return isSuccess;
+    }
+
+    /**
+     * 完全删除博客
+     *
+     * @param blogId 博客id
+     * @param userId 用户id
+     * @return 操作是否成功
 	 */
 	@Override
 	public Boolean completelyDeleteBlog(Integer blogId, Integer userId) {
-		Blog blog = getById(blogId);
-		// 权限校验，博客不是属于该用户
-		if (blog == null || !blog.getAuthorId().equals(userId)) {
-			throw new BusinessException("非法删除他人博客");
-		}
-		// 判断博客当前状态,是否已经是存在回收站里了
-		if (!BlogStatusType.DELETED.getValue().equals(blog.getStatus())) {
-			log.info("彻底删除操作失败，只有在回收站里的博客可以删除，id {}", blogId);
-			return false;
-		}
-		// 从数据库删除博客
-		boolean isSuccess = removeById(blogId);
-		if (isSuccess) {
-			// 发送删除的消息到MQ
-			rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_DELETE_KEY, blogId);
-			try {
+        Blog blog = getById(blogId);
+        // 权限校验，博客不是属于该用户
+        if (blog == null || !blog.getAuthorId().equals(userId)) {
+            throw new BusinessException("非法删除他人博客");
+        }
+        // 判断博客当前状态,是否已经是存在回收站或草稿里了
+        if (!BlogStatusType.DELETED.getValue().equals(blog.getStatus()) && !BlogStatusType.DRAFT.getValue().equals(blog.getStatus())) {
+            log.info("彻底删除操作失败，只有在回收站里的博客可以删除，id {}", blogId);
+            return false;
+        }
+        // 从数据库删除博客
+        boolean isSuccess = removeById(blogId);
+        if (isSuccess) {
+            // 发送删除的消息到MQ
+            rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_DELETE_KEY, blogId);
+            try {
 				// 删除其他相应的信息表
 				blogGeneralMapper.deleteById(blogId);
 				blogContentMapper.deleteById(blogId);

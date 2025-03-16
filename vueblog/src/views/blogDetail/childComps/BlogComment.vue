@@ -59,7 +59,7 @@
                           src="../../../assets/img/blogDetail/blogComment/commentLike.png"
                           alt=""
                         />
-                        <span class="like-num">1</span>
+                        <span class="like-num"></span>
                       </div>
                     </div>
                     <div class="comment-center">
@@ -134,7 +134,7 @@
                               src="../../../assets/img/blogDetail/blogComment/commentLike.png"
                               alt=""
                             />
-                            <span class="like-num">1</span>
+                            <span class="like-num"></span>
                           </div>
                         </div>
                         <div class="comment-center">

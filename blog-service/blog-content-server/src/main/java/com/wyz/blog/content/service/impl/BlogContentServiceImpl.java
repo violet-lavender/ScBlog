@@ -41,10 +41,12 @@ public class BlogContentServiceImpl implements BlogContentService {
 	public BlogListVO searchBlog(SearchQuery searchQuery) {
 		log.debug("searchQuery:{}", searchQuery);
 		// 1. 获取数据
-		SearchPage<BlogDoc> searchPage = blogRepository.findByDescriptiveContent(
-				// 1.1 设置key
+		SearchPage<BlogDoc> searchPage = blogRepository.findByStatusAndDescriptiveContent(
+				// 1.1 设置状态
+				1,
+				// 1.2 设置key
 				searchQuery.getKey(),
-				// 1.2 设置分页，这里是从第0页开始的
+				// 1.3 设置分页，这里是从第0页开始的
 				PageRequest.of(searchQuery.getPage() - 1, searchQuery.getSize()));
 		log.debug("result number:{}", searchPage.getTotalElements());
 		// 2. 数据解析

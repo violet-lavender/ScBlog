@@ -59,6 +59,7 @@ public class BlogConsoleController {
      * @param pageSize 页大小
      * @param status   博客状态码
      * @param authorId 作者id
+     * @param month    月份
      */
     @GetMapping("/list")
     public RestResult<BlogListConsoleVO> getBlogList(
@@ -110,6 +111,15 @@ public class BlogConsoleController {
         return new RestResult<>(blogListConsoleVO);
     }
 
+    /**
+     * 控制台搜索个人博客
+     *
+     * @param page     当前页
+     * @param pageSize 页大小
+     * @param status   博客状态码
+     * @param key      搜索关键字
+     * @param month    月份
+     */
     @GetMapping("/search")
     public RestResult<BlogListConsoleVO> searchBlog(
             @RequestParam(defaultValue = "1") int page,
@@ -176,13 +186,24 @@ public class BlogConsoleController {
      * @param id 博客id
      */
     @DeleteMapping("/blog")
-    public Boolean recoveryBlog(@NotNull Integer id) {
+    public Boolean deleteBlog(@NotNull Integer id) {
         Integer userId = AuthHelper.getCurrentUserIdOrExit();
         return blogService.deleteBlog(id, userId);
     }
 
     /**
-     * 彻底删除博客，只有回收站中的博客可以被彻底删除
+     * 恢复博客
+     *
+     * @param id 博客id
+     */
+    @PutMapping("/blog/recovery")
+    public Boolean recoveryBlog(@NotNull Integer id) {
+        Integer userId = AuthHelper.getCurrentUserIdOrExit();
+        return blogService.recoveryBlog(id, userId);
+    }
+
+    /**
+     * 彻底删除博客，只有回收站或草稿箱中的博客可以被彻底删除
      *
      * @param id 博客id
      */

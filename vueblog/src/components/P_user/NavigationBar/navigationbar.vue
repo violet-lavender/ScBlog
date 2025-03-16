@@ -1,22 +1,22 @@
 <template>
-<div >
-  <el-tabs  v-model="activeName" @tab-click="handleClick">
-    <!-- <div class="F-1"> -->
-    <el-tab-pane label="最近" @scroll="scrollBottom($event)" name="1">
-      <div  v-for="(item,index) in recentList"  @click="TurnToShow(item.id)">
-        <div class="BlogContent-a">
-          <div class="BlogContent-1">{{ item.title }}</div>
-          <div class="BlogContent-2">{{ item.description }}</div>
-          <div class="BlogContent-3">
-            {{ item.releaseTime }}.
-            <span>{{ item.viewNum }}阅读 .</span>
-            <span>{{ item.likeNum }}点赞 .</span>
-            <span>{{ item.commentNum }}评论 .</span>
-            <span>{{ item.collectionNum }}收藏</span>
+  <div>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <!-- <div class="F-1"> -->
+      <el-tab-pane label="最近" @scroll="scrollBottom($event)" name="1">
+        <div v-for="(item, index) in recentList" :key="item.id" @click="TurnToShow(item.id)">
+          <div class="BlogContent-a">
+            <div class="BlogContent-1">{{ item.title }}</div>
+            <div class="BlogContent-2">{{ item.description }}</div>
+            <div class="BlogContent-3">
+              {{ item.releaseTime }}.
+              <span>{{ item.viewNum }}阅读 .</span>
+              <span>{{ item.likeNum }}点赞 .</span>
+              <span>{{ item.commentNum }}评论 .</span>
+              <span>{{ item.collectionNum }}收藏</span>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- <infinite-loading
+        <!-- <infinite-loading
           spinner="spiral"
           @infinite="infiniteHandler"
           :distance="200"
@@ -28,24 +28,24 @@
             Error Data, click <a href="javascript:;" @click="trigger">here</a> toretry
           </div>
         </infinite-loading> -->
-    </el-tab-pane>
+      </el-tab-pane>
 
-    <el-tab-pane label="文章" name="2">
-      <el-tabs v-model="activeName2" @tab-click="handleClick">
-        <el-tab-pane label="按最后发布时间" name="1">
-            <div class="F-1" v-for="(item,index) in LastPublishTimeList"  @click="TurnToShow(item.id)" :key="index">
-            <div class="BlogContent-a">
-              <div class="BlogContent-1">{{ item.title }}</div>
-              <div class="BlogContent-2">{{ item.description }}</div>
-              <div class="BlogContent-3">
-                {{ item.releaseTime }}.
-                <span>{{ item.viewNum }}阅读 .</span>
-                <span>{{ item.likeNum }}点赞 .</span>
-                <span>{{ item.commentNum }}评论 .</span>
-                <span>{{ item.collectionNum }}收藏</span>
+      <el-tab-pane label="文章" name="2">
+        <el-tabs v-model="activeName2" @tab-click="handleClick">
+          <el-tab-pane label="按最后发布时间" name="1">
+            <div class="F-1" v-for="(item,index) in LastPublishTimeList" @click="TurnToShow(item.id)" :key="index">
+              <div class="BlogContent-a">
+                <div class="BlogContent-1">{{ item.title }}</div>
+                <div class="BlogContent-2">{{ item.description }}</div>
+                <div class="BlogContent-3">
+                  {{ item.releaseTime }}.
+                  <span>{{ item.viewNum }}阅读 .</span>
+                  <span>{{ item.likeNum }}点赞 .</span>
+                  <span>{{ item.commentNum }}评论 .</span>
+                  <span>{{ item.collectionNum }}收藏</span>
+                </div>
               </div>
-            </div>
-            <!-- <infinite-loading
+              <!-- <infinite-loading
                 spinner="spiral"
                 @infinite="infiniteHandler"
                 :distance="200"
@@ -58,60 +58,60 @@
                   Error Data, click <a href="javascript:;" @click="trigger">here</a> toretry
                 </div>
               </infinite-loading>  -->
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="按访问量" name="2">
-          <div class="F-1" v-for="(item,index) in maxViewList"  :key="index" @click="TurnToShow(item.id)">
-            <div class="BlogContent-a">
-              <div class="BlogContent-1">{{ item.title }}</div>
-              <div class="BlogContent-2">{{ item.description }}</div>
-              <div class="BlogContent-3">
-                {{ item.releaseTime }}.
-                <span>{{ item.viewNum }}阅读 .</span>
-                <span>{{ item.likeNum }}点赞 .</span>
-                <span>{{ item.commentNum }}评论 .</span>
-                <span>{{ item.collectionNum }}收藏</span>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="按访问量" name="2">
+            <div class="F-1" v-for="(item,index) in maxViewList" :key="index" @click="TurnToShow(item.id)">
+              <div class="BlogContent-a">
+                <div class="BlogContent-1">{{ item.title }}</div>
+                <div class="BlogContent-2">{{ item.description }}</div>
+                <div class="BlogContent-3">
+                  {{ item.releaseTime }}.
+                  <span>{{ item.viewNum }}阅读 .</span>
+                  <span>{{ item.likeNum }}点赞 .</span>
+                  <span>{{ item.commentNum }}评论 .</span>
+                  <span>{{ item.collectionNum }}收藏</span>
+                </div>
               </div>
             </div>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="创作历程" name="3">创作历程</el-tab-pane>
-      </el-tabs>
-    </el-tab-pane>
+          </el-tab-pane>
+          <el-tab-pane label="创作历程" name="3">创作历程</el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
 
-    <el-tab-pane label="资源" name="3">资源</el-tab-pane>
-    <el-tab-pane label="问答" name="4">
-      <el-tabs v-model="activeName3" @tab-click="handleClick">
-        <el-tab-pane label="回答的问题" name="1">回答的问题</el-tab-pane>
-        <el-tab-pane label="发布的问题" name="2">发布的问题</el-tab-pane>
-      </el-tabs>
-    </el-tab-pane>
+      <el-tab-pane label="资源" name="3">资源</el-tab-pane>
+      <el-tab-pane label="问答" name="4">
+        <el-tabs v-model="activeName3" @tab-click="handleClick">
+          <el-tab-pane label="回答的问题" name="1">回答的问题</el-tab-pane>
+          <el-tab-pane label="发布的问题" name="2">发布的问题</el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
 
-    <el-tab-pane label="帖子" name="5">
-      <el-tabs v-model="activeName4" @tab-click="handleClick">
-        <el-tab-pane label="回答的帖子" name="1">回答的帖子</el-tab-pane>
-        <el-tab-pane label="发布的帖子" name="2">发布的帖子</el-tab-pane>
-      </el-tabs>
-    </el-tab-pane>
+      <el-tab-pane label="帖子" name="5">
+        <el-tabs v-model="activeName4" @tab-click="handleClick">
+          <el-tab-pane label="回答的帖子" name="1">回答的帖子</el-tab-pane>
+          <el-tab-pane label="发布的帖子" name="2">发布的帖子</el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
 
-    <el-tab-pane label="视频" name="6">视频</el-tab-pane>
-    <el-tab-pane label="课程" name="7">课程</el-tab-pane>
+      <el-tab-pane label="视频" name="6">视频</el-tab-pane>
+      <el-tab-pane label="课程" name="7">课程</el-tab-pane>
 
-    <el-tab-pane label="关注/订阅/互动" name="8">
-      <el-tabs v-model="activeName5" @tab-click="handleClick">
-        <el-tab-pane label="关注的人" name="1">回答的帖子</el-tab-pane>
-        <el-tab-pane label="粉丝" name="2">发布的帖子</el-tab-pane>
-        <el-tab-pane label="关注的收藏夹" name="3">发布的帖子</el-tab-pane>
-        <el-tab-pane label="关注的社区" name="4">发布的帖子</el-tab-pane>
-        <el-tab-pane label="发布的评论" name="5">发布的帖子</el-tab-pane>
-        <el-tab-pane label="收到的评论" name="6">发布的帖子</el-tab-pane>
-        <el-tab-pane label="普通专栏" name="7">发布的帖子</el-tab-pane>
-      </el-tabs>
-    </el-tab-pane>
-    <el-tab-pane label="收藏" name="9">定时任务补偿</el-tab-pane>
-    <!-- </div> -->
-  </el-tabs>
-</div>
+      <el-tab-pane label="关注/订阅/互动" name="8">
+        <el-tabs v-model="activeName5" @tab-click="handleClick">
+          <el-tab-pane label="关注的人" name="1">回答的帖子</el-tab-pane>
+          <el-tab-pane label="粉丝" name="2">发布的帖子</el-tab-pane>
+          <el-tab-pane label="关注的收藏夹" name="3">发布的帖子</el-tab-pane>
+          <el-tab-pane label="关注的社区" name="4">发布的帖子</el-tab-pane>
+          <el-tab-pane label="发布的评论" name="5">发布的帖子</el-tab-pane>
+          <el-tab-pane label="收到的评论" name="6">发布的帖子</el-tab-pane>
+          <el-tab-pane label="普通专栏" name="7">发布的帖子</el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="收藏" name="9">定时任务补偿</el-tab-pane>
+      <!-- </div> -->
+    </el-tabs>
+  </div>
 </template>
 <script>
 import qs from "qs";
@@ -151,7 +151,7 @@ export default {
     infiniteHandler(){
       console.log("到底了开始触发了方法调用数据")
       this.page++
-      this.$axios.get('/blog-console/blog-list',{
+      this.$axios.get('/blog/console/list',{
         params:{page:this.page},
         headers:{'token':localStorage.getItem('token')}})
           .then((res) => {
@@ -176,7 +176,7 @@ export default {
     async GetData() {
       this.recentList = [];
     // 获取文章列表
-      await this.$axios.get("/blog-console/blog-list",{headers:{'token':localStorage.getItem('token')}}).then((res) => {
+      await this.$axios.get("/blog/console/list",{headers:{'token':localStorage.getItem('token')}}).then((res) => {
         console.log("获取博客列表成功",res)
         this.recentList = this.recentList.concat(res.data.data.records);
         console.log("获取到的博客列表数据", this.recentList);
