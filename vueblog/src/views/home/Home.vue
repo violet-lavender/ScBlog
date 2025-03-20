@@ -35,13 +35,13 @@
 				<div class="tabs">
 					<el-tabs v-model="activeName" @tab-click="handleClick">
 						<el-tab-pane label="关注" name="first">
-							<FollowArticleItem />
+							<FollowArticleItem ref="followArticle"/>
 						</el-tab-pane>
 						<el-tab-pane label="推荐" name="second">
 							<RecommendArticleItem style="margin-top: 2px" />
 						</el-tab-pane>
 						<el-tab-pane label="最新" name="third">
-							<NewArticleItem />
+							<NewArticleItem ref="newArticle"/>
 						</el-tab-pane>
 						<!--            <el-tab-pane label="热榜" name="fourth">热榜</el-tab-pane>-->
 					</el-tabs>
@@ -78,8 +78,18 @@ export default {
 		this.getData()
 	},
 	methods: {
-		handleClick(tab, event) {
-			console.log(tab, event);
+		handleClick(tab) {
+			this.$nextTick(() => {
+				// 强制触发布局计算 (关键!)
+				void this.$el.offsetHeight; // 这行代码会触发同步布局计算
+
+				// 手动触发对应子组件的无限滚动检查
+				if (tab.name === 'first') {
+					this.$refs.followArticle?.triggerLoad();
+				} else if (tab.name === 'third') {
+					this.$refs.newArticle?.triggerLoad();
+				}
+			});
 		},
 		getData() {
 			this.$axios
@@ -537,5 +547,17 @@ export default {
 
 .content .article-left {
 	width: 996px;
+}
+
+.el-tabs__content {
+	overflow: hidden !important;
+	/* 强制创建布局上下文 */
+	min-height: 1px;
+	/* 确保最小高度 */
+}
+
+.infinite-loading-wrap {
+	min-height: 50px;
+	/* 防止初始高度为0 */
 }
 </style>

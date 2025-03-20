@@ -367,8 +367,8 @@ export default {
 
 <style scoped>
 .managecontent {
-    width: calc(100%- 40px);
-    height: calc(100%- 40px);
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
     margin: 20px;
 }
 

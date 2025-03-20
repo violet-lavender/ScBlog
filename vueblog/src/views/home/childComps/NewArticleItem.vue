@@ -4,45 +4,32 @@
 			<div class="article-item">
 				<div class="article-title">
 					<a href="#">
-            <span>
-              <router-link
-								:to="{ name: 'BlogDetail', params: { blogId: item.id } }"
-								target="_blank"
-							>
-                {{ item.title }}
-              </router-link>
-            </span>
+						<span>
+							<router-link :to="{ name: 'BlogDetail', params: { blogId: item.id } }" target="_blank">
+								{{ item.title }}
+							</router-link>
+						</span>
 					</a>
 				</div>
 				<div class="article-content-item">
-					<div class="article-img-left" v-if="item.coverImage!=null&&item.coverImage.trim().length>10">
-						<router-link
-							:to="{ name: 'BlogDetail', params: { blogId: item.id } }"
-							target="_blank"
-						>
-							<img :src="item.coverImage" alt=""/>
+					<div class="article-img-left" v-if="item.coverImage != null && item.coverImage.trim().length > 10">
+						<router-link :to="{ name: 'BlogDetail', params: { blogId: item.id } }" target="_blank">
+							<img :src="item.coverImage" alt="" />
 						</router-link>
 					</div>
 					<div class="article-content-right">
-						<router-link
-							:to="{ name: 'BlogDetail', params: { blogId: item.id } }"
-							target="_blank"
-						>
+						<router-link :to="{ name: 'BlogDetail', params: { blogId: item.id } }" target="_blank">
 							<div class="article-content">
 								{{ item.description }}
 							</div>
 						</router-link>
 						<div class="article-evaluation">
-							<div class="article-good" @click="addLikeNum(item.actionStatus.like,item.id, index)">
+							<div class="article-good" @click="addLikeNum(item.actionStatus.like, item.id, index)">
 								<!--登录显示-->
-								<img
-									:src="
-                    item.actionStatus.like
-                      ? require('../../../assets/img/home/good_active.png')
-                      : require('../../../assets/img/home/good.png')
-                  "
-									alt=""
-								/>
+								<img :src="item.actionStatus.like
+									? require('../../../assets/img/home/good_active.png')
+									: require('../../../assets/img/home/good.png')
+									" alt="" />
 								{{ item.likeNum }} <span>赞</span>
 							</div>
 							<div class="article-author">
@@ -58,12 +45,7 @@
 		</div>
 
 		<!--infinite-loading这个组件要放在列表的底部，滚动的盒子里面-->
-		<infinite-loading
-			spinner="spiral"
-			@infinite="infiniteHandler"
-			:distance="200"
-			class="infinite-loading-wrap"
-		>
+		<infinite-loading ref="infiniteLoading" spinner="spiral" @infinite="infiniteHandler" :distance="200" class="infinite-loading-wrap">
 			<div slot="spinner">加载中...</div>
 			<div slot="no-more">暂无更多数据</div>
 			<div slot="no-results">No results Data</div>
@@ -105,7 +87,7 @@ export default {
 			this.blogIdForm.blogId = id;
 			this.$axios
 				.post("/blog/action/like", qs.stringify(this.blogIdForm), {
-					headers: {token: localStorage.getItem("token")},
+					headers: { token: localStorage.getItem("token") },
 				})
 				.then((res) => {
 					console.log(res);
@@ -127,21 +109,34 @@ export default {
 					}
 				});
 		},
+		// 暴露给父组件调用的方法
+		triggerLoad() {
+			this.$nextTick(() => {
+				if (this.$refs.infiniteLoading) {
+					// 重置分页并强制触发加载
+					this.page = 1;
+					this.blogList = [];
+					this.$refs.infiniteLoading.stateChanger.reset();
+					this.$refs.infiniteLoading.trigger();
+				}
+			});
+		},
 		async infiniteHandler($state) {
-			this.$axios
-				.get("/blog/list/new?page=" + this.page, {
-					headers: {token: localStorage.getItem("token")},
-				})
-				.then((res) => {
-					if (res.data.data.records.length) {
-						this.page += 1; // 下一页
-						this.blogList = this.blogList.concat(res.data.data.records);
-						console.log(this.blogList);
-						$state.loaded();
-					} else {
-						$state.complete();
-					}
+			try {
+				const res = await this.$axios.get("/blog/list/new?page=" + this.page, {
+					headers: { token: localStorage.getItem("token") },
 				});
+
+				if (res.data.data.records.length) {
+					this.page += 1;
+					this.blogList = [...this.blogList, ...res.data.data.records];
+					$state.loaded();
+				} else {
+					$state.complete();
+				}
+			} catch (error) {
+				$state.error();
+			}
 		},
 	},
 };

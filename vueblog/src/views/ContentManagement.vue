@@ -1,40 +1,44 @@
 <template>
   <div class="body-content">
-        <div class="top">
-            <div class="content">
-              <div class="left">
-                <div class="leftcontent">
-                  <button class="release">发布</button>
-                  <div class="collapse">
-                      <el-collapse v-model="activeNames" @change="handleChange">
-                          <el-collapse-item  title="首页" name="1">
-
-                          </el-collapse-item>
-                          <el-collapse-item title="管理" name="2">
-                            <ul >
-                              <li @click="ChoseModel(item)" v-for="(item,index) in manageList" 
-                              :style="{'color':item.chose==true?'red':''}" :key="index">{{item.title}}</li>
-                            </ul>
-                          </el-collapse-item>
-                          <el-collapse-item title="数据" name="3">
-                            <ul >
-                              <li @click="ChoseModel(item)" v-for="(item,index) in dataList" :style="{'color':item.chose==true?'red':''}" :key="index">{{item.title}}</li>
-                            </ul>
-                          </el-collapse-item>
-                          <el-collapse-item title="设置" name="4">
-
-                          </el-collapse-item>
-                      </el-collapse>
-                    </div>
-                </div>
-              </div>
-              <div class="right">
-                <div class="rightcontent">
-                  <ManageContent></ManageContent>
-                </div>
-              </div>
+    <div class="top">
+      <div class="content">
+        <!-- 左侧导航 -->
+        <div class="left">
+          <div class="leftcontent">
+            <button class="release">发布</button>
+            <div class="collapse">
+              <el-collapse v-model="activeNames" @change="handleChange">
+                <el-collapse-item title="首页" name="1"></el-collapse-item>
+                <el-collapse-item title="管理" name="2">
+                  <ul>
+                    <li @click="ChoseModel(item)" v-for="(item, index) in manageList" :key="index"
+                      :style="{ color: item.chose == true ? 'red' : '' }">
+                      {{ item.title }}
+                    </li>
+                  </ul>
+                </el-collapse-item>
+                <el-collapse-item title="数据" name="3">
+                  <ul>
+                    <li @click="ChoseModel(item)" v-for="(item, index) in dataList" :key="index"
+                      :style="{ color: item.chose == true ? 'red' : '' }">
+                      {{ item.title }}
+                    </li>
+                  </ul>
+                </el-collapse-item>
+                <el-collapse-item title="设置" name="4"></el-collapse-item>
+              </el-collapse>
             </div>
+          </div>
         </div>
+
+        <!-- 右侧主要内容 -->
+        <div class="right">
+          <div class="rightcontent">
+            <ManageContent></ManageContent>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,10 +90,13 @@ export default {
     /* height: 50px; */
     background: rgb(255, 255, 255);
 }
-.body-content{
+.body-content {
   width: 100%;
   min-height: 100vh;
+  /* 保证占满全屏高度 */
   background: rgb(75, 84, 102);
+  overflow: hidden;
+  /* 避免溢出引起的背景不同步 */
 }
 .top-mid{
     margin: 0 auto;
@@ -120,7 +127,7 @@ export default {
 .left{
   margin-top:20px;
   width: 23%;
-  height: 800px;
+  /* height: 800px; */
   background: rgb(255, 255, 255);
 }
 .left .leftcontent{
@@ -167,8 +174,9 @@ export default {
   margin-top:20px;
   background: rgb(255, 255, 255);
 }
-.right .rightcontent{
-  width: 100%;
+.right .rightcontent,
+.left .leftcontent {
   height: 100%;
+  overflow: auto; /* 避免溢出 */
 }
 </style>

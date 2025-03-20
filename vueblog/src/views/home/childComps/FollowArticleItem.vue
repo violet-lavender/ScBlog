@@ -5,50 +5,37 @@
         <div class="article-title">
           <a href="#">
             <span>
-              <router-link
-                :to="{ name: 'BlogDetail', params: { blogId: item.id } }"
-                target="_blank"
-              >
+              <router-link :to="{ name: 'BlogDetail', params: { blogId: item.id } }" target="_blank">
                 {{ item.title }}
               </router-link>
             </span>
           </a>
         </div>
         <div class="article-content-item">
-          <div class="article-img-left" v-if="item.coverImage!=null&&item.coverImage.trim().length>10">
-            <router-link
-              :to="{ name: 'BlogDetail', params: { blogId: item.id } }"
-              target="_blank"
-            >
+          <div class="article-img-left" v-if="item.coverImage != null && item.coverImage.trim().length > 10">
+            <router-link :to="{ name: 'BlogDetail', params: { blogId: item.id } }" target="_blank">
               <img :src="item.coverImage" alt="" />
             </router-link>
           </div>
           <div class="article-content-right">
-            <router-link
-              :to="{ name: 'BlogDetail', params: { blogId: item.id } }"
-              target="_blank"
-            >
+            <router-link :to="{ name: 'BlogDetail', params: { blogId: item.id } }" target="_blank">
               <div class="article-content">
                 {{ item.description }}
               </div>
             </router-link>
             <div class="article-evaluation">
-              <div class="article-good" @click="addLikeNum(item.actionStatus.like,item.id, index)">
+              <div class="article-good" @click="addLikeNum(item.actionStatus.like, item.id, index)">
                 <!--登录显示-->
-                <img
-                  :src="
-                    item.actionStatus.like
-                      ? require('../../../assets/img/home/good_active.png')
-                      : require('../../../assets/img/home/good.png')
-                  "
-                  alt=""
-                />
+                <img :src="item.actionStatus.like
+                  ? require('../../../assets/img/home/good_active.png')
+                  : require('../../../assets/img/home/good.png')
+                  " alt="" />
                 <!--未登录显示-->
-<!--                <img-->
-<!--                  v-if="!isShow"-->
-<!--                  src="../../../assets/img/home/good.png"-->
-<!--                  alt=""-->
-<!--                />-->
+                <!--                <img-->
+                <!--                  v-if="!isShow"-->
+                <!--                  src="../../../assets/img/home/good.png"-->
+                <!--                  alt=""-->
+                <!--                />-->
                 {{ item.likeNum }} <span>赞</span>
               </div>
               <div class="article-author">
@@ -64,12 +51,7 @@
     </div>
 
     <!--infinite-loading这个组件要放在列表的底部，滚动的盒子里面-->
-    <infinite-loading
-      spinner="spiral"
-      @infinite="infiniteHandler"
-      :distance="200"
-      class="infinite-loading-wrap"
-    >
+    <infinite-loading ref="infiniteLoading" spinner="spiral" @infinite="infiniteHandler" :distance="200" class="infinite-loading-wrap">
       <div slot="spinner">加载中...</div>
       <div slot="no-more">暂无更多数据</div>
       <div slot="no-results">No results Data</div>
@@ -98,17 +80,17 @@ export default {
       userAction: {},
       isLike: false,
       isShow: true,
-      isShowImg:true,
+      isShowImg: true,
     };
   },
   components: {
     InfiniteLoading,
   },
-  mounted() {},
+  mounted() { },
   computed: {},
   methods: {
     // 点赞
-    addLikeNum(isLike,id, index) {
+    addLikeNum(isLike, id, index) {
       this.blogIdForm.blogId = id;
       this.$axios
         .post("/blog/action/like", qs.stringify(this.blogIdForm), {
@@ -134,37 +116,48 @@ export default {
           }
         });
     },
-    async infiniteHandler($state) {
-      // this.$axios
-      //   .get("/blog/list?page=" + this.page, {
-      //     headers: { token: localStorage.getItem("token") },
-      //   })
-			this.$axios
-				.get("/blog/list/follow?page=" + this.page, {
-					headers: { token: localStorage.getItem("token") },
-				})
-        .then((res) => {
-          // console.log(res);
-          // console.log(res.data.data.userAction)
-          if (res.data.data.userAction == null) {
-            this.isShow = false;
-          } else {
-            this.isShow = true;
-          }
+    // 暴露给父组件调用的加载方法
+    triggerLoad() {
+      this.$nextTick(() => {
+        if (this.$refs.infiniteLoading) {
+          // 重置分页和列表
+          this.page = 1;
+          this.blogList = [];
+          // 重置无限滚动状态
+          this.$refs.infiniteLoading.stateChanger.reset();
+          // 触发首次加载
+          this.$refs.infiniteLoading.trigger();
+        }
+      });
+    },
 
-          if (res.data.data.records.length) {
-            this.page += 1; // 下一页
-            this.blogList = this.blogList.concat(res.data.data.records);
-            this.userAction = {
-              ...this.userAction,
-              ...res.data.data.userAction,
-            };
-            // console.log(this.blogList);
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
+    async infiniteHandler($state) {
+      try {
+        const res = await this.$axios.get("/blog/list/follow?page=" + this.page, {
+          headers: { token: localStorage.getItem("token") },
         });
+
+        // 处理用户动作显示状态
+        if (res.data.data.userAction == null) {
+          this.isShow = false;
+        } else {
+          this.isShow = true;
+        }
+
+        // 处理数据加载
+        if (res.data.data.records?.length) {
+          this.page += 1;
+          this.blogList = [...this.blogList, ...res.data.data.records];
+          this.userAction = { ...this.userAction, ...res.data.data.userAction };
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      } catch (error) {
+        console.error("关注列表加载失败:", error);
+        $state.error();
+        this.$message.error("数据加载失败，请重试");
+      }
     },
   },
 };
@@ -212,6 +205,7 @@ export default {
   -webkit-line-clamp: 1;
   line-height: 25px;
 }
+
 .article-title a span:hover {
   /*color: pink;*/
   text-decoration: underline;
@@ -220,6 +214,7 @@ export default {
 .article-img-left {
   margin-right: 16px;
 }
+
 .article-img-left a {
   position: relative;
   border-radius: 2px;
@@ -235,17 +230,18 @@ export default {
 }
 
 .article-img-left img {
-	width: 132px;
-	height: 100px;
-	object-fit: cover;
+  width: 132px;
+  height: 100px;
+  object-fit: cover;
 }
 
 /*图片文章并排显示*/
 .article-content-item {
   display: flex;
   padding-bottom: 15px;
-	height: 130px;
+  height: 130px;
 }
+
 .article-content-right {
   display: flex;
   flex: 1;
@@ -258,15 +254,16 @@ export default {
   min-height: 40px;
   color: #555666;
 }
+
 .article-content-right .article-content {
   color: #555666;
   font-size: 14px;
   font-weight: 400;
   line-height: 22px;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 4;
-	overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
 }
 
 /*评价*/
@@ -274,16 +271,19 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .article-evaluation img {
   width: 16px;
   height: 16px;
   margin-right: 3px;
 }
+
 .article-evaluation .article-good {
   display: flex;
   align-items: center;
   margin-right: 30px;
 }
+
 .article-evaluation .article-author {
   margin-right: 30px;
 }
