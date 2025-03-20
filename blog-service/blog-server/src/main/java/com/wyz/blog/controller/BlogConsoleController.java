@@ -133,7 +133,7 @@ public class BlogConsoleController {
         if (month != null && !month.matches("\\d{4}-\\d{2}")) {
             throw new BusinessException("月份格式错误, 应为yyyy-MM");
         }
-        Integer userId = AuthHelper.getCurrentUserId();
+        Integer userId = AuthHelper.getCurrentUserIdOrExit();
         // 获取博客列表
         LambdaQueryWrapper<BlogView> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(BlogView::getAuthorId, userId)
