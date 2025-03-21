@@ -11,7 +11,10 @@ import com.wyz.blog.type.BlogStatusType;
 import com.wyz.common.web.auth.AuthHelper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -45,10 +48,10 @@ public class BlogController {
 	 * 获取最新博客列表
 	 */
 	@GetMapping("/list/new")
-	public BlogStatusListVO getNewBlog(@RequestParam(defaultValue = "1") int page, @CookieValue(required = false) Integer schoolCode) {
+	public BlogStatusListVO getNewBlog(@RequestParam(defaultValue = "1") int page) {
 		log.debug("searchBlog,page->{}", page);
 		Integer id = AuthHelper.getCurrentUserId();
-		return blogViewService.getNewBlogList(id, schoolCode, page, pageSize);
+		return blogViewService.getNewBlogList(id, page, pageSize);
 	}
 
 	/**

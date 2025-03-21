@@ -79,10 +79,9 @@ public class BlogViewServiceImpl extends ServiceImpl<BlogViewMapper, BlogView> i
 	}
 
 	@Override
-	public BlogStatusListVO getNewBlogList(Integer userId, Integer schoolCode, int page, int pageSize) {
-		// 设置查询条件：schoolCode相同、状态为公开，并以id倒序（表示发布时间最新）
+	public BlogStatusListVO getNewBlogList(Integer userId, int page, int pageSize) {
+		// 设置查询条件：状态为公开，并以id倒序（表示发布时间最新）
 		LambdaQueryWrapper<BlogView> wrapper = new LambdaQueryWrapper<>();
-		wrapper.eq(schoolCode != null, BlogView::getSchoolCode, schoolCode);
 		wrapper.eq(BlogView::getStatus, BlogStatusType.PUBLISH.getValue()).orderByDesc(BlogView::getId);
 		// 设置分页
 		IPage<BlogView> iPage = new Page<>(page, pageSize);

@@ -27,13 +27,12 @@ public interface BlogViewService extends IService<BlogView> {
 	/**
 	 * 获取最新博客列表
 	 *
-	 * @param userId     用户id
-	 * @param schoolCode 院校代码
-	 * @param page       第几页
-	 * @param pageSize   页大小
+	 * @param userId   用户id
+	 * @param page     第几页
+	 * @param pageSize 页大小
 	 * @return 博客（含用户状态）列表
 	 */
-	BlogStatusListVO getNewBlogList(Integer userId, Integer schoolCode, int page, int pageSize);
+	BlogStatusListVO getNewBlogList(Integer userId, int page, int pageSize);
 
 	/**
 	 * 获取最新博客列表

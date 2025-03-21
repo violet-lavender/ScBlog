@@ -32,7 +32,7 @@ public class BlinkController {
 	private BlinkService blinkService;
 
 	/**
-	 * 获取动态内容
+	 * 获取动态内容 TODO, 博客的浏览量统计问题，感觉不好解决
 	 *
 	 * @param id 动态id
 	 */

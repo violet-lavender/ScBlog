@@ -129,12 +129,21 @@ export default {
 
 				if (res.data.data.records.length) {
 					this.page += 1;
+
+					// 确保 actionStatus 存在，避免 null 引发的 like 访问错误
+					res.data.data.records.forEach((item) => {
+						if (!item.actionStatus) {
+							item.actionStatus = { like: false }; // 默认值，避免 `null`
+						}
+					});
+
 					this.blogList = [...this.blogList, ...res.data.data.records];
 					$state.loaded();
 				} else {
 					$state.complete();
 				}
 			} catch (error) {
+				console.error("加载最新列表出错", error);
 				$state.error();
 			}
 		},
