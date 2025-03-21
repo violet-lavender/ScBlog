@@ -20,17 +20,17 @@ public class IpLimitConfig {
 	/**
 	 * 在规定的{@link #time}内最多访问多少次
 	 */
-	public static int count = 30;
+	public static int count = 100;
 
 	/**
 	 * 设置访问的单次记录时间，单位秒
 	 */
-	public static long time = 5;
+	public static long time = 60;
 
 	/**
 	 * 访问超出限制后禁止访问多久，单位秒
 	 */
-	public static long ttl = 10;
+	public static long ttl = 1800;
 
 	public void setKey(String key) {
 		IpLimitConfig.key = key;

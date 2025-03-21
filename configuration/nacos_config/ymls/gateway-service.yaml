@@ -10,6 +10,6 @@ spring:
 gateway:
   ip-limit:
     key: "gateway:ipLimit:"
-    count: 30
-    time: 5
-    ttl: 10
+    count: 100
+    time: 60
+    ttl: 1800

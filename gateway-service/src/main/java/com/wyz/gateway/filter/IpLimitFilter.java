@@ -48,7 +48,6 @@ public class IpLimitFilter implements GlobalFilter, Ordered {
 	/**
 	 * 检查是否超过访问限制
 	 * <p>
-	 * todo 有待优化，目前逻辑为，5s内连续访问30次，需要冷却10s
 	 *
 	 * @param exchange 访问信息
 	 * @return 是否超过限制，{@code true}超出限制
