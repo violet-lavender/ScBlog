@@ -15,4 +15,6 @@ public class BlinkVO {
 
 	UserDTO user;
 
+	// 是否点赞
+	Boolean isLike;
 }

@@ -110,7 +110,8 @@ public class BlinkController {
 	 */
 	@GetMapping("/list")
 	public BlinkViewListVO getList(@RequestParam(defaultValue = "1") Integer page, Integer schoolCode) {
-		return blinkViewService.getListByScore(page, PAGE_SIZE, schoolCode);
+		Integer userId = AuthHelper.getCurrentUserId();
+		return blinkViewService.getListByScore(page, PAGE_SIZE, schoolCode, userId);
 	}
 
 	/**

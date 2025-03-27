@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wyz.blink.mapper.BlinkViewMapper;
+import com.wyz.blink.mapper.LikeBlinkMapper;
 import com.wyz.blink.pojo.BlinkVO;
 import com.wyz.blink.pojo.BlinkView;
 import com.wyz.blink.pojo.BlinkViewListVO;
@@ -33,20 +34,23 @@ public class BlinkViewServiceImpl extends ServiceImpl<BlinkViewMapper, BlinkView
 	@Resource
 	private UserClient userClient;
 
+	@Resource
+	private LikeBlinkMapper likeBlinkMapper;
+
 	@Override
-	public BlinkViewListVO getListByTime(int page, int pageSize, Integer schoolCode) {
+	public BlinkViewListVO getListByTime(int page, int pageSize, Integer schoolCode, Integer userId) {
 		LambdaQueryWrapper<BlinkView> wrapper = new LambdaQueryWrapper<>();
 		// 通过id排序，即为通过时间排序，因为时间越后面的id就越大
 		wrapper.orderByDesc(BlinkView::getId).eq(schoolCode != null, BlinkView::getSchoolCode, schoolCode);
-		return getPage(wrapper, page, pageSize);
+		return getPage(wrapper, page, pageSize, userId);
 	}
 
 	@Override
-	public BlinkViewListVO getListByScore(int page, int pageSize, Integer schoolCode) {
+	public BlinkViewListVO getListByScore(int page, int pageSize, Integer schoolCode, Integer userId) {
 		LambdaQueryWrapper<BlinkView> wrapper = new LambdaQueryWrapper<>();
 		// 根据Score降序、 id升序排序
 		wrapper.orderByAsc(BlinkView::getScore).orderByDesc(BlinkView::getId).eq(schoolCode != null, BlinkView::getSchoolCode, schoolCode);
-		return getPage(wrapper, page, pageSize);
+		return getPage(wrapper, page, pageSize, userId);
 	}
 
 	@Override
@@ -54,7 +58,7 @@ public class BlinkViewServiceImpl extends ServiceImpl<BlinkViewMapper, BlinkView
 		LambdaQueryWrapper<BlinkView> wrapper = new LambdaQueryWrapper<>();
 		// 通过id排序，即为通过时间排序，因为时间越后面的id就越大
 		wrapper.orderByDesc(BlinkView::getId).eq(BlinkView::getUserId, userId);
-		return getPage(wrapper, page, pageSize);
+		return getPage(wrapper, page, pageSize, userId);
 	}
 
 	/**
@@ -64,7 +68,7 @@ public class BlinkViewServiceImpl extends ServiceImpl<BlinkViewMapper, BlinkView
 	 * @param page     第几页
 	 * @param pageSize 页大小
 	 */
-	private BlinkViewListVO getPage(Wrapper<BlinkView> wrapper, int page, int pageSize) {
+	private BlinkViewListVO getPage(Wrapper<BlinkView> wrapper, int page, int pageSize, Integer userId) {
 		BlinkViewListVO blinkViewListVO = new BlinkViewListVO();
 
 		// 查询数据
@@ -90,6 +94,14 @@ public class BlinkViewServiceImpl extends ServiceImpl<BlinkViewMapper, BlinkView
 			blinkVO.setBlink(blink);
 			blinkVO.setUser(userMap.get(blink.getUserId()));
 			blinkVOList.add(blinkVO);
+		}
+
+		if (userId != null) {
+			Integer[] blinkIdList = iPage.getRecords().stream().map(BlinkView::getId).toArray(Integer[]::new);
+			Set<Integer> likeBlinkIdSet = likeBlinkMapper.selectMapByUserIdAndBlinkIdList(userId, blinkIdList);
+			for (BlinkVO blinkVO : blinkVOList) {
+				blinkVO.setIsLike(likeBlinkIdSet.contains(blinkVO.getBlink().getId()));
+			}
 		}
 
 		blinkViewListVO.setRecords(blinkVOList);
