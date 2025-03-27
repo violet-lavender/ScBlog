@@ -20,6 +20,16 @@ public interface BlinkViewService extends IService<BlinkView> {
 	BlinkViewListVO getListByTime(int page, int pageSize, Integer schoolCode);
 
 	/**
+	 * 获取动态列表，以Score排序，获取最高分的
+	 *
+	 * @param page       第几页
+	 * @param pageSize   页大小
+	 * @param schoolCode 院校代码
+	 * @return 动态列表数据
+	 */
+	BlinkViewListVO getListByScore(int page, int pageSize, Integer schoolCode);
+
+	/**
 	 * 获取个人的动态列表
 	 *
 	 * @param userId   用户id
