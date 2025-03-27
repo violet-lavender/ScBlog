@@ -65,8 +65,10 @@ public class BlinkServiceImpl extends ServiceImpl<BlinkMapper, Blink> implements
 		}
 	}
 
+	// 计算评分, 字数开方作为初始评分
 	private double getRating(Blink blink) {
-		return blink.getContent().length();
+		double rating = Math.sqrt(blink.getContent().length());
+		return Math.round(rating * 100.0) / 100.0;
 	}
 
 }
