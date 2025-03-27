@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 import static com.wyz.blog.constants.RedisConstants.*;
 
 /**
- * 排行榜服务实现类
+ * 排行榜服务实现类 TODO 这里只存储到Redis中，但是Score中没有显示，感觉还是不太对
  */
 @Service
 public class RankServiceImpl implements RankService {

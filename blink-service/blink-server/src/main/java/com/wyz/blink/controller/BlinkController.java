@@ -52,7 +52,7 @@ public class BlinkController {
 	 * 创建动态
 	 *
 	 * @param content    动态内容
-	 * @param schoolCode 院校代码，从cookie中获取
+	 * @param schoolCode 院校代码，从cookie中获取 TODO 这里的院校代码竟然显示了
 	 */
 	@PostMapping
 	public void createBlink(@NotNull String content, @CookieValue(required = false) Integer schoolCode) {
