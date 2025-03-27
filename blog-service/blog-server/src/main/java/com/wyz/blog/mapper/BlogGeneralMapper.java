@@ -3,7 +3,10 @@ package com.wyz.blog.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wyz.blog.pojo.domain.BlogGeneral;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * 博客概述Mapper
@@ -66,5 +69,12 @@ public interface BlogGeneralMapper extends BaseMapper<BlogGeneral> {
 	 */
 	@Update("update blog_general set comment_num = comment_num - 1 where blog_id = #{blogId} and comment_num > 0;")
 	void decreaseCommentNum(Integer blogId);
+
+	/**
+	 * 批量更新分数
+	 *
+	 * @param list
+	 */
+	void batchUpdateScore(@Param("list") List<BlogGeneral> list);
 
 }

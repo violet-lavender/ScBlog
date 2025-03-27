@@ -47,7 +47,6 @@ public class LikeBlinkServiceImpl extends ServiceImpl<LikeBlinkMapper, LikeBlink
             // 点赞已经存在
             likeBlinkMapper.deleteById(selectOne);
             blinkGeneralMapper.decreaseLikeNum(blinkId);
-            // 向rabbitMQ发送 取消点赞消息 TODO, score 问题
             return false;
         } else {
             // 点赞不存在
@@ -57,7 +56,6 @@ public class LikeBlinkServiceImpl extends ServiceImpl<LikeBlinkMapper, LikeBlink
             linkBlink.setCreateTime(new Timestamp(System.currentTimeMillis()));
             likeBlinkMapper.insert(linkBlink);
             blinkGeneralMapper.increaseLikeNum(blinkId);
-            // 向rabbitMQ发送 点赞消息 TODO, score 问题
             return true;
         }
     }

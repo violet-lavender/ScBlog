@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyz.blog.mapper.BlogGeneralMapper">
+
+    <!-- 批量更新分数 -->
+    <update id="batchUpdateScore">
+        INSERT INTO blog_general
+        (blog_id, score)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.blogId},
+            #{item.score}
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        score = VALUES(score)
+    </update>
+</mapper>

@@ -165,16 +165,12 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 		BlogGeneral blogGeneral = new BlogGeneral();
 		blogGeneral.setBlogId(blog.getId());
 		// 8. 设置初始评分
-		blogGeneral.setScore(ratingBlog(blogDTO.getContent()));
+		blogGeneral.setScore(10.0);
 		if (blogGeneralMapper.insert(blogGeneral) != 1) {
 			throw new MapperException("新增博客失败", "blog_general insert error!");
 		}
 		// 9. 发送MQ消息
 		rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_INSERT_KEY, blog);
-	}
-
-	private int ratingBlog(@NotNull String blog) {
-		return blog.length();
 	}
 
 	@Override

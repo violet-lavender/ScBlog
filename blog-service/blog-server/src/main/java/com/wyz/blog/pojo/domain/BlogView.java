@@ -86,8 +86,8 @@ public class BlogView {
 	Integer collectionNum;
 
 	/**
-	 * 评分
-	 */
-	Integer score;
+     * 评分
+     */
+    Double score;
 
 }

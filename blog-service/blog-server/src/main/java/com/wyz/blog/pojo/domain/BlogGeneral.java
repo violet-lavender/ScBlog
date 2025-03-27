@@ -38,7 +38,7 @@ public class BlogGeneral {
 	/**
 	 * 评分
 	 */
-	Integer score;
+	Double score;
 
 	/**
 	 * 是否已经删除，0未删除，1已删除
