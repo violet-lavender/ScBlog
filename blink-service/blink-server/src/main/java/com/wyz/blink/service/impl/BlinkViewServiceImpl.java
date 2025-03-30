@@ -49,14 +49,14 @@ public class BlinkViewServiceImpl extends ServiceImpl<BlinkViewMapper, BlinkView
 	public BlinkViewListVO getListByScore(int page, int pageSize, Integer schoolCode, Integer userId) {
 		LambdaQueryWrapper<BlinkView> wrapper = new LambdaQueryWrapper<>();
 		// 根据Score降序、 id升序排序
-		wrapper.orderByAsc(BlinkView::getScore).orderByDesc(BlinkView::getId).eq(schoolCode != null, BlinkView::getSchoolCode, schoolCode);
+		wrapper.orderByDesc(BlinkView::getScore).orderByAsc(BlinkView::getId).eq(schoolCode != null, BlinkView::getSchoolCode, schoolCode);
 		return getPage(wrapper, page, pageSize, userId);
 	}
 
 	@Override
 	public BlinkViewListVO getSelfList(int userId, int page, int pageSize) {
 		LambdaQueryWrapper<BlinkView> wrapper = new LambdaQueryWrapper<>();
-		// 通过id排序，即为通过时间排序，因为时间越后面的id就越大
+		// 通过id降序，即为通过时间排序，因为时间越后面的id就越大
 		wrapper.orderByDesc(BlinkView::getId).eq(BlinkView::getUserId, userId);
 		return getPage(wrapper, page, pageSize, userId);
 	}
