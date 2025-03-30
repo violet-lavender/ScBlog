@@ -24,7 +24,8 @@
               </div>
             </router-link>
             <div class="article-evaluation">
-              <div class="article-good" @click="addLikeNum(item.actionStatus.like, item.id, index)">
+              <div class="article-good" @click="addLikeNum(item.actionStatus.like, item.id, index)"
+                :disabled="loadingStates[item.id]"> <!-- 禁用状态绑定 -->
                 <!--登录显示-->
                 <img :src="item.actionStatus.like
                   ? require('../../../assets/img/home/good_active.png')
@@ -51,7 +52,8 @@
     </div>
 
     <!--infinite-loading这个组件要放在列表的底部，滚动的盒子里面-->
-    <infinite-loading ref="infiniteLoading" spinner="spiral" @infinite="infiniteHandler" :distance="200" class="infinite-loading-wrap">
+    <infinite-loading ref="infiniteLoading" spinner="spiral" @infinite="infiniteHandler" :distance="200"
+      class="infinite-loading-wrap">
       <div slot="spinner">加载中...</div>
       <div slot="no-more">暂无更多数据</div>
       <div slot="no-results">No results Data</div>
@@ -81,6 +83,7 @@ export default {
       isLike: false,
       isShow: true,
       isShowImg: true,
+      loadingStates: {},  // 跟踪每个文章的加载状态
     };
   },
   components: {
@@ -90,31 +93,42 @@ export default {
   computed: {},
   methods: {
     // 点赞
-    addLikeNum(isLike, id, index) {
-      this.blogIdForm.blogId = id;
-      this.$axios
-        .post("/blog/action/like", qs.stringify(this.blogIdForm), {
-          headers: { token: localStorage.getItem("token") },
-        })
-        .then((res) => {
-          console.log(res);
-          if (res.data.code == 402 && res.data.status == false) {
-            this.$message({
-              showClose: true,
-              message: "请先登录哦~",
-              type: "warning",
-            });
-          }
-          if (res.data.code == 200 && res.data.status == true) {
-            if (isLike) {
-              this.blogList[index].likeNum--;
-              this.blogList[index].actionStatus.like = false;
-            } else {
-              this.blogList[index].likeNum++;
-              this.blogList[index].actionStatus.like = true;
-            }
-          }
-        });
+    async addLikeNum(isLike, id, index) {
+      // 如果正在加载，阻止重复点击
+      if (this.loadingStates[id]) return;
+
+      // 设置加载状态并保存当前值用于可能的回滚
+      this.$set(this.loadingStates, id, true);
+      const originalLike = isLike;
+      const originalLikeNum = this.blogList[index].likeNum;
+
+      try {
+        // 乐观更新：立即切换状态
+        this.blogList[index].actionStatus.like = !originalLike;
+        this.blogList[index].likeNum += originalLike ? -1 : 1;
+
+        const res = await this.$axios.post(
+          "/blog/action/like",
+          qs.stringify({ blogId: id }),
+          { headers: { token: localStorage.getItem("token") } }
+        );
+
+        if (res.data.code !== 200 || !res.data.status) {
+          // 请求失败，回滚状态
+          this.blogList[index].actionStatus.like = originalLike;
+          this.blogList[index].likeNum = originalLikeNum;
+          this.$message.error("操作失败，请重试");
+        }
+        // 请求成功则保持乐观更新状态
+      } catch (error) {
+        // 请求异常，回滚状态
+        this.blogList[index].actionStatus.like = originalLike;
+        this.blogList[index].likeNum = originalLikeNum;
+        this.$message.error("网络错误，请检查连接");
+      } finally {
+        // 清除加载状态
+        this.$set(this.loadingStates, id, false);
+      }
     },
     // 暴露给父组件调用的加载方法
     triggerLoad() {
