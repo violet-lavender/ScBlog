@@ -19,6 +19,7 @@ import '@/assets/svg/iconfont.js'
 import '@/assets/svg/icon.css'
 import less from 'less'
 
+
 Vue.use(less)
 // Vue.use(ElementUI);
 
@@ -55,4 +56,3 @@ new Vue({
 	render: h => h(App),
 
 }).$mount('#app')
-

@@ -45,6 +45,7 @@ public class BlinkServiceImpl extends ServiceImpl<BlinkMapper, Blink> implements
 		blinkGeneralMapper.insert(general);
 	}
 
+	// TODO 异常优化，放到权限问题一起处理
 	@Override
 	public void remove(int id, int userId) {
 		LambdaQueryWrapper<Blink> wrapper = new LambdaQueryWrapper<>();

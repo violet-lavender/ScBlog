@@ -41,7 +41,7 @@
                 </div>
               </li>
               <li v-for="(icon, i) in iconList" :key="i">
-                <svg class="icon" aria-hidden="true">
+                <svg class="icon" aria-hidden="true" @click="handleFeatureClick(i)">
                   <use :xlink:href="icon"></use>
                 </svg>
               </li>
@@ -50,11 +50,23 @@
         </div>
       </div>
     </div>
+
+    <infinite-loading spinner="spiral" @infinite="infiniteHandler" :distance="200" class="infinite-loading-wrap">
+      <div slot="spinner">加载中...</div>
+      <div slot="no-more">暂无更多数据</div>
+      <div slot="no-results">No results Data</div>
+      <div slot="error" slot-scope="{ trigger }">
+        Error Data, click
+        <a href="javascript:;" @click="trigger">here</a> to retry
+      </div>
+    </infinite-loading>
   </div>
 </template>
 
 <script>
 import qs from 'qs'
+
+import InfiniteLoading from 'vue-infinite-loading'
 
 export default {
   data() {
@@ -63,37 +75,53 @@ export default {
       username: '',
       iconList: ['#icon-pinglun', '#icon-zhuanfa', '#icon-gengduo'],
       loadingStates: {},  // 加载状态跟踪
-      config: {
-        params: {
-          page: 0,
-          schoolCode: null,
-        }
-      },
+      components: { InfiniteLoading },
+      page: 1,
+      hasMore: true,  // 是否还有更多数据
       // 动态列表
       DynamicList: []
     }
   },
-  created() {
-    this.GetData()
-  },
+  created() {},
+  components: { InfiniteLoading },
   methods: {
-    GetData() {
-      // 添加headers携带token
-      const config = {
-        params: this.config.params,
-        headers: {
-          token: localStorage.getItem("token")
-        }
+    async infiniteHandler($state) {
+      if (!this.hasMore) {
+        $state.complete()
+        return
       }
 
-      this.$axios.get('/blink/list', config).then((res) => {
-        if (res.data?.status) {
-          this.DynamicList = res.data.data.records.map(item => ({
-            ...item,
-            isLike: item.isLike ?? false  // 前端默认值处理
-          }))
+      try {
+        const config = {
+          params: {
+            page: this.page
+          },
+          headers: { token: localStorage.getItem("token") }
         }
-      }).catch(console.error)
+
+        const res = await this.$axios.get('/blink/list', config)
+
+        if (res.data?.status) {
+          const records = res.data.data.records
+          this.DynamicList = this.DynamicList.concat(
+            records.map(item => ({
+              ...item,
+              isLike: item.isLike ?? false
+            }))
+          )
+
+          this.page++
+          this.hasMore = this.page <= res.data.data.pages
+          $state.loaded()
+
+          if (!this.hasMore) {
+            $state.complete()
+          }
+        }
+      } catch (error) {
+        $state.error()
+        console.error("加载失败:", error)
+      }
     },
     // 跳转至编辑动态页面
     Publish() {
@@ -149,6 +177,15 @@ export default {
       } finally {
         this.$delete(this.loadingStates, blinkId);
       }
+    },
+    handleFeatureClick(index) {
+      const features = ['评论', '分享', '其他'];
+      this.$message({
+        message: `当前暂未开发${features[index]}功能哦，敬请期待更多功能~`,
+        type: 'info',
+        duration: 3000,
+        customClass: 'feature-message'
+      });
     }
   },
 
@@ -330,4 +367,5 @@ export default {
   transform: scale(1.1);
   transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
+
 </style>
