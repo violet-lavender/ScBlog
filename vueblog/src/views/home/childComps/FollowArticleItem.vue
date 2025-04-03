@@ -52,7 +52,7 @@
     </div>
 
     <!--infinite-loading这个组件要放在列表的底部，滚动的盒子里面-->
-    <infinite-loading ref="infiniteLoading" spinner="spiral" @infinite="infiniteHandler" :distance="200"
+    <infinite-loading ref="infiniteLoading" spinner="spiral" @infinite="infiniteLoading" :distance="200"
       class="infinite-loading-wrap">
       <div slot="spinner">加载中...</div>
       <div slot="no-more">暂无更多数据</div>
@@ -140,12 +140,12 @@ export default {
           // 重置无限滚动状态
           this.$refs.infiniteLoading.stateChanger.reset();
           // 触发首次加载
-          this.$refs.infiniteLoading.trigger();
+          // this.$refs.infiniteLoading.trigger();
         }
       });
     },
 
-    async infiniteHandler($state) {
+    async infiniteLoading($state) {
       try {
         const res = await this.$axios.get("/blog/list/follow?page=" + this.page, {
           headers: { token: localStorage.getItem("token") },

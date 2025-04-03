@@ -90,7 +90,7 @@ export default {
             }
 			let formdata=new FormData()
 			formdata.append('content',this.textarea)
-			// formdata.append('schoolCode',)
+            formdata.append('schoolCode', JSON.parse(localStorage.getItem('userMessage')).schoolCode || '')
 			//添加院校代码
             // this.config.content = this.textarea;
             

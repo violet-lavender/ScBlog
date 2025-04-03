@@ -4,99 +4,55 @@
 			<div class="toolbar-container">
 				<div class="toolbar-container-left">
 					<div class="toolbar-logo toolbar-subMenu-box csdn-toolbar-fl">
-						<a
-							data-report-click='{"spm":"3001.4476"}'
-							data-report-query="spm=3001.4476"
-							href="/"
-						>
-							<img id="icon" title="首页" src="../../../assets/img/long-logo.png"/>
+						<a data-report-click='{"spm":"3001.4476"}' data-report-query="spm=3001.4476" href="/">
+							<img id="icon" title="首页" src="../../../assets/img/long-logo.png" />
 						</a>
 					</div>
 					<ul id="head-nav" class="toolbar-menus csdn-toolbar-fl">
 						<li class="" title="技术问题，有问必答">
-							<a
-								data-report-click='{"mod":"popu_336","dest":"http://scblogs.cn/","spm":"3001.4492"}'
-								data-report-query="spm=3001.4492"
-								href="/"
-							>
+							<a data-report-click='{"mod":"popu_336","dest":"http://scblogs.cn/","spm":"3001.4492"}'
+								data-report-query="spm=3001.4492" href="/">
 								问答
 								<!-- 校园风采 -->
 							</a>
 						</li>
 
 						<li class="" title="找到志同道合的伙伴">
-							<a
-								@click="ToHeart()"
-								href="javascript:"
-							>
+							<a @click="ToHeart()" href="javascript:">
 								动态
 								<!-- 关于我们 -->
 							</a>
 						</li>
 
 						<li class="" title="看看美丽的校园">
-							<a
-								data-report-click='{"mod":"popu_336","dest":"http://scblogs.cn/","spm":"3001.4482"}'
-								data-report-query="spm=3001.4482"
-								href="/"
-							>
+							<a data-report-click='{"mod":"popu_336","dest":"http://scblogs.cn/","spm":"3001.4482"}'
+								data-report-query="spm=3001.4482" href="/">
 								校园风采
 							</a>
 						</li>
 
-						<li class="" title="当前院校">
-							<a
-								href="javascript:"
-								@click="centerDialogVisible = true">
-								<el-popover
-									placement="top"
-									width="500"
-									v-model="visible"
-									:key="showschool"
-								>
+						<li class="" title="当前院校" v-if="isShowAvatar">
+							<a href="javascript:" @click="centerDialogVisible = true">
+								<el-popover placement="top" width="500" v-model="visible" :key="showschool">
 									<el-row>
 										<el-col :span="8">
-											<el-select
-												v-model="provinceId"
-												@focus="getProvinces"
-												placeholder="请选择省份"
-											>
-												<el-option
-													v-for="item in provinceList"
-													:key="item.id"
-													:label="item.name"
-													:value="item.id"
-												>
+											<el-select v-model="provinceId" @focus="getProvinces" placeholder="请选择省份">
+												<el-option v-for="item in provinceList" :key="item.id"
+													:label="item.name" :value="item.id">
 												</el-option>
 											</el-select>
 										</el-col>
 										<el-col :span="8">
-											<el-select
-												v-model="cityId"
-												@focus="getCities"
-												placeholder="请选择城市"
-											>
-												<el-option
-													v-for="item in cityList"
-													:key="item.id"
-													:label="item.name"
-													:value="item.id"
-												>
+											<el-select v-model="cityId" @focus="getCities" placeholder="请选择城市">
+												<el-option v-for="item in cityList" :key="item.id" :label="item.name"
+													:value="item.id">
 												</el-option>
 											</el-select>
 										</el-col>
 										<el-col :span="8">
-											<el-select
-												v-model="schoolCode"
-												@focus="getSchools"
-												placeholder="请选择学校"
-											>
-												<el-option
-													v-for="item in schoolList"
-													:key="item.id"
-													:label="item.name"
-													:value="item.code"
-												>
+											<el-select v-model="schoolCode" @focus="getSchools" placeholder="请选择学校">
+												<el-option v-for="item in schoolList" :key="item.id" :label="item.name"
+													:value="item.code">
 												</el-option>
 											</el-select>
 										</el-col>
@@ -105,7 +61,7 @@
 										<el-button size="mini" type="text" @click="Cancel()">取消</el-button>
 										<el-button type="primary" size="mini" @click="ChangeSchool()">确定</el-button>
 									</div>
-									<el-text slot="reference">哈尔滨工业大学(威海)</el-text>
+									<el-text slot="reference">{{ myschool || '请选择院校' }}</el-text>
 								</el-popover>
 								<!-- 资源分享 -->
 							</a>
@@ -115,77 +71,54 @@
 				</div>
 
 				<!-- 搜索框 -->
-				<div class="toolbar-container-middle" :style="{'display': isShowInput}">
+				<div class="toolbar-container-middle" :style="{ 'display': isShowInput }">
 					<div class="toolbar-search onlySearch">
 						<div class="toolbar-search-container">
 							<span class="icon-fire" style="display: none"></span>
 							<!--  搜索博客  -->
-							<input
-								id="toolbar-search-input"
-								autocomplete="off"
-								type="text"
-								v-model="key"
-								value=""
-								placeholder="迁移学习分析"
-								style="text-indent: 12px"
-							/>
+							<input id="toolbar-search-input" autocomplete="off" type="text" v-model="key" value=""
+								placeholder="迁移学习分析" style="text-indent: 12px" />
 							<button id="toolbar-search-button" @click="goSearchBlogs()">
 								<!--                <button id="toolbar-search-button" @click="searchBlogs()">-->
 								<i></i><span>搜索</span>
 							</button>
-							<input
-								type="password"
-								autocomplete="new-password"
-								readonly=""
-								disabled="true"
-								style="
+							<input type="password" autocomplete="new-password" readonly="" disabled="true" style="
                   display: none;
                   position: absolute;
                   left: -9999999px;
                   width: 0;
                   height: 0;
-                "
-							/>
+                " />
 						</div>
 					</div>
 				</div>
 
 				<div class="toolbar-container-right">
 					<div class="toolbar-btns onlyUser">
-						<div
-							class="toolbar-btn toolbar-btn-login csdn-toolbar-fl"
-							v-if="!isShowAvatar"
-						>
+						<div class="toolbar-btn toolbar-btn-login csdn-toolbar-fl" v-if="!isShowAvatar">
 							<router-link to="/login"><a>登录/注册</a></router-link>
 						</div>
 
 						<!-- 显示头像 下拉菜单开始 -->
 						<div class="test-div csdn-toolbar-fl">
 							<el-dropdown @command="handleCommand">
-                <span class="el-dropdown-link">
-                  <a class="test-div csdn-toolbar-fl" v-if="isShowAvatar">
-                    <img :src="avatarUrl" alt="" class="test-img"
-												 style="border: 1px solid #e8e8ed;margin-right: 10px;"/>
-                  </a>
-                </span>
+								<span class="el-dropdown-link">
+									<a class="test-div csdn-toolbar-fl" v-if="isShowAvatar">
+										<img :src="avatarUrl" alt="" class="test-img"
+											style="border: 1px solid #e8e8ed;margin-right: 10px;" />
+									</a>
+								</span>
 								<el-dropdown-menu slot="dropdown">
 									<el-dropdown-item command="a">个人中心</el-dropdown-item>
-									<el-dropdown-item command="b" divided
-									>退出登录
-									</el-dropdown-item
-									>
+									<el-dropdown-item command="b" divided>退出登录
+									</el-dropdown-item>
 								</el-dropdown-menu>
 							</el-dropdown>
 						</div>
 						<!-- 显示头像 下拉菜单结束 -->
 						<div class="toolbar-btn toolbar-btn-write csdn-toolbar-fl">
-							<a
-								data-report-click='{"spm":"3001.7765"}'
-								data-report-query="spm=3001.7765"
-								class="btn-write-new"
-								@click="goBlogEdit()"
-								style="cursor: pointer"
-							></a>
+							<a data-report-click='{"spm":"3001.7765"}' data-report-query="spm=3001.7765"
+								class="btn-write-new" @click="goBlogEdit()" style="cursor: pointer"></a>
 						</div>
 
 
@@ -236,9 +169,12 @@ export default {
 	created() {
 		this.avatarUrl = window.localStorage.avatarUrl;
 		this.isShowAvatar = window.localStorage.isShowAvatar;
-		console.log(this.$route.fullPath)
+		console.log(this.$route.fullPath);
 		this.showInput();
-		// this.GetMySchool()
+		// 初始化时获取用户学校
+		if (this.isShowAvatar) {
+			this.GetMySchool();
+		}
 	},
 	mounted() {
 		this.bus.$on("userMessage", (data) => {
@@ -285,13 +221,42 @@ export default {
 			this.myschool = JSON.parse(localStorage.getItem('userMessage')).schoolName
 		},
 		//修改用户学校
-		ChangeSchool() {
-			let formdata = new FormData()
-			formdata.append('code', this.schoolCode)
-			this.$axios.put('/user/school/code', formdata, this.config).then(res => {
-				// if()
-			})
-			this.visible = false
+		async ChangeSchool() {
+			if (!this.schoolCode) {
+				this.$message.warning('请选择完整的院校信息');
+				return;
+			}
+
+			try {
+				const formData = new FormData();
+				formData.append('code', this.schoolCode);
+
+				await this.$axios.put('/user/school/code', formData, this.config);
+
+				// 更新本地用户信息
+				const userData = JSON.parse(localStorage.getItem('userMessage'))
+				userData.schoolCode = this.schoolCode // 使用选择的新 code
+				localStorage.setItem('userMessage', JSON.stringify(userData))
+
+				// 更新前端显示
+				const school = this.schoolList.find(item => item.code === this.schoolCode);
+				if (school) {
+					this.myschool = school.name;
+					// 更新本地用户信息
+					const userMessage = JSON.parse(localStorage.getItem('userMessage'));
+					userMessage.schoolName = school.name;
+					localStorage.setItem('userMessage', JSON.stringify(userMessage));
+				}
+
+				this.visible = false;
+				this.$message.success('院校信息已更新');
+				this.provinceId = '';
+				this.cityId = '';
+				this.schoolCode = '';
+			} catch (error) {
+				console.error('更新院校失败:', error);
+				this.$message.error('院校更新失败');
+			}
 		},
 		// 获取省份
 		getProvinces() {
@@ -358,7 +323,7 @@ export default {
 			if (command === "a") {
 				var routeUrl = this.$router.resolve({
 					name: 'UserHome',
-					params: {userId: JSON.parse(localStorage.getItem("userMessage")).id}
+					params: { userId: JSON.parse(localStorage.getItem("userMessage")).id }
 				})
 				window.open(routeUrl.href, '_blank');
 			}
@@ -397,7 +362,7 @@ export default {
 					type: "warning",
 				});
 			} else {
-				this.$router.push({path: "/blog/add"});
+				this.$router.push({ path: "/blog/add" });
 				// window.open("/blog/add", "_blank");
 			}
 		},
@@ -420,12 +385,7 @@ export default {
 	width: 100%;
 }
 
-#csdn-toolbar
-.toolbar-inside
-.toolbar-container
-.toolbar-container-right
-.onlyUser
-.test-img {
+#csdn-toolbar .toolbar-inside .toolbar-container .toolbar-container-right .onlyUser .test-img {
 	display: block;
 	width: 32px;
 	height: 32px;
@@ -444,7 +404,5 @@ export default {
 	margin-top: 5px;
 }
 
-#head-nav {
-
-}
+#head-nav {}
 </style>

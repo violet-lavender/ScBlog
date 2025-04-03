@@ -39,7 +39,7 @@ public class BlinkController {
 	private LikeBlinkService likeBlinkService;
 
 	/**
-	 * 获取动态内容 TODO, 博客的浏览量统计问题，感觉不好解决
+	 * 获取动态内容
 	 *
 	 * @param id 动态id
 	 */
@@ -52,10 +52,11 @@ public class BlinkController {
 	 * 创建动态
 	 *
 	 * @param content    动态内容
-	 * @param schoolCode 院校代码，从cookie中获取 TODO 这里的院校代码竟然显示了
+	 * @param schoolCode 院校代码，从cookie中获取
 	 */
 	@PostMapping
-	public void createBlink(@NotNull String content, @CookieValue(required = false) Integer schoolCode) {
+	public void createBlink(@NotNull String content, Integer schoolCode) {
+		log.info("schoolCode: {}", schoolCode);
 		Integer id = AuthHelper.getCurrentUserIdOrExit();
 		SaveBlinkBO saveBlinkBO = new SaveBlinkBO();
 		saveBlinkBO.setContent(content);
@@ -106,7 +107,7 @@ public class BlinkController {
 	 * 获取分数动态列表
 	 *
 	 * @param page       第几页
-	 * @param schoolCode 院校代码，哪个学校的 TODO 这里的院校代码问题
+	 * @param schoolCode 院校代码, 哪个学校的, 实际不用
 	 */
 	@GetMapping("/list")
 	public BlinkViewListVO getList(@RequestParam(defaultValue = "1") Integer page, Integer schoolCode) {

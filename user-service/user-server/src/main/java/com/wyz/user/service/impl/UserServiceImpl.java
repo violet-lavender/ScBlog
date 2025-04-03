@@ -264,6 +264,7 @@ public class UserServiceImpl extends ServiceImpl<UserViewMapper, UserView> imple
 
     /**
      * 更新用户的院校代码
+     * 只更新 user 表的 school_code 字段即可, 对于 blog、blink中的 school_code 字段不作更新(显然这是符合逻辑的)
      *
      * @param id         用户id
      * @param schoolCode 院校代码

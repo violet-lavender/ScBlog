@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 
 /**
  * 用户教育信息
+ * TODO , 这个表暂时没有用到, 感觉不需要这个表, 院校代码在 user 表中体现即可
  */
 @Data
 public class UserEducation {

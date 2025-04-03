@@ -96,6 +96,7 @@ export default {
 				// 避免浏览器缓存 每次获取个人信息时 给头像url添加时间戳, 同时通知头部导航栏
 				res.data.data.avatarUrl += `?timestamp=${new Date().getTime()}`
 				this.bus.$emit('userMessage', JSON.stringify(res.data.data))
+        res.data.data.schoolCode = res.data.data.schoolCode || '' // 防止 undefined
         localStorage.setItem('userMessage', JSON.stringify(res.data.data))
       }).then(() => {
         this.userMessage = JSON.parse(localStorage.getItem('userMessage'))

@@ -143,7 +143,7 @@ public class UserController {
     }
 
     /**
-     * 更新用户院校代码
+     * 更新用户院校代码 TODO: 院校代码更新有，选择就是，但是选完后后端更新而前端显示不更新，同时只更新了user表
      *
      * @param code 院校代码
      */
