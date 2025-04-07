@@ -37,6 +37,11 @@ public class BlogSaveBO {
 	String description;
 
 	/**
+	 * 院校代码
+	 */
+	Integer schoolCode;
+
+	/**
 	 * 内容(md格式)
 	 */
 	@NotNull(message = "博客内容不能为空")

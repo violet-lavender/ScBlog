@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 import static com.wyz.blog.sdk.BlogMqConstants.*;
 
@@ -169,8 +170,10 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 		if (blogGeneralMapper.insert(blogGeneral) != 1) {
 			throw new MapperException("新增博客失败", "blog_general insert error!");
 		}
-		// 9. 发送MQ消息
-		rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_INSERT_KEY, blog);
+		// 9. 发送MQ消息(ES只存储发布的博客)
+		if (Objects.equals(blog.getStatus(), BlogStatusType.PUBLISH.getValue())) {
+			rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_INSERT_KEY, blog);
+		}
 	}
 
 	@Override

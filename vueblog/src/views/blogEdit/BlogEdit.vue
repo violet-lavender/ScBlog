@@ -74,6 +74,7 @@ export default {
         content: "",
         contentHtml: "",
         status: 2,
+        schoolCode: "", 
       },
       dialogShow: false,
     };
@@ -81,6 +82,7 @@ export default {
   created() {
     // 显示头像
     this.avatarUrl = window.localStorage.avatarUrl;
+    this.ruleForm.schoolCode = JSON.parse(localStorage.getItem('userMessage')).schoolCode || '';
   },
   methods: {
     // md文档开始

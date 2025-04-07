@@ -131,6 +131,7 @@ export default {
           this.formData.append('content',this.ruleForm.content);
 					this.formData.append('contentHtml',this.ruleForm.contentHtml);
           this.formData.append('status',this.ruleForm.status);
+          this.formData.append('schoolCode', JSON.parse(localStorage.getItem('userMessage')).schoolCode || '');
 
           this.$refs.uploadxls.submit();    // 提交表单
           // this.$refs.uploadxls.clearFiles();    // 清空图片数据
