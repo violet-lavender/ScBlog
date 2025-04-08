@@ -17,7 +17,7 @@
                             <use xlink:href="#icon-dianzan_kuai"></use>
                             <!-- use是复制一个图标的意思 -->
                         </svg>
-                        {{ item.thumbs }}
+                       <!--  {{ item.thumbs }} -->
                     </div>
                 </div>
             </div>

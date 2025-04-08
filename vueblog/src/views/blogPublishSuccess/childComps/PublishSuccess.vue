@@ -4,10 +4,12 @@
       <div class="title">博客发布成功</div>
       <img src="../../../assets/img/blogPublishSuccess/publish.png" alt="" class="img-publish">
       <div class="btn-box">
-				<router-link to="/">
-					<div class="btn">返回首页</div>
-				</router-link>
-        <div class="btn">内容管理</div>
+        <router-link to="/">
+          <div class="btn">返回首页</div>
+        </router-link>
+        <router-link to="/ContentManagement">
+          <div class="btn">内容管理</div>
+        </router-link>
         <div class="btn">查看文章</div>
         <router-link to="/blog/add" target="_blank">
           <div class="btn">再写一篇</div>

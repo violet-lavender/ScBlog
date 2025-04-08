@@ -163,7 +163,7 @@ public class BlogConsoleController {
     }
 
     /**
-     * 保存博客 TODO, 注意这里没有院校代码信息, 这个BO里没有，可能需要修改实体对象
+     * 保存博客
      *
      * @param blog 要保存的博客内容
      */
