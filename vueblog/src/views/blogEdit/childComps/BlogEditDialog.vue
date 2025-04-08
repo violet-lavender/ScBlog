@@ -147,7 +147,10 @@ export default {
               //   message: "发布成功~",
               //   type: "success",
               // });
-              this.$router.push("/blog/publish");
+              this.$router.push({
+                path: "/blog/publish",
+                query: { blogId: res.data.data }
+              });
             }
           })
 

@@ -60,6 +60,7 @@ const routes = [
 		path: '/blog/:blogId',
 		name: 'BlogDetail',
 		component: BlogDetail,
+		props: true,
 	},
 	{
 		path: '/blog/:blogId/edit',

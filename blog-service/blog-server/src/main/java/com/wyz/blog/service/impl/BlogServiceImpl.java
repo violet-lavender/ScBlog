@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Objects;
 
 import static com.wyz.blog.sdk.BlogMqConstants.*;
 
@@ -61,13 +60,12 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 	private RabbitTemplate rabbitTemplate;
 
 	@Override
-	public void saveBlog(BlogSaveBO blogDTO) {
+	public Integer saveBlog(BlogSaveBO blogDTO) {
 		log.debug("saveBlog, id->{}", blogDTO.getId());
 		// 1. 判断是新建博客还是修改博客
 		if (blogDTO.getId() == null) {
 			// 1.1 博客不存在，新建博客
-			createBlog(blogDTO);
-			return;
+			return createBlog(blogDTO);
 		}
 		// 1.2 博客存在，修改博客
 		// 2. 先进行作者身份核实
@@ -122,6 +120,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 		}
 		// 7. 发送MQ消息
 		rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_UPDATE_KEY, blog);
+		return blog.getId();
 	}
 
 	/**
@@ -129,7 +128,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 	 *
 	 * @param blogDTO 博客内容
 	 */
-	private void createBlog(BlogSaveBO blogDTO) {
+	private Integer createBlog(BlogSaveBO blogDTO) {
 		// 1. 拷贝属性到blog实体类
 		Blog blog = new Blog();
 		BeanUtils.copyProperties(blogDTO, blog);
@@ -170,10 +169,9 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 		if (blogGeneralMapper.insert(blogGeneral) != 1) {
 			throw new MapperException("新增博客失败", "blog_general insert error!");
 		}
-		// 9. 发送MQ消息(ES只存储发布的博客)
-		if (Objects.equals(blog.getStatus(), BlogStatusType.PUBLISH.getValue())) {
-			rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_INSERT_KEY, blog);
-		}
+		// 9. 发送MQ消息
+		rabbitTemplate.convertAndSend(BLOG_TOPIC_EXCHANGE, BLOG_INSERT_KEY, blog);
+		return blog.getId();
 	}
 
 	@Override

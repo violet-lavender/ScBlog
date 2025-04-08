@@ -168,7 +168,7 @@ public class BlogConsoleController {
      * @param blog 要保存的博客内容
      */
     @PostMapping("/blog")
-    public void saveBlog(@Validated BlogSaveBO blog, MultipartFile coverImage) {
+    public RestResult<Integer> saveBlog(@Validated BlogSaveBO blog, MultipartFile coverImage) {
         Integer id = AuthHelper.getCurrentUserIdOrExit();
         // 设置其他参数
         blog.setCoverImageFile(coverImage);
@@ -177,7 +177,8 @@ public class BlogConsoleController {
         if (FileUtils.isNotEmpty(blog.getCoverImageFile())) {
             FileUtils.checkFile(blog.getCoverImageFile(), 1024 * 1024L, FileType.JPEG, FileType.PNG);
         }
-        blogService.saveBlog(blog);
+        Integer blogId = blogService.saveBlog(blog);
+        return new RestResult<>(blogId);
     }
 
     /**

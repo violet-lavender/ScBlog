@@ -10,7 +10,7 @@
         <router-link to="/ContentManagement">
           <div class="btn">内容管理</div>
         </router-link>
-        <div class="btn">查看文章</div>
+        <div class="btn" @click="handleViewArticle">查看文章</div>
         <router-link to="/blog/add" target="_blank">
           <div class="btn">再写一篇</div>
         </router-link>
@@ -20,39 +20,63 @@
 </template>
 
 <script>
-  export default {
-    name: "",
+export default {
+  name: "",
+  data() {
+    return {
+      blogId: null
+    }
+  },
+  created() {
+    this.blogId = this.$route.query.blogId
+  },
+  methods: {
+    handleViewArticle() {
+      if (!this.blogId) {
+        this.$message.error('获取文章信息失败')
+        return
+      }
+      this.$router.push({
+        path: `/blog/${this.blogId}`,
+      })
+    }
   }
+}
 </script>
 
 <style scoped>
-  .box-card {
-    width: 480px;
-  }
-  .title {
-    font-size: 18px;
-    font-weight: 500;
-    /*margin-bottom: 120px;*/
-  }
-  .img-publish {
-    width: 300px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  .btn-box {
-    display: flex;
-    justify-content: space-around;
-  }
-  .btn-box .btn {
-    height: 32px;
-    width: 100px;
-    border: 1px solid #ccccd8;
-    border-radius: 15px;
-    line-height: 30px;
-    cursor: pointer;
-    color: #555666;
-  }
-  .btn-box .btn:hover {
-    border: 1px solid #555666;
-  }
+.box-card {
+  width: 480px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  /*margin-bottom: 120px;*/
+}
+
+.img-publish {
+  width: 300px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.btn-box {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-box .btn {
+  height: 32px;
+  width: 100px;
+  border: 1px solid #ccccd8;
+  border-radius: 15px;
+  line-height: 30px;
+  cursor: pointer;
+  color: #555666;
+}
+
+.btn-box .btn:hover {
+  border: 1px solid #555666;
+}
 </style>

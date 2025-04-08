@@ -20,7 +20,7 @@ public interface BlogService extends IService<Blog> {
 	 *
 	 * @param blog 博客
 	 */
-	void saveBlog(BlogSaveBO blog);
+	Integer saveBlog(BlogSaveBO blog);
 
 	/**
 	 * 获取作者博客数量
