@@ -93,7 +93,7 @@ public class LikeBlogServiceImpl extends ServiceImpl<LikeBlogMapper, LikeBlog> i
 
 	@Override
 	public BlogListVO getLikeBlogList(@Valid @NotNull Integer userId, int page, int pageSize) {
-		// 先查收藏表，获取收藏的博客id
+		// 先查点赞表，获取点赞的博客id
 		LambdaQueryWrapper<LikeBlog> wrapper = new LambdaQueryWrapper<>();
 		wrapper.eq(LikeBlog::getUserId, userId);
 		IPage<LikeBlog> iPage = new Page<>(page, pageSize);

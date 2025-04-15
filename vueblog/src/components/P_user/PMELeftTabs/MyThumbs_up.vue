@@ -62,7 +62,7 @@ export default {
                 this.AddStation()
             })
         },
-        //添加收藏列表的初始状态true
+        //添加点赞列表的初始状态true
         AddStation(){
             this.likeList.forEach(item=>{
                 item.thumbs=true
@@ -70,7 +70,7 @@ export default {
         },
         ChangeStar(index){
             this.likeList[index].starStation=!this.likeList[index].starStation
-            // 开始收藏状态修正
+					// 开始点赞状态修正
             this.Like(index)
         },
         Like(blogid, authorId, index) {

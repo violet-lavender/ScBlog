@@ -9,7 +9,9 @@ import com.wyz.blog.mapper.*;
 import com.wyz.blog.pojo.bo.ActionStatusBO;
 import com.wyz.blog.pojo.bo.BlogInfoBO;
 import com.wyz.blog.pojo.bo.BlogStatusBO;
+import com.wyz.blog.pojo.domain.Blog;
 import com.wyz.blog.pojo.domain.BlogView;
+import com.wyz.blog.pojo.domain.ViewBlog;
 import com.wyz.blog.pojo.vo.BlogContentVO;
 import com.wyz.blog.pojo.vo.BlogInfoListVO;
 import com.wyz.blog.pojo.vo.BlogStatusListVO;
@@ -28,6 +30,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +52,9 @@ public class BlogViewServiceImpl extends ServiceImpl<BlogViewMapper, BlogView> i
 	private BlogViewMapper blogViewMapper;
 
 	@Resource
+	private BlogMapper blogMapper;
+
+	@Resource
 	private BlogGeneralMapper blogGeneralMapper;
 
 	@Resource
@@ -61,6 +67,9 @@ public class BlogViewServiceImpl extends ServiceImpl<BlogViewMapper, BlogView> i
 	private BlogContentHtmlMapper blogContentHtmlMapper;
 
 	@Resource
+	private ViewBlogMapper viewBlogMapper;
+
+	@Resource
 	private UserClient userClient;
 
 	@Resource
@@ -71,7 +80,6 @@ public class BlogViewServiceImpl extends ServiceImpl<BlogViewMapper, BlogView> i
 
 	@Override
 	public BlogStatusListVO getRecommendBlogList(Integer userId, int page, int pageSize) {
-		// todo 最好根据用户标签来推
 		BlogInfoListVO blogInfoListVO = searchBlog(null, page, pageSize);
 		BlogStatusListVO blogStatusListVO = BeanUtil.copyProperties(blogInfoListVO, BlogStatusListVO.class);
 		addActionStatusToList(blogStatusListVO.getRecords(), userId);
@@ -146,6 +154,8 @@ public class BlogViewServiceImpl extends ServiceImpl<BlogViewMapper, BlogView> i
 		}
 		BlogStatusBO blogStatusBO = BeanUtil.copyProperties(blogView, BlogStatusBO.class);
 		if (userId != null) {
+			// 增加用户博客浏览记录
+			ViewBlog(id, userId);
 			// 获取该用户对该博客的状态
 			Map<Integer, ActionStatusBO> status = getBlogActionStatus(userId, id);
 			blogStatusBO.setActionStatus(status.get(id));
@@ -158,6 +168,35 @@ public class BlogViewServiceImpl extends ServiceImpl<BlogViewMapper, BlogView> i
 		// 博客阅读量+1
 		this.increaseViewNum(id, blogView.getAuthorId(), userId);
 		return blog;
+	}
+
+	/**
+	 * 新增博客浏览记录
+	 *
+	 * @param blogId 博客ID
+	 * @param userId 用户ID
+	 */
+	public void ViewBlog(Integer blogId, Integer userId) {
+		// 判断博客是否存在
+		Blog blog = blogMapper.selectById(blogId);
+		if (blog == null) {
+			return;
+		}
+		LambdaQueryWrapper<ViewBlog> wrapper = new LambdaQueryWrapper<>();
+		wrapper.eq(ViewBlog::getBlogId, blogId).eq(ViewBlog::getUserId, userId);
+		ViewBlog selectOne = viewBlogMapper.selectOne(wrapper);
+		if (selectOne != null) {
+			// 浏览记录已存在, 修改时间
+			selectOne.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			viewBlogMapper.updateById(selectOne);
+		} else {
+			// 新增浏览记录
+			ViewBlog viewBlog = new ViewBlog();
+			viewBlog.setBlogId(blogId);
+			viewBlog.setUserId(userId);
+			viewBlog.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			viewBlogMapper.insert(viewBlog);
+		}
 	}
 
 	/**

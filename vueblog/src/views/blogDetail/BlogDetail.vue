@@ -312,7 +312,7 @@ export default {
 			const blogId = this.$route.params.blogId;
 			this.blogIdForm.blogId = this.$route.params.blogId;
 			const _this = this;
-			await this.$axios.get("/blog/detail?id=" + blogId).then((res) => {
+			await this.$axios.get("/blog/detail?id=" + blogId, {headers: {token: localStorage.getItem('token')}}).then((res) => {
 				console.log("返回的所有数据", res);
 				const blog = res.data.data;
 

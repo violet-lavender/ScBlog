@@ -3,6 +3,7 @@ package com.wyz.blog.controller;
 import com.wyz.blog.pojo.vo.BlogListVO;
 import com.wyz.blog.service.CollectBlogService;
 import com.wyz.blog.service.LikeBlogService;
+import com.wyz.blog.service.ViewBlogService;
 import com.wyz.common.web.auth.AuthHelper;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +28,8 @@ public class BlogActionController {
 	private LikeBlogService likeBlogService;
 	@Resource
 	private CollectBlogService collectBlogService;
+	@Resource
+	private ViewBlogService viewBlogService;
 
 	/**
 	 * 点赞博客
@@ -78,6 +81,26 @@ public class BlogActionController {
 	public BlogListVO getCollectList(@RequestParam(defaultValue = "1") int page) {
 		Integer id = AuthHelper.getCurrentUserIdOrExit();
 		return collectBlogService.getCollectBlogList(id, page, pageSize);
+	}
+
+	/**
+	 * 获取浏览记录列表
+	 *
+	 * @param page 第几页（默认每页20条）
+	 */
+	@GetMapping("/view")
+	public BlogListVO getViewList(@RequestParam(defaultValue = "1") int page) {
+		Integer id = AuthHelper.getCurrentUserIdOrExit();
+		return viewBlogService.getViewBlogList(id, page, pageSize);
+	}
+
+	/**
+	 * 清空浏览记录
+	 */
+	@DeleteMapping("/view")
+	public Boolean clearViewList() {
+		Integer id = AuthHelper.getCurrentUserIdOrExit();
+		return viewBlogService.clearViewBlogList(id);
 	}
 
 }

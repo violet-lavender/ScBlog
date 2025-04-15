@@ -15,19 +15,22 @@
             </ul>
           </div>
           <div class="contentright">
-              <div v-if="leftNavigation[0].chose">
-                <Information></Information>
-              </div>
-              <div v-if="leftNavigation[1].chose">
-                <AccountSet></AccountSet>
-              </div>
-              <div v-if="leftNavigation[2].chose">
-                <MyCollect></MyCollect>
-              </div>
-              <div v-if="leftNavigation[5].chose">
-                <MyThumbs></MyThumbs>
-              </div>
-          </div>
+						<div v-if="leftNavigation[0].chose">
+							<Information></Information>
+						</div>
+						<div v-if="leftNavigation[1].chose">
+							<AccountSet></AccountSet>
+						</div>
+						<div v-if="leftNavigation[2].chose">
+							<MyCollect></MyCollect>
+						</div>
+						<div v-if="leftNavigation[3].chose">
+							<MyBrowse></MyBrowse>
+						</div>
+						<div v-if="leftNavigation[5].chose">
+							<MyThumbs></MyThumbs>
+						</div>
+					</div>
         </div>
       </div>
       <!-- 页面底部视图 -->
@@ -44,17 +47,19 @@ import ButtomView from "@/components/P_user/ButtomView/ButtomView.vue"
 import Information from "@/components/P_user/PMELeftTabs/Information.vue";
 import AccountSet from "@/components/P_user/PMELeftTabs/AccountSet.vue"
 import MyCollect from "@/components/P_user/PMELeftTabs/MyCollect.vue"
+import MyBrowse from "@/components/P_user/PMELeftTabs/MyBrowse.vue";
 import MyThumbs from "@/components/P_user/PMELeftTabs/MyThumbs_up.vue"
 
 export default {
   components: {
-    TopBarA,
-    ButtomView,
-	  Information,
-	  AccountSet,
-	  MyCollect,
-	  MyThumbs,
-  },
+		TopBarA,
+		ButtomView,
+		Information,
+		AccountSet,
+		MyCollect,
+		MyBrowse,
+		MyThumbs,
+	},
   data() {
     return {
       leftNavigation: [{name: "个人资料", chose: true,id:1}, {name: "账号设置", chose: false,id:2}
