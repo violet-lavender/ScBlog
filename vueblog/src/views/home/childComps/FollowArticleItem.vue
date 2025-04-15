@@ -24,17 +24,17 @@
               </div>
             </router-link>
             <div class="article-evaluation">
-              <div class="article-good" @click="addLikeNum(item.actionStatus.like, item.id, index)"
-                :disabled="loadingStates[item.id]"> <!-- 禁用状态绑定 -->
-                <!--登录显示-->
-                <img :src="item.actionStatus.like
+              <div class="article-good" @click="addLikeNum(item.actionStatus.isLike, item.id, index)"
+									 :disabled="loadingStates[item.id]"> <!-- 禁用状态绑定 -->
+								<!--登录显示-->
+								<img :src="item.actionStatus.isLike
                   ? require('../../../assets/img/home/good_active.png')
                   : require('../../../assets/img/home/good.png')
-                  " alt="" />
-                <!--未登录显示-->
-                <!--                <img-->
-                <!--                  v-if="!isShow"-->
-                <!--                  src="../../../assets/img/home/good.png"-->
+                  " alt=""/>
+								<!--未登录显示-->
+								<!--                <img-->
+								<!--                  v-if="!isShow"-->
+								<!--                  src="../../../assets/img/home/good.png"-->
                 <!--                  alt=""-->
                 <!--                />-->
                 {{ item.likeNum }} <span>赞</span>
@@ -104,8 +104,8 @@ export default {
 
       try {
         // 乐观更新：立即切换状态
-        this.blogList[index].actionStatus.like = !originalLike;
-        this.blogList[index].likeNum += originalLike ? -1 : 1;
+				this.blogList[index].actionStatus.isLike = !originalLike;
+				this.blogList[index].likeNum += originalLike ? -1 : 1;
 
         const res = await this.$axios.post(
           "/blog/action/like",
@@ -115,15 +115,15 @@ export default {
 
         if (res.data.code !== 200 || !res.data.status) {
           // 请求失败，回滚状态
-          this.blogList[index].actionStatus.like = originalLike;
-          this.blogList[index].likeNum = originalLikeNum;
+					this.blogList[index].actionStatus.isLike = originalLike;
+					this.blogList[index].likeNum = originalLikeNum;
           this.$message.error("操作失败，请重试");
         }
         // 请求成功则保持乐观更新状态
       } catch (error) {
         // 请求异常，回滚状态
-        this.blogList[index].actionStatus.like = originalLike;
-        this.blogList[index].likeNum = originalLikeNum;
+				this.blogList[index].actionStatus.isLike = originalLike;
+				this.blogList[index].likeNum = originalLikeNum;
         this.$message.error("网络错误，请检查连接");
       } finally {
         // 清除加载状态

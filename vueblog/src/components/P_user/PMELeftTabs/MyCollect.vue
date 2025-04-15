@@ -88,8 +88,12 @@ export default {
 					type: 'success'
 				});
 			}
-        },
-    }
+		},
+		TurnToDetail(index) {
+			var routeUrl = this.$router.resolve({name: 'BlogDetail', params: {blogId: index}})
+			window.open(routeUrl.href, '_blank');
+		},
+	}
 }
 </script>
 

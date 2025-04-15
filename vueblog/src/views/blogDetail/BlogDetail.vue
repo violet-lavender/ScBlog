@@ -25,12 +25,7 @@
               </div>
               <div class="focus-btn">
                 <div class="btn" @click="followUser()">
-                  <a
-                    href="javascript:;"
-                    v-if="isShowFollow"
-                    style="color: #999aaa"
-                    >已关注</a
-                  >
+                  <a v-if="isShowFollow" href="javascript:;" style="color: #999aaa">已关注</a>
                   <a href="javascript:;" v-else style="color: #555666">关注</a>
                 </div>
               </div>
@@ -69,38 +64,29 @@
                 <dd class="font">获赞</dd>
               </dl>
               <dl>
-                <dt class="count">{{ UserCreationStatistics.commentNum }}</dt>
-                <dd class="font">评论</dd>
-              </dl>
-              <dl>
-                <dt class="count">{{ UserCreationStatistics.collectNum }}</dt>
-                <dd class="font">收藏</dd>
-              </dl>
-            </div>
-          </div>
-          <!-- 侧边盒子2 搜索 -->
-          <!--          <div class="box asideSearchArticle">-->
-          <!--            <div class="search-box">-->
-          <!--              <input type="text" placeholder="搜博主文章"/>-->
-          <!--              <a href="#">-->
-          <!--                <img src="../../assets/img/blogDetail/search.png" alt=""/>-->
-          <!--              </a>-->
-          <!--            </div>-->
-          <!--          </div>-->
+								<dt class="count">{{ UserCreationStatistics.commentNum }}</dt>
+								<dd class="font">评论</dd>
+							</dl>
+							<dl>
+								<dt class="count">{{ UserCreationStatistics.collectNum }}</dt>
+								<dd class="font">收藏</dd>
+							</dl>
+						</div>
+					</div>
 
 					<!-- 侧边盒子2 目录 -->
-					<div class="box asideHotArticle" v-show="navList.length!=0">
+					<div v-show="navList.length != 0" class="box asideHotArticle">
 						<h3 class="aside-title">目录</h3>
 						<div class="aside-content">
-							<ul class="nav-list" v-for="item in navList" :key="item.name">
-								<li :class="item.localName=='h2'? 'h2active':item.localName=='h3'? 'h3active':item.localName=='h4'? 'h4active':item.localName=='h5'? 'h5active':item.localName=='h6'? 'h6active':''">
-									<a @click="scrollToPosition(item.href)">{{item.name}}</a>
-<!--									<a :href="'#'+item.href" >{{item.name}}</a>-->
+							<ul v-for="item in navList" :key="item.name" class="nav-list">
+								<li
+									:class="item.localName == 'h2' ? 'h2active' : item.localName == 'h3' ? 'h3active' : item.localName == 'h4' ? 'h4active' : item.localName == 'h5' ? 'h5active' : item.localName == 'h6' ? 'h6active' : ''">
+									<a @click="scrollToPosition(item.href)">{{ item.name }}</a>
 								</li>
 							</ul>
 						</div>
 					</div>
-        </div>
+				</div>
         <!-- 右边博客内容 -->
         <div class="main-rt textScroll">
           <el-card class="box-card">
@@ -108,41 +94,23 @@
               <h1>{{ blogDetail.title }}</h1>
               <!--文章信息开始-->
               <div class="article-info">
-<!--                <img-->
-<!--                  class="article-type-img"-->
-<!--                  src="../../assets/img/blogDetail/original.png"-->
-<!--                  alt=""-->
-<!--                />-->
                 <div class="info-box">{{ profile.author }}</div>
-                <img
-                  class="icon"
-                  src="../../assets/img/blogDetail/time.png"
-                  alt=""
-                />
+								<img alt="" class="icon" src="../../assets/img/blogDetail/time.png"/>
                 <div class="info-box">
                   于&nbsp;{{ blogDetail.releaseTime }}&nbsp;发布
                 </div>
-                <img
-                  class="icon"
-                  src="../../assets/img/blogDetail/view.png"
-                  alt=""
-                />
+								<img alt="" class="icon" src="../../assets/img/blogDetail/view.png"/>
                 <div class="info-box">浏览量：{{ blogDetail.viewNum }}</div>
                 <!-- 收藏 -->
-                <div class="collection" @click="addCollectionNum()">
-                  <img
-                    class="icon"
-                    :src="
-                      isCollect
-                        ? require('../../assets/img/blogDetail/collection_active.png')
-                        : require('../../assets/img/blogDetail/collection.png')
-                    "
-                    alt=""
-                  />
-                  <div class="info-box">
-                    收藏&nbsp;{{ blogDetail.collectionNum }}
-                  </div>
-                </div>
+								<div class="collection" @click="addCollectionNum()">
+									<img :src="isCollect
+                      ? require('../../assets/img/blogDetail/collection_active.png')
+                      : require('../../assets/img/blogDetail/collection.png')
+                    " alt="" class="icon"/>
+									<div class="info-box">
+										收藏&nbsp;{{ blogDetail.collectionNum }}
+									</div>
+								</div>
               </div>
               <!--文章信息结束-->
               <el-divider></el-divider>
@@ -158,53 +126,36 @@
                 <span class="profile-name">{{ profile.author }}</span>
               </div>
               <div class="profile-attend" @click="followUser()">
-                <a
-                  href="javascript:;"
-                  v-if="isShowFollow"
-                  style="color: #999aaa"
-                  >已关注</a
-                >
+								<a v-if="isShowFollow" href="javascript:;" style="color: #999aaa">已关注</a>
                 <a href="javascript:;" v-else>关注</a>
               </div>
             </div>
             <div class="toolbox-middle">
-              <div class="item-box like" @click="addLikeNum()">
-                <img
-                  :src="
-                    isLike
-                      ? require('../../assets/img/blogDetail/good_active.png')
-                      : require('../../assets/img/blogDetail/good.png')
-                  "
-                  alt=""
-                />
-                <span>{{ blogDetail.likeNum }}</span>
-              </div>
+							<div class="item-box like" @click="addLikeNum()">
+								<img :src="isLike
+                    ? require('../../assets/img/blogDetail/good_active.png')
+                    : require('../../assets/img/blogDetail/good.png')
+                  " alt=""/>
+								<span>{{ blogDetail.likeNum }}</span>
+							</div>
               <div class="item-box comment">
                 <img src="../../assets/img/blogDetail/comment.png" alt="" />
                 <span>{{ blogDetail.commentNum }}</span>
               </div>
-              <div class="item-box collection" @click="addCollectionNum()">
-                <img
-                  :src="
-                    isCollect
-                      ? require('../../assets/img/blogDetail/collection2_active.png')
-                      : require('../../assets/img/blogDetail/collection2.png')
-                  "
-                  alt=""
-                />
-                <span>{{ blogDetail.collectionNum }}</span>
-              </div>
-            </div>
-          </div>
-          <!-- 评论 -->
-          <BlogComment
-            :facomment="comment"
-            @func="getComment"
-            @recordsChange="recordsChange"
-          />
-        </div>
-      </div>
-    </div>
+							<div class="item-box collection" @click="addCollectionNum()">
+								<img :src="isCollect
+                    ? require('../../assets/img/blogDetail/collection2_active.png')
+                    : require('../../assets/img/blogDetail/collection2.png')
+                  " alt=""/>
+								<span>{{ blogDetail.collectionNum }}</span>
+							</div>
+						</div>
+					</div>
+					<!-- 评论 -->
+					<BlogComment :facomment="comment" @func="getComment" @recordsChange="recordsChange"/>
+				</div>
+			</div>
+		</div>
 
 
 	</div>
@@ -257,56 +208,40 @@ export default {
       },
       profile: {
         authorId: 0,
-        author: "",
-        avatarUrl: "",
-      },
-      // 评论
-      comment: {},
-      // 关注用户的id
-      followIdForm: {
-        followId: "",
-      },
-      isShowFollow: false,
+				author: "",
+				avatarUrl: "",
+			},
+			// 评论
+			comment: {},
+			// 关注用户的id
+			followIdForm: {
+				followId: "",
+			},
+			isShowFollow: false,
 			// 目录
-			navList:[],
-      config:{
-        params: {
-          userId: 0,
-        },
-				headers:{
-					token:localStorage.getItem('token')
+			navList: [],
+			config: {
+				params: {
+					userId: 0,
+				},
+				headers: {
+					token: localStorage.getItem('token')
 				}
 			},
-    };
-  },
-  created() {
-  },
+		};
+	},
+	created() {
+	},
 	mounted() {
 		this.getArticleDetail();
-    // this.getUserCreationStatistics();
 	},
 
-  // 滚动开始
-  // 监听页面滚动
-  // mounted () {
-  //   window.addEventListener('scroll', this.handleTabFix, true)
-  // },
-  // //离开当前组件前一定要清除滚动监听，否则进入其他路由会报错
-  // beforeRouteLeave (to, from, next) {
-  //   window.removeEventListener('scroll', this.handleTabFix, true)
-  //   next()
-  // },
-  // 滚动结束
-
-  methods: {
-    // getUserCreationStatistics() {
-
-    // },
-    gotoUserHome() {
-        // console.log(this.profile.authorId);
-        var routeUrl= this.$router.resolve({name:'UserHome',params:{userId:this.profile.authorId}})
-        window.open(routeUrl.href, '_blank');
-    },
+	methods: {
+		gotoUserHome() {
+			// console.log(this.profile.authorId);
+			var routeUrl = this.$router.resolve({name: 'UserHome', params: {userId: this.profile.authorId}})
+			window.open(routeUrl.href, '_blank');
+		},
 		async getArticleDetail() {
 			// 显示文章详情
 			const blogId = this.$route.params.blogId;
@@ -316,10 +251,10 @@ export default {
 				console.log("返回的所有数据", res);
 				const blog = res.data.data;
 
-				// 渲染md文档
-				// var MarkdownIt = require("markdown-it");
-				// var md = new MarkdownIt();
-				// var result = md.render(blog.content.content);
+				const actionStatus = blog.info.actionStatus || {}
+				_this.isLike = actionStatus.isLike || false
+				_this.isCollect = actionStatus.isCollect || false
+
 				var result = blog.content.content;
 
 				_this.blogDetail = {
@@ -335,19 +270,17 @@ export default {
 				_this.profile = {
 					author: blog.author.nickname,
 					avatarUrl: blog.author.avatarUrl,
-          authorId: blog.author.id
+					authorId: blog.author.id
 				};
 				_this.followIdForm = {
-          followId: blog.author.id,
-        };
-        document.title = _this.blogDetail.title + " - " + _this.profile.author + " - 校园博客"
-        this.config.params.userId = blog.author.id;
-        this.$axios.get('/user/general', this.config).then((res) => {
-          // console.log(res.data.data);
-          this.UserCreationStatistics = res.data.data;
-        })
-				// _this.comment = blog.comment;
-				// console.log(_this.comment);
+					followId: blog.author.id,
+				};
+				document.title = _this.blogDetail.title + " - " + _this.profile.author + " - 校园博客"
+				this.config.params.userId = blog.author.id;
+				this.$axios.get('/user/general', this.config).then((res) => {
+					// console.log(res.data.data);
+					this.UserCreationStatistics = res.data.data;
+				})
 			});
 			// 获取目录
 			const aArr = this.$refs.content.querySelectorAll("a");
@@ -369,22 +302,18 @@ export default {
 		// 目录滚动
 		scrollToPosition(id) {
 			let position = offsetDomTop(document.getElementById(id));
-			// position.top = position.top - 80;
 			scrolltoToc(position.top);
 		},
-    // recordsChange(records) {
-    //   this.comment = records; //在父组件修改值
-    // },
-    // 关注
-    followUser() {
-      this.$axios
-        .post("/user/follow", qs.stringify(this.followIdForm), {
-          headers: { token: localStorage.getItem("token") },
-        })
-        .then((res) => {
-          if (
-            res.data.code == 200 &&
-            res.data.data == true &&
+		// 关注
+		followUser() {
+			this.$axios
+				.post("/user/follow", qs.stringify(this.followIdForm), {
+					headers: {token: localStorage.getItem("token")},
+				})
+				.then((res) => {
+					if (
+						res.data.code == 200 &&
+						res.data.data == true &&
             res.data.status == true
           ) {
             this.isShowFollow = res.data.data;
@@ -405,18 +334,6 @@ export default {
           }
         });
     },
-    // 获取评论
-    // getComment() {
-    //   console.log("获取评论");
-    //   const blogId = this.$route.params.blogId;
-    //   const _this = this;
-    //   this.$axios.get("/blog/blog?id=" + blogId).then((res) => {
-    //     console.log(res);
-    //     const blog = res.data.data;
-    //     _this.comment = blog.comment;
-    //     console.log(_this.comment);
-    //   });
-    // },
     // 点赞
     addLikeNum() {
       this.$axios
@@ -488,24 +405,31 @@ export default {
 .h2active {
 	margin-left: 20px;
 }
+
 .h3active {
 	margin-left: 40px;
 }
+
 .h4active {
 	margin-left: 60px;
 }
+
 .h5active {
 	margin-left: 80px;
 }
+
 .h6active {
 	margin-left: 100px;
 }
+
 .nav-list a {
 	color: #555666;
 }
+
 .nav-list a:hover {
 	color: #16a0f8;
 }
+
 /*目录结束*/
 
 /*文章点赞收藏底部开始*/

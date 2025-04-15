@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="comment-container">
-<!--			{{this.commentList}}-->
       <div class="comment-title">
         评论 <span>{{ commentList.allCount }}</span>
       </div>
@@ -192,7 +191,6 @@
 </template>
 
 <script>
-import qs from "qs";
 
 export default {
   name: "",
@@ -326,9 +324,6 @@ export default {
         })
         .then((res) => {
 					this.commentList = res.data.data
-          // console.log(res)
-					// this.getCommentList()
-          // this.$emit("recordsChange", res.data.data);
         });
     },
   },

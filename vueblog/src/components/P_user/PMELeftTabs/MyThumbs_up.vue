@@ -85,18 +85,22 @@ export default {
                     this.$message({
                         message: '操作成功',
                         type: 'success',
-                    });
-                    // 重新获取点赞列表以确保显示最新数据
-                    this.GetData();
-                } else {
-                    this.$message({
-                        message: '操作失败',
-                        type: 'error'
-                    });
-                }
-            });
-        }
-    }
+										});
+									// 重新获取点赞列表以确保显示最新数据
+									this.GetData();
+								} else {
+									this.$message({
+										message: '操作失败',
+										type: 'error'
+									});
+								}
+						});
+				},
+			TurnToDetail(index) {
+				var routeUrl = this.$router.resolve({name: 'BlogDetail', params: {blogId: index}})
+				window.open(routeUrl.href, '_blank');
+			},
+		}
 }
 </script>
 
