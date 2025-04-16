@@ -137,80 +137,107 @@ export default {
 <style scoped>
 .contentright {
 	width: 990px;
-	/* overflow: hidden; */
+	margin: 0 auto;
 }
 
 .contentright .F-1 {
 	width: 100%;
-	height: 150px;
+	min-height: 150px;
 	margin-bottom: 20px;
-	border-radius: 5px;
-	padding: 10px 20px;
+	padding: 16px 24px;
 	display: flex;
 	align-items: center;
-	background: white;
-	transition: all 0.15s linear;
+	justify-content: space-between;
+	background-color: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	transition: all 0.2s ease-in-out;
 	cursor: pointer;
-	overflow: hidden;
 }
 
 .contentright .F-1:hover {
-	transform: scale(1.01);
-	background: rgb(247, 247, 247);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+	background-color: #fafafa;
 }
 
 .contentright .F-1 .BlogContent-image {
-	width: 170px;
-	height: 120px;
+	width: 160px;
+	height: 100px;
+	flex-shrink: 0;
 	border-radius: 10px;
 	overflow: hidden;
 	display: flex;
-	box-sizing: border-box;
+	align-items: center;
+	justify-content: center;
+	background-color: #f0f0f0;
 }
+
 .contentright .F-1 .BlogContent-image img {
 	width: 100%;
-	/*height: auto;*/
-	object-fit: cover;
-}
-.contentright .F-1 .BlogContent-image imgB {
 	height: 100%;
+	object-fit: cover;
+	transition: transform 0.3s ease;
+	border-radius: 10px;
 }
+
+.contentright .F-1:hover .BlogContent-image img {
+	transform: scale(1.05);
+}
+
 .contentright .F-1 .BlogContent-a {
-	width: 50rem;
-	height: 120px;
+	flex: 1;
+	margin-right: 16px;
+	color: #333;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100px;
+	overflow: hidden;
+}
+
+.BlogContent-1 {
+	font-size: 18px;
+	font-weight: 700;
+	color: #222;
+	line-height: 1.6;
+	margin-bottom: 4px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: normal;
-	color: #606B7C;
+	white-space: nowrap;
 }
 
-.contentright .F-1 .BlogContent-a .BlogContent-1 {
-	/* width: 100%; */
-	height: 25%;
-	line-height: 1.5rem;
-	font-size: 16px;
-	font-weight: 600;
-	color: black;
-}
-
-.contentright .F-1 .BlogContent-a .BlogContent-2 {
-	height: 55%;
-	line-height: 1.2rem;
-	font-size: 14px;
-	font-weight: 500;
-	color: black;
-}
-
-.contentright .F-1 .BlogContent-a .BlogContent-3 {
-	height: 30%;
-	line-height: 20px;
+.BlogContent-2 {
 	font-size: 14px;
 	font-weight: 400;
-	color: black;
-	bottom: 0;
+	color: #555;
+	line-height: 1.5;
+	margin-bottom: 6px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
-.contentright .F-1 .BlogContent-a .BlogContent-3 span {
-	margin: 0 10px;
+.BlogContent-3 {
+	font-size: 13px;
+	color: #888;
+	line-height: 1.5;
+	margin-top: auto;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.BlogContent-3 span {
+	margin-left: 12px;
+}
+
+.infinite-loading-wrap {
+	margin-top: 20px;
+	text-align: center;
+	color: #888;
+	font-size: 14px;
 }
 </style>

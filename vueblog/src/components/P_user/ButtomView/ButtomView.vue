@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="bottom">
         <div class="content">
                 <ul class="content-list">
@@ -48,4 +48,4 @@
     float: left; 
     margin:0 10px;
 }
-</style>
+</style> -->
