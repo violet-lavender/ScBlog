@@ -27,4 +27,11 @@ public interface BlinkGeneralMapper extends BaseMapper<BlinkGeneral> {
     @Update("update blink_general set likes_num = likes_num - 1, score = score - 3 where blink_id = #{blinkId} and likes_num > 0;")
     void decreaseLikeNum(Integer blinkId);
 
+    /**
+     * 动态浏览量+1
+     *
+     * @param blinkId 动态id
+     */
+    @Update("update blink_general set view_num = view_num + 1, score = score + 0.1 where blink_id = #{blinkId};")
+    void viewBlink(Integer blinkId);
 }

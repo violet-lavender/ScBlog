@@ -15,36 +15,42 @@
         <div class="heartsay" v-for="item in DynamicList" :key="item.id">
           <div class="heartA">
             <div class="img">
-              <img :src="item.user.avatarUrl" alt="">
-            </div>
-            <div class="username">
-              {{ item.user.username }}
-            </div>
-          </div>
-          <div class="heartB">
-            <!-- 表白墙动态内容部分 -->
-            <div>
-              {{ item.content }}
-            </div>
-          </div>
-          <div class="heartC">
-            <ul>
-              <li>
-                <div class="like-wrapper">
-                  <svg class="icon like-icon" :class="{ active: item.isLike || false }" @click="Like(item.id)"
-                    :disabled="loadingStates[item.id]" aria-hidden="true">
-                    <use xlink:href="#icon-dianzan_kuai"></use>
-                  </svg>
-                  <span class="like-count">
+							<img :src="item.user.avatarUrl" alt="">
+						</div>
+						<div class="username">
+							{{ item.user.username }}
+						</div>
+					</div>
+					<div class="heartB" @click="handleClick(item.id)">
+						<div>
+							{{ item.content }}
+						</div>
+					</div>
+					<div class="meta-info">
+						<span>{{ item.createTime }}</span>
+						<span>{{ item.viewNum || 0 }} 浏览</span>
+						<span>{{ item.likesNum || 0 }} 点赞</span>
+					</div>
+					<div class="heartC">
+						<ul>
+							<li>
+								<div class="like-wrapper">
+									<svg class="icon like-icon" :class="{ active: item.isLike || false }" @click="Like(item.id)"
+											 :disabled="loadingStates[item.id]" aria-hidden="true">
+										<use xlink:href="#icon-dianzan_kuai"></use>
+									</svg>
+									<span class="like-count">
                     {{ item.likesNum || 0 }}
                   </span>
                 </div>
               </li>
-              <li v-for="(icon, i) in iconList" :key="i">
-                <svg class="icon" aria-hidden="true" @click="handleFeatureClick(i)">
-                  <use :xlink:href="icon"></use>
-                </svg>
-              </li>
+							<li v-for="(icon, i) in iconList" :key="i">
+								<div class="icon-wrapper" @click="handleFeatureClick(i)">
+									<svg aria-hidden="true" class="icon">
+										<use :xlink:href="icon"></use>
+									</svg>
+								</div>
+							</li>
             </ul>
           </div>
         </div>
@@ -72,27 +78,28 @@ export default {
   data() {
     return {
       avatarUrl: '',
-      username: '',
-      iconList: ['#icon-pinglun', '#icon-zhuanfa', '#icon-gengduo'],
-      loadingStates: {},  // 加载状态跟踪
-      components: { InfiniteLoading },
-      page: 1,
-      hasMore: true,  // 是否还有更多数据
-      // 动态列表
-      DynamicList: []
-    }
-  },
-  created() {},
-  components: { InfiniteLoading },
-  methods: {
-    async infiniteHandler($state) {
-      if (!this.hasMore) {
-        $state.complete()
-        return
-      }
+			username: '',
+			iconList: ['#icon-pinglun', '#icon-zhuanfa', '#icon-gengduo'],
+			loadingStates: {},  // 加载状态跟踪
+			components: {InfiniteLoading},
+			page: 1,
+			hasMore: true,  // 是否还有更多数据
+			// 动态列表
+			DynamicList: []
+		}
+	},
+	created() {
+	},
+	components: {InfiniteLoading},
+	methods: {
+		async infiniteHandler($state) {
+			if (!this.hasMore) {
+				$state.complete()
+				return
+			}
 
-      try {
-        const config = {
+			try {
+				const config = {
           params: {
             page: this.page
           },
@@ -114,25 +121,41 @@ export default {
           this.hasMore = this.page <= res.data.data.pages
           $state.loaded()
 
-          if (!this.hasMore) {
-            $state.complete()
-          }
-        }
-      } catch (error) {
-        $state.error()
-        console.error("加载失败:", error)
-      }
-    },
-    // 跳转至编辑动态页面
-    Publish() {
-      var routeUrl = this.$router.resolve({ path: './DynamicEdit' })
-      window.open(routeUrl.href, '_blank');
-    },
-    // 点赞函数
-    async Like(blinkId) {
-      if (!blinkId || this.loadingStates[blinkId]) return;
+					if (!this.hasMore) {
+						$state.complete()
+					}
+				}
+			} catch (error) {
+				$state.error()
+				console.error("加载失败:", error)
+			}
+		},
+		// 点击动态, 增加浏览量
+		async handleClick(blinkId) {
+			if (this.loadingStates[blinkId]) return;
+			this.$set(this.loadingStates, blinkId, true);
 
-      const index = this.DynamicList.findIndex(item => item.id === blinkId);
+			try {
+				await this.$axios.post('/blink/view',
+					qs.stringify({id: blinkId}),
+					{headers: {token: localStorage.getItem("token")}}
+				);
+			} catch (error) {
+				console.error('浏览量上报失败:', error);
+			} finally {
+				this.$delete(this.loadingStates, blinkId);
+			}
+		},
+		// 跳转至编辑动态页面
+		Publish() {
+			var routeUrl = this.$router.resolve({path: './DynamicEdit'})
+			window.open(routeUrl.href, '_blank');
+		},
+		// 点赞函数
+		async Like(blinkId) {
+			if (!blinkId || this.loadingStates[blinkId]) return;
+
+			const index = this.DynamicList.findIndex(item => item.id === blinkId);
       if (index === -1) return;
 
       const target = this.DynamicList[index];
@@ -193,179 +216,254 @@ export default {
 </script>
 
 <style scoped>
+:root {
+	--primary-color: #ff6b9d;
+	--secondary-color: #ff9ebc;
+	--hover-color: #ffc2d4;
+	--text-dark: #5a3a4d;
+	--text-light: #8c5c6d;
+	--bg-gradient: linear-gradient(135deg, #fff0f4 0%, #ffe9ec 100%);
+	--active-color: #ff3b6d;
+	--white: #ffffff;
+	--white-pinkish: #fff6f8;
+}
+
 .contain {
-  /* 保留空容器样式 */
+	background: var(--bg-gradient);
+	min-height: 100vh;
+	padding: 20px 0;
+	font-family: 'Helvetica Neue', sans-serif;
+	color: var(--text-dark);
 }
 
 .F-3 {
-  width: 100%;
-  min-height: 200px;
-  border-radius: 5px;
-  background: linear-gradient(to right, pink, rgb(251, 205, 213), pink);
+	width: 100%;
+	max-width: 1120px;
+	margin: 0 auto;
+	border-radius: 16px;
+	background: #ffe8ef;
+	box-shadow: 0 8px 24px rgba(255, 122, 163, 0.12);
+	border: 1px solid rgba(255, 122, 163, 0.18);
+	overflow: hidden;
+	transition: all 0.3s ease;
 }
 
 .F-3-content {
-  width: 100%;
+	padding: 32px 0;
 }
 
-/* 合并重复的.F-3选择器 */
-.F-3 .publishlove {
-  width: 100%;
-  line-height: 100px;
-  text-align: right;
-  font-size: 20px;
-  font-weight: 600;
-  padding-right: 15%;
-  color: rgb(64, 189, 251);
+.publishlove {
+	padding: 0 6% 30px;
+	text-align: right;
 }
 
-.F-3 .publishlove a {
-  cursor: pointer;
+.publishlove a {
+	display: inline-block;
+	padding: 12px 36px;
+	background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+	color: #fff5f7 !important;
+	/* 改为柔和白色 */
+	border-radius: 32px;
+	font-size: 18px;
+	font-weight: 600;
+	transition: all 0.3s ease;
+	box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+	text-decoration: none;
 }
 
-.heartsay {
-  width: 100%;
-  min-height: 200px;
-  border-bottom: 1px solid white;
+.publishlove a:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 24px rgba(255, 107, 157, 0.4);
+	background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
 }
 
 .nodata {
-  width: 100%;
-  line-height: 100%;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-  color: aliceblue;
+	padding: 60px 0;
+	font-size: 18px;
+	color: var(--text-dark);
+	opacity: 0.8;
+	text-align: center;
 }
 
-/* 合并嵌套层级 */
+.heartsay {
+	margin: 24px auto;
+	width: 90%;
+	background: var(--white);
+	border-radius: 16px;
+	padding: 24px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.heartsay:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 20px rgba(255, 122, 163, 0.15);
+}
+
 .heartA {
-  width: 100%;
-  height: 100px;
-  padding-left: 20px;
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
 }
 
 .heartA .img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(205, 205, 205, 0.5);
-  text-align: center;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	overflow: hidden;
+	background: #fff;
+	border: 2px solid var(--primary-color);
+	box-shadow: 0 2px 6px rgba(255, 107, 157, 0.15);
+	flex-shrink: 0;
 }
 
 .heartA .img img {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .heartA .username {
-  line-height: 100%;
-  font-size: 20px;
-  font-weight: 600;
-  margin-left: 20px;
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--text-dark);
+	margin-left: 16px;
+	letter-spacing: 0.5px;
 }
 
 .heartB {
-  width: 95%;
-  min-height: 200px;
-  margin: 10px auto;
-  border-radius: 5px;
-  background: rgba(241, 234, 234, 0.6);
-  border-color: white;
-  transition: all 0.3s;
+	padding: 18px;
+	margin: 15px 0;
+	background: #fff0f5;
+	border-radius: 12px;
+	font-size: 16px;
+	line-height: 1.7;
+	color: var(--text-light);
+	border: 2px solid transparent;
+	transition: all 0.3s ease;
+	white-space: pre-wrap;
+	word-break: break-word;
+	/* 新增修复样式 */
+	text-indent: 0;
+	text-align: justify;
+	text-justify: inter-ideograph;
+}
+
+.heartB {
+	/* 保持原有基础样式 */
+	padding: 18px;
+	margin: 15px 0;
+	background: #fff0f5;
+	border-radius: 12px;
+	font-size: 16px;
+	line-height: 1.7;
+	color: var(--text-light);
+	transition: all 0.3s ease;
+	white-space: pre-wrap;
+	word-break: break-word;
+
+	/* 新增修正属性 */
+	text-align: left !important;
+	/* 强制左对齐 */
+	text-indent: 0 !important;
+	/* 清除首行缩进 */
+	padding-left: 0;
+	/* 清除左侧内间距 */
 }
 
 .heartB:hover {
-  border: 4px solid rgba(255, 255, 255);
+	border-color: rgba(255, 107, 157, 0.2);
+	background: rgba(255, 235, 238, 0.35);
 }
 
-/* 合并ul相关样式 */
 .heartC ul {
-  width: 100%;
-  height: 60px;
-  display: flex;
+	display: flex;
+	justify-content: flex-end;
+	gap: 16px;
+	padding: 8px 15px 0;
 }
 
 .heartC li {
-  width: 25%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+}
+
+.like-wrapper,
+.icon-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 6px 12px;
+	min-height: 36px;
+	min-width: 48px;
+	border-radius: 20px;
+	background: rgba(255, 107, 157, 0.08);
+	transition: background 0.3s ease;
+	cursor: pointer;
+}
+
+.like-wrapper:hover,
+.icon-wrapper:hover {
+	background: rgba(255, 107, 157, 0.15);
 }
 
 .heartC svg {
-  width: 50%;
-  height: 50%;
-  margin-top: 10px;
-  fill: rgb(255, 255, 255);
-  transition: all 0.2s linear;
-  cursor: pointer;
+	width: 24px;
+	height: 24px;
+	fill: #999;
+	transition: all 0.2s ease;
 }
 
-/* 合并交互状态 */
-.heartC svg:hover {
-  transform: scale(1.3);
-  fill: rgb(51, 239, 236);
-}
-
-.heartC svg:active {
-  transform: scale(0.8);
-  fill: rgb(238, 90, 90);
-}
-
-/* 合并点赞相关样式 */
-.like-wrapper {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  border-radius: 16px;
-  transition: background-color 0.2s;
-}
-
-.like-wrapper:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.like-icon {
-  width: 24px !important;
-  height: 24px !important;
-  margin-top: 0 !important;
+.like-icon.active {
+	fill: var(--active-color) !important;
+	filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.5));
 }
 
 .like-count {
-  margin-left: 4px;
-  font-size: 14px;
-  color: #fff;
-  font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--text-dark);
 }
 
-/* 合并激活状态 */
-.icon.active {
-  color: #ff5652;
-  fill: currentColor;
-  filter: drop-shadow(0 2px 4px rgba(255, 86, 82, 0.3));
+.heartC li:not(:first-child) svg {
+	background: none;
+	padding: 0;
+	border-radius: 0;
 }
 
-/* 优化覆盖规则 */
-.heartC li:nth-child(1) svg.active {
-  fill: rgb(51, 239, 236);
+.heartC li:not(:first-child) svg:hover {
+	background: rgba(255, 107, 157, 0.15);
+	transform: scale(1.15);
+	fill: var(--primary-color);
 }
 
-.heartC li:hover svg {
-  transform: none;
-  fill: currentColor;
+.infinite-loading-wrap {
+	padding: 30px 0;
+	color: var(--text-dark);
 }
 
-.like-wrapper:hover .like-icon {
-  transform: scale(1.1);
-  transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+.infinite-loading-wrap div[slot="spinner"] {
+	font-size: 14px;
+	color: var(--primary-color);
 }
 
+.infinite-loading-wrap div[slot="no-more"] {
+	color: #aaa;
+}
+
+.meta-info {
+	font-size: 13px;
+	color: #999;
+	margin-top: -10px;
+	margin-bottom: 8px;
+	padding-left: 4px;
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.meta-info span {
+	white-space: nowrap;
+}
 </style>

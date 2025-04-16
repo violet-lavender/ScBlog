@@ -49,6 +49,16 @@ public class BlinkController {
 	}
 
 	/**
+	 * 模拟获取动态详情, 进行点击浏览量统计
+	 *
+	 * @param id 动态id
+	 */
+	@PostMapping("/view")
+	public void viewBlink(@NotNull Integer id) {
+		blinkService.viewBlink(id);
+	}
+
+	/**
 	 * 创建动态
 	 *
 	 * @param content    动态内容

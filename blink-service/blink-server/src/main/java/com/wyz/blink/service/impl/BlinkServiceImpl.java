@@ -45,7 +45,6 @@ public class BlinkServiceImpl extends ServiceImpl<BlinkMapper, Blink> implements
 		blinkGeneralMapper.insert(general);
 	}
 
-	// TODO 异常优化，放到权限问题一起处理
 	@Override
 	public void remove(int id, int userId) {
 		LambdaQueryWrapper<Blink> wrapper = new LambdaQueryWrapper<>();
@@ -63,6 +62,13 @@ public class BlinkServiceImpl extends ServiceImpl<BlinkMapper, Blink> implements
 		wrapper.set(Blink::getContent, blinkBO.getContent());
 		if (blinkMapper.update(null, wrapper) != 1) {
 			throw new MapperException("动态更新失败", blinkBO);
+		}
+	}
+
+	@Override
+	public void viewBlink(Integer blinkId) {
+		if (blinkId != null) {
+			blinkGeneralMapper.viewBlink(blinkId);
 		}
 	}
 

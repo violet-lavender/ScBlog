@@ -32,4 +32,9 @@ public interface BlinkService extends IService<Blink> {
 	 */
 	void update(UpdateBlinkBO blinkBO);
 
+	/**
+	 * 浏览动态
+	 */
+	void viewBlink(Integer blinkId);
+
 }
