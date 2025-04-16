@@ -47,47 +47,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Resource
     private RabbitTemplate rabbitTemplate;
 
-/*	@Override
-	public void create(Comment comment) {
-		// 检查博客是否存在，检查父评论id是否在该博客下
-		boolean exists = false;
-		// 博客评论的博客信息
-		RestResult<BlogDTO> result = null;
-		if (comment.getParentId() != null) {
-			// 判断博客id和父评论id是否正确
-			LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();
-			wrapper.eq(Comment::getBlogId, comment.getBlogId()).eq(Comment::getId, comment.getParentId());
-			Comment parentComment = commentMapper.selectOne(wrapper);
-			if (parentComment != null) {
-				exists = true;
-				// 如果父评论还有上一级评论，则设置父评论的上一级评论为当前评论的父评论，如此，所有子评论的父评论id都一定是一级评论
-				comment.setParentId(parentComment.getParentId() != null ? parentComment.getParentId() : parentComment.getId());
-				comment.setParentUserId(parentComment.getUserId());
-			}
-		} else {
-			// 根据id判断博客是否存在
-			result = blogClient.getBlogInfo(comment.getBlogId());
-			exists = result.getStatus() && result.getData() != null;
-		}
-		// todo 优化逻辑
-		if (!exists) {
-			throw new BusinessException("数据异常");
-		}
-		comment.setId(null);
-		comment.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		commentMapper.insert(comment);
-		// 发送消息：博客评论数增加
-		CommentDTO commentDTO = new CommentDTO();
-		commentDTO.setBlogId(comment.getBlogId());
-		commentDTO.setContent(comment.getContent());
-		commentDTO.setUserId(comment.getUserId());
-		// noinspection ConstantConditions
-		commentDTO.setAuthorId(result.getData().getAuthorId());
-		rabbitTemplate.convertAndSend(COMMENT_TOPIC_EXCHANGE, BLOG_COMMENT_INCREASE_KEY, commentDTO);
-
-		log.info("博客评论增加，blogId={},commentId={}", comment.getBlogId(), comment.getId());
-	}*/
-
     @Override
     public void create(Comment comment) {
         // 统一强制获取博客信息，确保后续逻辑可用
@@ -187,9 +146,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         }
 
         // 查询子评论
-        // 以父评论id查询所有子评论，按时间排序(也可以按id倒序)
+        // 以父评论id查询所有子评论，按时间正序(也可以按id正序)，父评论倒序，子评论正序，避免不连贯
         wrapper.clear();
-        wrapper.eq(Comment::getBlogId, blogId).in(Comment::getParentId, parentIdList).orderByDesc(Comment::getId);
+        wrapper.eq(Comment::getBlogId, blogId).in(Comment::getParentId, parentIdList).orderByAsc(Comment::getId);
         // 查询所有子评论
         log.debug("查询子评论sql,{}", wrapper.getSqlSelect());
         List<Comment> subList = commentMapper.selectList(wrapper);
