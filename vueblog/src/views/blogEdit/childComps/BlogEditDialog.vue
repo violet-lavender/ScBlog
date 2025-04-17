@@ -61,31 +61,31 @@
 </template>
 
 <script>
-import qs from "qs";
 export default {
   props: {
-    blogTitle: String,
-    blogContent: String,
-		blogContentHtml:String,
-    dialogShow: {
-      type: Boolean,
-      default: false,
-    },
-  },
+		blogId: [String, Number],
+		blogTitle: String,
+		blogContent: String,
+		blogContentHtml: String,
+		dialogShow: {
+			type: Boolean,
+			default: false,
+		},
+	},
   name: "",
   data() {
     return {
       dialogFormVisible: this.dialogShow,
       // 表单
       ruleForm: {
-        id: "",
-        title: this.blogTitle,
-        description: "",
-        coverImage: null,
-        content: this.blogContent,
+				id: this.blogId,
+				title: this.blogTitle,
+				description: "",
+				coverImage: null,
+				content: this.blogContent,
 				contentHtml: this.blogContentHtml,
-        status: 1,
-      },
+				status: 1,
+			},
       rules: {
         description: [
           { required: true, message: "请填写文章摘要", trigger: "blur" },

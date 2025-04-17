@@ -27,7 +27,6 @@
                 </div>
               </div>
             </li>
-            <li></li>
             <li>
               <div class="deleteUser">
                 <div class="text">账号注销</div>
@@ -265,10 +264,6 @@ export default {
       // console.log("获取浏览器全局数据",this.$parent.userMessage)
       console.log("获取浏览器全局数据", this.form)
     },
-    Back() {
-      this.changepassword = false
-      this.contentSeen = true
-    },
     ChangePassword() {
       this.contentSeen = false
       this.changepassword = true
@@ -285,9 +280,11 @@ export default {
     },
     // 返回账号设置
     Back() {
-      this.changeemail = false;
-      this.contentSeen = true;
-    },
+			this.changepassword = false
+			this.changeemail = false
+			this.deleteaccount = false
+			this.contentSeen = true
+		},
     // 获取邮箱验证码
     obtainEmailCode() {
       if (this.ruleForm3.mail === "") {
@@ -403,10 +400,13 @@ export default {
 }
 </script>
 <style scoped>
+/* 修改邮箱模块样式 */
 .changeemailA {
-  width: 60%;
-  margin: 0 auto;
-  padding: 20px;
+	width: 60%;
+	margin: 0 auto;
+	padding: 20px;
+	border-radius: 8px;
+	background-color: #f9f9f9;
 }
 
 .changeemailcontent {
@@ -419,24 +419,24 @@ export default {
   width: 100%;
 }
 
-/* 删除原有 verification-item 相关样式 */
-
-/* 新增统一表单项样式 */
+/* 统一表单项样式 */
 .changeemailA .el-form-item {
   margin-bottom: 22px;
 }
 
 /* 标签对齐设置 */
 .changeemailA .el-form-item__label {
-  width: 100px !important;
-  text-align: right;
-  padding-right: 20px;
+	width: 120px;
+	text-align: right;
+	padding-right: 20px;
+	font-size: 16px;
+	color: #333;
 }
 
 /* 内容区域对齐 */
 .changeemailA .el-form-item__content {
-  margin-left: 100px !important;
-  line-height: normal;
+	margin-left: 120px !important;
+	line-height: normal;
 }
 
 /* 验证码容器布局 */
@@ -448,13 +448,11 @@ export default {
 /* 输入框统一宽度 */
 .changeemailA .el-input {
   width: 348px;
-  /* 与注册页面相同宽度 */
 }
 
 /* 验证码输入框特殊宽度 */
 .changeemailA .code-container .el-input {
   width: 250px;
-  /* 与注册页面验证码输入框相同宽度 */
 }
 
 /* 按钮间距调整 */
@@ -462,35 +460,40 @@ export default {
   margin-left: 10px;
 }
 
+/* 右侧内容部分 */
 .rightContent {
   width: 100%;
   background: transparent;
 }
 
 .rightContentA {
-  width: 100%;
-  background: linear-gradient(to bottom right, rgb(233, 189, 189), rgb(255, 255, 255));
-  height: 230px;
+	width: 100%;
+	background: linear-gradient(to bottom right, rgb(233, 189, 189), rgb(255, 255, 255));
+	height: 230px;
+	border-radius: 8px;
 }
 
 .rightContentB {
-  width: 100%;
-  height: 600px;
-  background: white;
+	width: 100%;
+	height: 600px;
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .rightContentB-1 {
-  width: calc(100%- 30px);
-  height: 100px;
-  line-height: 100px;
-  font-size: 30px;
-  font-weight: 800;
-  margin-left: 30px;
+	width: 100%;
+	height: 100px;
+	line-height: 100px;
+	font-size: 30px;
+	font-weight: 800;
+	margin-left: 30px;
+	color: #333;
 }
 
 .rightContentB-2 {
-  width: calc(100%- 60px);
-  margin: 0px 30px;
+	width: calc(100% - 60px);
+	margin: 0px 30px;
 }
 
 .rightContentB-2 ul {
@@ -499,47 +502,64 @@ export default {
 }
 
 .rightContentB-2 ul li {
-  width: 100%;
-  height: 80px;
-  line-height: 80px;
-  font-size: 20px;
-  font-weight: 600;
+	width: 100%;
+	height: 80px;
+	line-height: 80px;
+	margin: 4px 0;
+	/* 增加垂直间距控制 */
+	font-size: 20px;
+	font-weight: 600;
+	border-bottom: 1px solid #eee;
+}
+
+/* 给最后一个列表项添加顶部间距 */
+.rightContentB-2 ul li:last-child {
+	margin-top: 30px;
+	border-top: 1px solid #eee; /* 增加分割线提升视觉效果 */
 }
 
 .rightContentB-2 ul li .text {
-  width: 80px;
-  float: left;
+	width: 80px;
+	float: left;
+	color: #666;
 }
 
 .rightContentB-2 ul li .right {
-  float: right;
+	float: right;
 }
 
 .rightContentB-2 ul li .delete {
   float: right;
   color: red;
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .rightContentB-2 ul li .right span:nth-child(1) {
-  margin-right: 50px;
+	margin-right: 50px;
 }
 
 .rightContentB-2 ul li .right span:nth-child(2) {
-  cursor: pointer;
-  color: rgb(21, 123, 201);
+	cursor: pointer;
+	color: rgb(21, 123, 201);
+	transition: color 0.3s;
 }
 
+.rightContentB-2 ul li .right span:nth-child(2):hover {
+	color: rgb(252, 85, 49);
+}
+
+/* 修改密码模块样式 */
 .changepass {
-  width: 100%;
-  height: 500px;
-  background: white;
+	width: 100%;
+	height: 500px;
+	background: white;
+	border-radius: 8px;
 }
 
 .changepass .changepasscontent {
-  width: calc(100%- 40px);
-  height: 100%;
-  margin: 0 20px;
+	width: calc(100% - 40px);
+	height: 100%;
+	margin: 0 20px;
 }
 
 .changepassB {
@@ -555,9 +575,9 @@ export default {
 }
 
 .changepass .changepasscontent .changepassA {
-  width: 50%;
-  height: calc(100%- 50px);
-  margin: 100px auto;
+	width: 50%;
+	height: calc(100% - 50px);
+	margin: 100px auto;
 }
 
 .changepass .changepasscontent .changepassA .errorTip {
@@ -570,33 +590,37 @@ export default {
 }
 
 .changepass .changepasscontent .changepassC {
-  width: 50%;
-  height: calc(100%- 50px);
-  margin: 100px auto;
-  text-align: center;
-  font-size: 40px;
-  font-weight: 600;
+	width: 50%;
+	height: calc(100% - 50px);
+	margin: 100px auto;
+	text-align: center;
+	font-size: 40px;
+	font-weight: 600;
+	color: #333;
 }
 
+/* 注销账户模块样式 */
 .deleteAccount {
-  width: 100%;
-  height: 500px;
-  background: white;
+	width: 100%;
+	height: 500px;
+	background: white;
+	border-radius: 8px;
 }
 
 .deletecontent {
-  width: calc(100%- 40px);
-  height: 100%;
-  margin: 0 20px;
+	width: calc(100% - 40px);
+	height: 100%;
+	margin: 0 20px;
 }
 
 .deleteaccountA {
-  width: 100%;
-  height: 200px;
-  line-height: 200px;
-  text-align: center;
-  font-size: 40px;
-  font-weight: 800;
+	width: 100%;
+	height: 200px;
+	line-height: 200px;
+	text-align: center;
+	font-size: 40px;
+	font-weight: 800;
+	color: #333;
 }
 
 .deletecontent .button {
@@ -606,15 +630,12 @@ export default {
   line-height: 200px;
 }
 
-.changeemailA {
-  width: 50%;
-  margin: 100px auto;
-}
-
+/* 表单按钮样式统一 */
 .demo-ruleForm .el-form-item {
   margin-bottom: 20px;
 }
 
+/* 验证码按钮样式 */
 .verifyCodeItem {
   display: flex;
   justify-content: space-between;
@@ -622,11 +643,13 @@ export default {
 }
 
 .getCodeButton {
-  margin-left: 10px;
-  width: 120px;
-  height: 36px;
-  font-size: 14px;
-  color: white;
+	margin-left: 10px;
+	width: 120px;
+	height: 36px;
+	font-size: 14px;
+	color: white;
+	background-color: #409eff;
+	border-radius: 4px;
 }
 
 .getCodeButton:disabled {

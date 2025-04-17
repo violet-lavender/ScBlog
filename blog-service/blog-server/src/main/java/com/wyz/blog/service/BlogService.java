@@ -6,6 +6,7 @@ import com.wyz.blog.pojo.bo.BlogSaveBO;
 import com.wyz.blog.pojo.domain.Blog;
 import com.wyz.blog.pojo.domain.BlogContent;
 import com.wyz.blog.pojo.domain.BlogUserGeneral;
+import com.wyz.blog.pojo.vo.BlogDraftVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -38,14 +39,24 @@ public interface BlogService extends IService<Blog> {
 	 */
 	String uploadImage(MultipartFile coverImage);
 
-	/**
-	 * 获取博客md，用于作者编辑博客内容
-	 *
-	 * @param blogId 博客id
-	 * @param userId 用户id
-	 * @return 博客内容
-	 */
-	BlogContent getBlogContent(Integer blogId, Integer userId);
+    /**
+     * 获取博客md，用于作者编辑博客内容
+     * 这里没有标题啊，并且已发布博客怎么编辑呢，只能编辑草稿吧
+     *
+     * @param blogId 博客id
+     * @param userId 用户id
+     * @return 博客内容
+     */
+    BlogContent getBlogContent(Integer blogId, Integer userId);
+
+    /**
+     * 获取草稿详情，id、title、content 即可
+     *
+     * @param blogId 博客id
+     * @param userId 用户id
+     * @return 草稿详情
+     */
+    BlogDraftVO getDraftBlog(Integer blogId, Integer userId);
 
     /**
      * 删除博客（将博客存入回收站）

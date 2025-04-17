@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wyz.blog.pojo.domain.Blog;
 import com.wyz.blog.pojo.domain.BlogUserGeneral;
 import com.wyz.blog.pojo.vo.BlogContentVO;
+import com.wyz.blog.pojo.vo.BlogDraftVO;
 import com.wyz.blog.pojo.vo.BlogStatusListVO;
 import com.wyz.blog.service.BlogService;
 import com.wyz.blog.service.BlogViewService;
@@ -62,6 +63,18 @@ public class BlogController {
 		log.debug("searchBlog,page->{}", page);
 		Integer id = AuthHelper.getCurrentUserIdOrExit();
 		return blogViewService.getFollowBlogList(id, page, pageSize);
+	}
+
+	/**
+	 * 获取草稿博客详情
+	 * 这里获取的是 content 而不是 html, 因为要在编辑器中展示，继续编辑草稿
+	 *
+	 * @param id 草稿博客id
+	 */
+	@GetMapping("/draft")
+	public BlogDraftVO getDraftBlog(@RequestParam Integer id) {
+		Integer userId = AuthHelper.getCurrentUserIdOrExit();
+		return blogService.getDraftBlog(id, userId);
 	}
 
 	/**

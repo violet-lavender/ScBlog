@@ -97,7 +97,7 @@ export default {
 				const res = await this.$axios.get("/blog/console/list", {
 					params: {
 						userId: this.userId, // 直接使用当前prop值
-						status: 0,
+						status: 1,
 						page: this.config.params.page
 					},
 					headers: this.config.headers

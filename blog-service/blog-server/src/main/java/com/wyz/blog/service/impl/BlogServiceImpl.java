@@ -6,6 +6,7 @@ import com.wyz.blog.mapper.*;
 import com.wyz.blog.pojo.bo.BlogCountBO;
 import com.wyz.blog.pojo.bo.BlogSaveBO;
 import com.wyz.blog.pojo.domain.*;
+import com.wyz.blog.pojo.vo.BlogDraftVO;
 import com.wyz.blog.service.BlogService;
 import com.wyz.blog.type.BlogStatusType;
 import com.wyz.common.exception.BusinessException;
@@ -339,25 +340,39 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 	}
 
 	@Override
-	public BlogContent getBlogContent(@NotNull Integer blogId, @NotNull Integer userId) {
-		LambdaQueryWrapper<Blog> blogWrapper = new LambdaQueryWrapper<>();
-		blogWrapper.eq(Blog::getId, blogId).eq(Blog::getAuthorId, userId);
-		// 判断是否存在（该博客是否为该用户发表的）
-		if (!blogMapper.exists(blogWrapper)) {
-			return null;
-		}
-		return blogContentMapper.selectById(blogId);
-	}
+    public BlogContent getBlogContent(@NotNull Integer blogId, @NotNull Integer userId) {
+        LambdaQueryWrapper<Blog> blogWrapper = new LambdaQueryWrapper<>();
+        blogWrapper.eq(Blog::getId, blogId).eq(Blog::getAuthorId, userId);
+        // 判断是否存在（该博客是否为该用户发表的）
+        if (!blogMapper.exists(blogWrapper)) {
+            return null;
+        }
+        return blogContentMapper.selectById(blogId);
+    }
 
-	/**
-	 * 将targetBean中为空的属性，从originalBean中获取并填充，<br>
-	 * targetBean中不为空的属性不会被改变
-	 *
-	 * @param targetBean   目标bean，must not null
-	 * @param originalBean 源bean，must not null
-	 * @param <T>          bean的类型，两个bean类型必须一致
-	 */
-	public <T> void copyOnlyNullProperties(T targetBean, T originalBean) {
+    @Override
+    public BlogDraftVO getDraftBlog(@NotNull Integer blogId, @NotNull Integer userId) {
+        LambdaQueryWrapper<Blog> blogWrapper = new LambdaQueryWrapper<>();
+        blogWrapper.eq(Blog::getId, blogId).eq(Blog::getAuthorId, userId);
+        if (!blogMapper.exists(blogWrapper)) {
+            return null;
+        }
+        BlogDraftVO blogDraft = new BlogDraftVO();
+        blogDraft.setId(blogId);
+        blogDraft.setTitle(blogMapper.selectById(blogId).getTitle());
+        blogDraft.setContent(blogContentMapper.selectById(blogId).getContent());
+        return blogDraft;
+    }
+
+    /**
+     * 将targetBean中为空的属性，从originalBean中获取并填充，<br>
+     * targetBean中不为空的属性不会被改变
+     *
+     * @param targetBean   目标bean，must not null
+     * @param originalBean 源bean，must not null
+     * @param <T>          bean的类型，两个bean类型必须一致
+     */
+    public <T> void copyOnlyNullProperties(T targetBean, T originalBean) {
 		BeanMap targetMap = BeanMap.create(targetBean);
 		BeanMap originMap = BeanMap.create(originalBean);
 		for (Object name : targetMap.keySet()) {
